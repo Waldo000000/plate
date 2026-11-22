@@ -1,0 +1,13 @@
+{
+  "name": "food-and-weight-log",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "demo": "node demo/serve.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

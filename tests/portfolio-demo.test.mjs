@@ -1,0 +1,26 @@
+import { readFileSync } from 'node:fs';
+import { runInNewContext } from 'node:vm';
+import assert from 'node:assert/strict';
+import { test } from 'node:test';
+const fixture=readFileSync(new URL('../demo/fixture.js',import.meta.url),'utf8');
+test('blank demo accepts a fictional 2,092 kJ meal, 75 kg baseline and an independent energy display choice',async()=>{
+ const window={}, location=new URL('http://127.0.0.1:4173/?onboarding=1');
+ runInNewContext(fixture,{window,location,URL,URLSearchParams,Response});
+ const get=async()=> (await window.fetch('/api/state')).json();
+ const post=async(path,body)=>(await window.fetch('/api/'+path,{method:'POST',body:JSON.stringify(body)})).json();
+ assert.deepEqual((await get()).weights,[]);
+ assert.deepEqual((await get()).food,[]);
+ const [meal]=JSON.parse(decodeURIComponent(window.demoMealFragment.slice(8)));
+ assert.equal(meal.kj,2092);
+ const saved=await post('food',{description:meal.description,kcal:meal.kj/4.184});
+ assert.equal(saved.kcal,500);
+ const targets={protein_target_g:120,energy_budget_kj:8368,fibre_target_g:30};
+ await post('preferences',{...targets,initial_weight_kg:75});
+ await post('preferences',{...targets,initial_weight_kg:78});
+ assert.deepEqual((await get()).weights.map(w=>w.kg),[75]);
+ assert.equal((await get()).settings.protein_target_g,120);
+ assert.equal((await post('display-preferences',{energy_unit:'kcal'})).energy_unit,'kcal');
+ assert.equal((await get()).settings.energy_unit,'kcal');
+ assert.equal((await get()).food[0].kcal*4.184,2092);
+ assert.equal((await get()).settings.energy_budget_kj,8368);
+});
