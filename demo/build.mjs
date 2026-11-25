@@ -35,9 +35,15 @@ if(shot)window.addEventListener('load',()=>{
     ready.disconnect();
     if(shot==='track'||shot?.startsWith('track-')){
       const targets=document.querySelector('#trackTargetsToggle');
-      if((macros.getAttribute('aria-pressed')==='true')!==(shot!=='track-fibre'))macros.click();
-      if((targets.getAttribute('aria-pressed')==='true')!==(shot==='track-fibre'||shot==='track'))targets.click();
+      if((macros.getAttribute('aria-pressed')==='true')!==(!['track-fibre','track-fibre-before','track-pear'].includes(shot)))macros.click();
+      if((targets.getAttribute('aria-pressed')==='true')!==(['track-fibre','track-fibre-before','track'].includes(shot)))targets.click();
       document.querySelector('[data-range="all"]').click();
+    }
+    if(shot==='track-pear'){
+      const picker=document.querySelector('#day');
+      picker.value=new Date(Date.parse(picker.value)-8*86400000).toISOString().slice(0,10);
+      picker.dispatchEvent(new Event('change'));
+      document.querySelector('[data-metric="fibre"]')?.click();
     }
     if(shot==='weight'){
       document.querySelector('#trackTargetsToggle').click();

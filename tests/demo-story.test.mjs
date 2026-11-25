@@ -13,7 +13,13 @@ async function story(shot) {
 }
 
 test('bulk and cut screenshots are exact chronological prefixes of the same fictional log',async ()=>{
-  const [bulk,cut,finish]=await Promise.all(['track-bulk','track-cut','track-fibre'].map(story));
+  const [bulk,cut,earlyFibre,pear,finish]=await Promise.all(['track-bulk','track-cut','track-fibre-before','track-pear','track-fibre'].map(story));
+  assert.deepEqual(earlyFibre,cut);
+  assert.deepEqual(pear,cut);
+  const ranked=pear.data.food.filter(row=>row.day==='2026-11-07').sort((a,b)=>b.nutrition.macros.fibre_g-a.nutrition.macros.fibre_g);
+  assert.ok(ranked.length>1);
+  assert.match(ranked[0].description,/^Pear •/);
+  assert.ok(ranked[0].nutrition.macros.fibre_g>ranked[1].nutrition.macros.fibre_g);
   assert.deepEqual([bulk.day,cut.day,finish.day],['2026-10-25','2026-11-15','2026-11-25']);
   for(const { day,data } of [bulk,cut]) {
     for(const key of ['food','weights','complete']) {

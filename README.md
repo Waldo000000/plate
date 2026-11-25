@@ -28,9 +28,17 @@ When I reached 90 kg, I switched to a cut by lowering my daily energy target. A 
 
 ![A few weeks into the cut: the daily energy target steps down and weight starts coming down](docs/images/track-cut.jpg)
 
-Looking at my track record against my targets, I could see that protein was mostly green but fibre was still yellow. I went back through a few days in my food log and tapped Fibre to see which foods had given me the most. Pears were up there, so I started having them more often. The fibre tiles started turning green.
+Looking at my track record against my targets, I could see that protein was mostly green but fibre was still yellow.
 
-![Later in the same cut: the fibre tiles turn green as the trend reaches the target](docs/images/targets.jpg)
+![Energy, protein and fibre targets early in the cut, with fibre tiles still yellow](docs/images/fibre-before.jpg)
+
+I went back through a few days in my food log and tapped Fibre to see which foods had given me the most.
+
+![Fibre breakdown for one day, with a pear at the top](docs/images/fibre-pear.jpg)
+
+Pears were up there, so I started having them more often. The fibre tiles started turning green.
+
+![Energy, protein and fibre targets later in the same cut, with fibre tiles now turning green](docs/images/targets.jpg)
 
 I thought tracking calories would be a pain, but logging a meal takes next to no effort, and seeing those small changes pay off makes me want to keep doing it.
 

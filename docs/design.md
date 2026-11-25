@@ -16,7 +16,7 @@ Macros and Targets can be turned on independently, and the browser remembers the
 
 ## The everyday screens
 
-The screenshots use fictional data from the local demo. Open `/capture.html?shot=next-meal` for the midday example or `/capture.html?shot=high-energy` for the energy-sorted food log. The three Track Record views, `track-bulk`, `track-cut` and `track-fibre`, use the same log with different end dates and chart layers.
+The screenshots use fictional data from the local demo. Open `/capture.html?shot=next-meal` for the midday example or `/capture.html?shot=high-energy` for the energy-sorted food log. The four Track Record views, `track-bulk`, `track-cut`, `track-fibre-before` and `track-fibre`, use the same log with different end dates and chart layers. `track-pear` opens Fibre on a day from that same log.
 
 ### Before deciding what to eat
 
@@ -32,7 +32,11 @@ The screenshots use fictional data from the local demo. Open `/capture.html?shot
 
 ![Weight and daily energy a few weeks into the cut](images/track-cut.jpg)
 
-![Weight and nutrition targets later in the same cut, with fibre tiles turning green](images/targets.jpg)
+![Fibre is still below target](images/fibre-before.jpg)
+
+![The pear tops the ranked fibre breakdown for a day in the cut](images/fibre-pear.jpg)
+
+![Fibre tiles turning green later in the same cut](images/targets.jpg)
 
 The tile colours show how each day went against its targets. The lines show by how much. Today’s target values appear as hollow dots rather than a line from the last completed day. Missing dates have faint tiles, and the trend lines connect logged observations without adding data for those dates.
 

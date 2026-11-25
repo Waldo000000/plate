@@ -5,7 +5,7 @@
   const date = new Intl.DateTimeFormat('en-AU', {timeZone:'Australia/Brisbane',year:'numeric',month:'2-digit',day:'2-digit'});
   const parts = Object.fromEntries(date.formatToParts(new Date()).map(({type,value})=>[type,value]));
   const shot=new URLSearchParams(location.search).get('shot');
-  const storyCutoffs=new Map([['track-bulk',-31],['track-cut',-10],['track-fibre',0],['track',0]]);
+  const storyCutoffs=new Map([['track-bulk',-31],['track-cut',-10],['track-fibre-before',-10],['track-pear',-10],['track-fibre',0],['track',0]]);
   const isTrack=storyCutoffs.has(shot);
   const cutoff=storyCutoffs.get(shot)??0;
   const seriesEnd=isTrack?'2026-11-25':[parts.year,parts.month,parts.day].join('-');
@@ -100,7 +100,7 @@
     [-12,{description:'Sticky date pudding with ice cream • large restaurant serve',kj:3400,time:'20:15',macros:{protein_g:8,carbs_g:112,fat_g:35,fibre_g:2},groups:{dairy:670,discretionary:2730}}],
   ]);
   const trackPearDays=new Set([-18,-9,-8,-7,-6,-5,-3,-2,-1]);
-  const trackPear={description:'Pear • one large',kj:450,time:'15:40',macros:{protein_g:0.7,carbs_g:22,fat_g:0.3,fibre_g:6},groups:{fruit:450}};
+  const trackPear={description:'Pear • one large',kj:490,time:'15:40',macros:{protein_g:0.8,carbs_g:24,fat_g:0.3,fibre_g:7},groups:{fruit:490}};
   const trackWeightByDay=new Map(trackWeights);
   const dailyVariance=n=>{
     const mixed=Math.imul(n+271,0x45d9f3b);
