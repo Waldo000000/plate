@@ -22,6 +22,7 @@ sqlite.exec(readFileSync(new URL("../drizzle/0006_food_chat.sql", import.meta.ur
 
 sqlite.exec(readFileSync(new URL("../drizzle/0007_display_preferences.sql", import.meta.url), "utf8"));
 sqlite.exec(readFileSync(new URL("../drizzle/0008_food_log_tip.sql", import.meta.url), "utf8"));
+sqlite.exec(readFileSync(new URL("../drizzle/0009_nutrition_target_history.sql", import.meta.url), "utf8"));
 
 const env = { DB: {
   prepare(sql) {
@@ -198,12 +199,64 @@ await body(req("/api/preferences", {method:"POST",user:null,body:targets}),401);
 await body(req("/api/preferences", {method:"POST",user:"targets-a",origin:"https://outside.test",body:targets}),403);
 await body(req("/api/preferences", {method:"POST",user:"targets-a",body:{...targets,weight_goal_kg:"84"}}),400);
 await body(req("/api/preferences", {method:"POST",user:"targets-a",body:targets}));
-assert.deepEqual((await body(req("/api/state",{user:"targets-a"}))).settings,{protein_target_g:null,...targets});
+const currentBrisbane=new Date(Date.now()+36000000).toISOString().slice(0,10);
+assert.deepEqual((await body(req("/api/state",{user:"targets-a"}))).settings,{protein_target_g:null,...targets,nutrition_target_history:[
+ {metric:"energy_budget_kj",effective_day:currentBrisbane,target_value:8600},
+ {metric:"fibre_target_g",effective_day:currentBrisbane,target_value:29},
+]});
 assert.deepEqual((await body(req("/api/state",{user:"targets-b"}))).settings,{protein_target_g:null});
 await body(req("/api/preferences",{method:"POST",user:"targets-a",body:{energy_budget_kj:null,fibre_target_g:null,weight_goal_kg:null}}));
 assert.equal((await body(req("/api/state",{user:"targets-a"}))).settings.energy_budget_kj,null);
 
-const privateChat="https://chatgpt.com/c/00000000-0000-4000-8000-000000000001";
+// Exercise the Settings HTTP entry point with existing undated values and a
+// correction through yesterday, where the restore boundary is today's target.
+const targetOwner="target-history-owner", dateOffset=days=>new Date(Date.parse(currentBrisbane)+days*86400000).toISOString().slice(0,10);
+const historyState=async user=>(await body(req("/api/state",{user}))).settings;
+const legacy={energy_budget_kj:12345,fibre_target_g:28,weight_goal_kg:82};
+const seedPrefs=sqlite.prepare("INSERT INTO personal_targets VALUES (?,?,?,?)");
+seedPrefs.run(targetOwner,legacy.energy_budget_kj,legacy.fibre_target_g,legacy.weight_goal_kg);
+sqlite.prepare("INSERT INTO user_settings (user_id,protein_target_g) VALUES (?,?)").run(targetOwner,141);
+assert.deepEqual((await historyState(targetOwner)).nutrition_target_legacy,{energy_budget_kj:12345,fibre_target_g:28});
+// A save that only changes weight does not fabricate energy or fibre history.
+await body(req("/api/preferences",{method:"POST",user:targetOwner,body:{...legacy,weight_goal_kg:83}}));
+assert.equal((await historyState(targetOwner)).nutrition_target_history,undefined);
+const targetCorrection={metric:"energy_budget_kj",from:dateOffset(-5),to:dateOffset(-1),value:9012};
+const fix=(data,{user=targetOwner,origin=API}={})=>req("/api/target-history",{method:"POST",user,origin,body:data});
+await body(fix(targetCorrection,{user:null}),401);
+await body(fix(targetCorrection,{origin:"https://outside.test"}),403);
+for(const bad of [{to:currentBrisbane},{from:dateOffset(-500)},{from:currentBrisbane},{metric:"weight_goal_kg"},{value:"9012"},{user_id:"targets-b"}])await body(fix({...targetCorrection,...bad}),400);
+await body(fix(targetCorrection));
+let targetHistory=await historyState(targetOwner);
+const datedFor=(state,metric,day)=>state.nutrition_target_history.filter(r=>r.metric===metric&&r.effective_day<=day).at(-1)?.target_value;
+assert.equal(datedFor(targetHistory,"energy_budget_kj",dateOffset(-6)),12345);
+for(const offset of [-5,-4,-3,-2,-1])assert.equal(datedFor(targetHistory,"energy_budget_kj",dateOffset(offset)),9012);
+assert.equal(datedFor(targetHistory,"energy_budget_kj",currentBrisbane),12345);
+assert.deepEqual(targetHistory.nutrition_target_legacy,{fibre_target_g:28});
+assert.equal(targetHistory.energy_budget_kj,12345);
+assert.equal(targetHistory.protein_target_g,141);
+assert.equal(targetHistory.weight_goal_kg,83);
+assert.deepEqual(await historyState("targets-b"),{protein_target_g:null});
+const earlierSettings=(await body(req("/api/state?to="+dateOffset(-8),{user:targetOwner}))).settings;
+assert.equal(earlierSettings.nutrition_target_history.find(r=>r.metric==="energy_budget_kj").target_value,12345);
+await body(fix({...targetCorrection,from:dateOffset(-3),to:dateOffset(-2),value:null}));
+targetHistory=await historyState(targetOwner);
+assert.equal(datedFor(targetHistory,"energy_budget_kj",dateOffset(-4)),9012);
+assert.equal(datedFor(targetHistory,"energy_budget_kj",dateOffset(-3)),null);
+assert.equal(datedFor(targetHistory,"energy_budget_kj",dateOffset(-2)),null);
+assert.equal(datedFor(targetHistory,"energy_budget_kj",dateOffset(-1)),9012);
+await body(req("/api/preferences",{method:"POST",user:targetOwner,body:{...legacy,energy_budget_kj:13500,fibre_target_g:null}}));
+targetHistory=await historyState(targetOwner);
+assert.equal(datedFor(targetHistory,"energy_budget_kj",dateOffset(-1)),9012);
+assert.equal(datedFor(targetHistory,"energy_budget_kj",currentBrisbane),13500);
+assert.equal(datedFor(targetHistory,"fibre_target_g",currentBrisbane),null);
+assert.equal(targetHistory.protein_target_g,141);
+await body(fix({...targetCorrection,metric:"protein_target_g",from:dateOffset(-2),to:dateOffset(-1),value:133}));
+targetHistory=await historyState(targetOwner);
+assert.equal(targetHistory.protein_target_history.find(r=>r.effective_day===dateOffset(-2)).target_g,133);
+assert.equal(targetHistory.protein_target_history.find(r=>r.effective_day===currentBrisbane).target_g,141);
+assert.equal(targetHistory.protein_target_g,141);
+
+const privateChat="https://chatgpt.com/c/fce2e9a1-828c-4314-a700-bb5d0f51bb2c";
 await body(req("/api/food-chat",{method:"POST",user:null,body:{url:privateChat}}),401);
 await body(req("/api/food-chat",{method:"POST",origin:"https://outside.test",body:{url:privateChat}}),403);
 for(const url of ["https://chatgpt.com/share/public-thread","https://other.test/c/first-thread","https://someone@chatgpt.com/c/first-thread","https://chatgpt.com/","https://chatgpt.com/c/first%2fthread",42]){
@@ -214,7 +267,7 @@ assert.deepEqual(savedChat,{ok:true,food_chat_url:privateChat});
 assert.equal((await body(req("/api/state",{user:"private-chat-a"}))).settings.food_chat_url,privateChat);
 assert.equal((await body(req("/api/log",{user:"private-chat-a"}))).settings.food_chat_url,undefined);
 assert.equal((await body(req("/api/state",{user:"private-chat-b"}))).settings.food_chat_url,undefined);
-const privateChat2="https://chatgpt.com/g/g-example-name/c/00000000-0000-4000-8000-000000000002";
+const privateChat2="https://chatgpt.com/g/g-example-name/c/a0fa7110-dde1-46ff-8245-3c02a6597531";
 assert.equal((await body(req("/api/food-chat",{method:"POST",user:"private-chat-a",body:{url:privateChat2}}))).food_chat_url,privateChat2);
 await body(req("/api/food-chat",{method:"POST",user:"private-chat-a",body:{url:null}}));
 assert.equal((await body(req("/api/state",{user:"private-chat-a"}))).settings.food_chat_url,undefined);
@@ -240,10 +293,10 @@ assert.equal((await body(req("/api/state",{user:resetUser}))).settings.protein_t
 await body(req("/api/food",{method:"DELETE",user:resetUser,origin:API,body:{id:"same-id"}}));
 await body(req(deletePath,{method:"POST",user:resetUser,origin:API,body:{confirmation:"DELETE"}}));
 assert.deepEqual(await body(req("/api/state",{user:resetUser})),{settings:{protein_target_g:null},food:[],weights:[],complete:[]});
-for(const table of ["food_entries","weights","completed_days","user_settings","protein_target_history","personal_targets","food_chat_preferences"]){
+for(const table of ["food_entries","weights","completed_days","user_settings","protein_target_history","personal_targets","nutrition_target_history","food_chat_preferences"]){
  const count=sqlite.prepare("SELECT COUNT(*) AS n FROM "+table+" WHERE user_id=?");
  assert.equal(count.get(resetUser).n,0);
- assert.equal(count.get(otherUser).n,1);
+ assert.equal(count.get(otherUser).n,table==="nutrition_target_history"?2:1);
 }
 
 

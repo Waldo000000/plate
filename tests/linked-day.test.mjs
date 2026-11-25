@@ -62,6 +62,31 @@ test('nutrition keyboard and outside-plot dismissal retain the linked calendar d
  assert.match(html,/\.weight-callout\{min-width:0;width:max-content/);
 });
 
+test('Track record cancels only primary mouse focus, without consuming the date click or keyboard navigation',()=>{
+ const s=setup(),start=dateNum('2026-11-01'),end=dateNum('2026-11-20');
+ const f=s.frame(start,end),weight=s.frame(start,end);
+ s.api.wireLinkedChart(f,new El('div'),'nutrition',start,end,()=>({rows:[],points:[]}));
+ s.api.wireLinkedChart(weight,new El('div'),'weight',start,end);
+ assert.equal(f.svg.attrs.tabindex,'0');
+ assert.equal(weight.svg.events.mousedown,undefined);
+ f.svg.events.pointerdown({pointerType:'mouse'});
+ assert.ok(f.svg.classes.has('pointer-focus'));
+ const prevented=[];
+ for(const button of [1,2,0])f.svg.events.mousedown({button,preventDefault(){prevented.push(button)}});
+ assert.deepEqual(prevented,[0]);
+ assert.ok(!f.svg.classes.has('pointer-focus'),'unfocused mouse press must not hide the next Tab focus');
+ f.svg.ownerDocument={activeElement:f.svg};
+ f.svg.events.pointerdown({pointerType:'mouse'});
+ f.svg.events.mousedown({button:0,preventDefault(){}});
+ assert.ok(f.svg.classes.has('pointer-focus'),'mouse press on keyboard-focused chart hides the focus ring');
+ f.svg.events.click({detail:1,clientX:200,clientY:80,stopPropagation(){}});
+ assert.equal(s.picker.value,'2026-11-10');
+ assert.equal(s.api.getPopup(),'nutrition');
+ f.svg.events.keydown({key:'ArrowRight',preventDefault(){}});
+ assert.equal(s.picker.value,'2026-11-11');
+ assert.equal(s.api.getPopup(),'nutrition');
+ assert.ok(!f.svg.classes.has('pointer-focus'),'keyboard navigation shows the ring again');
+});
 test('chart selection compensates for the food list above changing height, in either direction',()=>{
  const s=setup(),y=[230,813,230];const anchor={getBoundingClientRect:()=>({top:y[s.renders]})};
  s.api.selectChartDay('2026-11-20','nutrition',anchor);
@@ -146,4 +171,54 @@ test('mid-log swipe caps scroll to keep a shorter food tray in view',()=>{
  trail={top:-95,bottom:-15,height:80};
  s.c.restoreDayScrollAnchor(snapshot);
  assert.deepEqual(s.scrolls,[[-95,'instant']]);
+});
+test('weight macro-panel lower plot selects the same calendar day and extends its selection band',()=>{
+ const s=setup(),start=dateNum('2026-11-01'),end=dateNum('2026-11-20'),f=s.frame(start,end),wrap=new El('div');
+ f.height=288;f.selectionBottom=256;
+ f.svg.getBoundingClientRect=()=>({left:0,top:50,width:400,height:288});
+ const painted=[];
+ s.api.wireLinkedChart(f,wrap,'weight',start,end,undefined,(_focus,day,px)=>painted.push([day,px]));
+ f.svg.events.click({clientX:f.x(dateNum('2026-11-12')),clientY:280,stopPropagation(){}});
+ assert.equal(s.picker.value,'2026-11-12');
+ assert.equal(painted.at(-1)[0],'2026-11-12');
+ assert.equal(f.svg.children[0].attrs.height,236);
+ assert.equal(s.api.getPopup(),null);
+ // The date labels below the strip remain outside the hit area.
+ f.svg.events.click({clientX:f.x(dateNum('2026-11-07')),clientY:330,stopPropagation(){}});
+ assert.equal(s.picker.value,'2026-11-12');
+ f.svg.events.keydown({key:'ArrowRight',preventDefault(){}});
+ assert.equal(painted.at(-1)[0],'2026-11-13');
+});
+test('one history range controls both dates, including the earliest real log in All',()=>{
+ const now=dateNum('2026-11-24'),controls=['14','30','all'].map(range=>({dataset:{range},setAttribute(_k,v){this.pressed=v}}));
+ const state={weights:[{day:'2026-11-19'},{day:'2026-11-30'}],food:[{day:'2026-11-15'}]};
+ const active={value:'2026-11-23'},calls=[],context={chartRange:'14',ready:true,state,toDay,dateNum,
+  startForRange:(range,end,earliest)=>range==='all'?earliest?dateNum(earliest):end:end-(Number(range)-1)*DAY,
+  document:{querySelectorAll:()=>controls},saveHistoryView(){},
+  captureDayScrollAnchor:e=>{calls.push(e);return {source:e}},
+  cancelDayNavigation:()=>calls.push('cancel'),draws:()=>calls.push('draw'),
+  restoreDayScrollAnchor:a=>calls.push(a?.source??null),
+ };
+ const from=html.indexOf('function sharedChartStart('),until=html.indexOf('function drawCurrentWeightChart(',from);
+ runInNewContext(html.slice(from,until)+';globalThis.api={setSharedChartRange,sharedChartStart}',context);
+ assert.equal(context.api.sharedChartStart(now),dateNum('2026-11-11'));
+ const weight=controls.find(b=>b.dataset.range==='all');
+ context.api.setSharedChartRange('all',weight);
+ assert.equal(context.api.sharedChartStart(now),dateNum('2026-11-15'));
+ assert.deepEqual(controls.filter(b=>b.pressed==='true').map(b=>b.dataset),[{range:'all'}]);
+ const nutrition=controls.find(b=>b.dataset.range==='30');
+ context.api.setSharedChartRange('30',nutrition);
+ assert.equal(context.api.sharedChartStart(now),dateNum('2026-10-26'));
+ assert.deepEqual(controls.filter(b=>b.pressed==='true').map(b=>b.dataset),[{range:'30'}]);
+ assert.deepEqual(calls,[weight,'cancel','draw',weight,nutrition,'cancel','draw',nutrition]);
+ assert.equal(active.value,'2026-11-23');
+});
+
+test('one History card and range follow Daily log; Macros and Targets precede the date range',()=>{
+ const main=html.slice(html.indexOf('<main id="plateMain"'),html.indexOf('<dialog class="nutrition-sheet settings-sheet" id="appSettings"'));
+ assert.ok(main.indexOf('id="dailyLog"')<main.indexOf('class="card shared-history-card"'));
+ assert.equal((main.match(/aria-label="Shared history date range"/g)??[]).length,1);
+ assert.equal((main.match(/data-range="/g)??[]).length,3);
+ assert.ok(main.indexOf('id="trackRecordTitle"')<main.indexOf('id="chart"'));
+ assert.match(main,/id="weightMacrosToggle"[^]*id="trackTargetsToggle"[^]*id="historyRange"/);
 });

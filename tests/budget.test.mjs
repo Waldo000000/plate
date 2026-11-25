@@ -1,6 +1,8 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import {runInNewContext} from 'node:vm';
 const h=readFileSync('index.html','utf8'),code=h.slice(h.indexOf('const NUTRITION_COLOURS='),h.indexOf("$('#openSettings').onclick"));
-const ctx={toKj:f=>f.kcal*4.184};runInNewContext(code+';globalThis.m=budgetModel;globalThis.d=budgetDial;',ctx);
+const brisbaneDay=(now=new Date())=>new Date(now.getTime()+36000000).toISOString().slice(0,10);
+const ctx={toKj:f=>f.kcal*4.184,state:{complete:[]},today:brisbaneDay,status(){}};
+runInNewContext(code+';globalThis.m=budgetModel;globalThis.d=budgetDial;globalThis.pace=budgetPace;globalThis.expected=expectedEnergyFraction;',ctx);
 const food=(energy,p,f)=>({kcal:energy/4.184,nutrition:{macros:{...(p===null?{}:{protein_g:p}),...(f===null?{}:{fibre_g:f})}}});
 test('budget and unknowns never conflate zeros and fractions',()=>{for(const f of [0,.2,null]){const m=ctx.m([food(500,6,f)],null,8500);assert.equal(m.reserve,0);assert.equal(m.fibre.known,f===null?0:1);assert.equal(m.fibre.grams,f??0)}});
 test('actual over independent from reserve, optional target, exact boundary',()=>{for(const e of [0,7395,8300,8500,8550,19000])for(const p of [0,72,137,null])for(const goal of [null,137]){const m=ctx.m([food(e,p,0)],goal,8500);assert.equal(m.over,Math.max(0,e-8500));assert.equal(m.reserve,goal===null||p===null?0:Math.max(0,goal-p)*17);assert.ok(Math.abs(m.macros.segments.reduce((n,s)=>n+s.kj,0)-e)<.51)}});
@@ -33,7 +35,7 @@ test('all four details use the food entries directly, preserving split groups an
  const items=[{description:'Chips',kcal:400/4.184,nutrition:{macros:{protein_g:0,fibre_g:2},groups:{vegetables:250,added_fats_oils:150}}},
   {description:'Lasagne',kcal:1000/4.184,nutrition:{macros:{protein_g:20},groups:{grains:300,protein:450,dairy:250}}},
   {description:'Egg',kcal:300/4.184,nutrition:{macros:{fibre_g:0},groups:{protein:300}}}];
- const m=ctx.m(items,135,8500);
+ const m={...ctx.m(items,135,8500),day:'2026-11-23'};
  const li=()=>elems.get('#nutritionItems').children;
  const values=row=>[(row.children[1].textContent??row.children[1].children[1].textContent),row.children[2].children[0].textContent];
  for(const [mode,title,expected] of [['protein','Protein',[['Lasagne','20 g'],['Chips','0 g'],['Egg','Not recorded']]],['fibre','Fibre',[['Chips','2 g'],['Egg','0 g'],['Lasagne','Not recorded']]],['energy','Energy',[['Lasagne','1000 kJ'],['Chips','400 kJ'],['Egg','300 kJ']]]]){
@@ -121,7 +123,7 @@ test('pointer dialog return hides only pointer outlines; keyboard interaction re
  const tile={dataset:{metric:'energy'},classList:{toggle(k,on){on?classes.add(k):classes.delete(k)},remove(k){classes.delete(k)}}};
  ctx.document={querySelectorAll:()=>[tile]};
  runInNewContext('globalThis.bindTile=bindNutritionTile;',ctx);
- ctx.bindTile(tile,[],ctx.m([],null,8500));
+ ctx.bindTile(tile,[],{...ctx.m([],null,8500),day:'2026-11-23'});
  tile.onclick({detail:1});assert.equal(classes.has('pointer-focus'),true);
  ctx.$('#nutritionSheet').onkeydown({key:'Escape'});assert.equal(classes.has('pointer-focus'),false);
  tile.onclick({detail:1});tile.onkeydown({key:'Tab'});assert.equal(classes.has('pointer-focus'),false);
@@ -215,4 +217,85 @@ test('macro legend preference is set synchronously and restored for both committ
  assert.match(h,/let macroLegendRepaint=\(\)=>\{\},macroLegendOpen=false/);
  assert.match(h,/macro-legend"'\+\(macroLegendOpen\?' open':''\)/);
  assert.match(h,/drawBreakdown\(items,next,dash,false\)/);
+});
+
+test('past days with food use their own full budget, while unlogged dates stay neutral',()=>{
+ const yesterday='2026-11-23',now=new Date('2026-11-24T03:30:00Z');
+ function pace(total,hasFood=true,budget=8500){return ctx.pace({total,budget},yesterday,hasFood,now)}
+ assert.equal(pace(5000).colour,'rgb(22,123,101)');
+ assert.equal(pace(8500).colour,'rgb(22,123,101)');
+ assert.equal(pace(8500).status,'Within budget');
+ assert.equal(pace(8925).colour,'rgb(180,145,20)');
+ assert.equal(pace(9775).colour,'rgb(194,100,30)');
+ assert.equal(pace(11050).colour,'rgb(174,58,45)');
+ assert.equal(pace(9775,false).colour,'#82908b');
+ assert.equal(pace(0,false).status,'No food logged');
+ assert.equal(pace(5000,true,null).status,'No energy budget');
+ assert.equal(pace(9000,true,11000).status,'Within budget');
+ assert.equal(pace(9000,true,8500).status,'Over budget');
+ const markup=ctx.d('energy','Budget left','0','kJ',0,false,'Budget used',false,pace(8500));
+ assert.match(markup,/aria-label="Budget left 0 kJ Budget used · Within budget"/);
+ assert.match(markup,/style="color:rgb\(22,123,101\)"/);
+ assert.match(markup,/stroke="currentColor" opacity="\.7"/);
+ assert.match(markup,/stroke-dasharray="0 100"/);
+});
+test('a front-loaded day still leaves about a third before dinner and finishes by 7:30 pm Brisbane',()=>{
+ const day='2026-11-24',budget=10000,total=8500;
+ const at=iso=>ctx.pace({budget,total},day,true,new Date(iso));
+ assert.equal(at('2026-11-24T07:00:00Z').allowance,10000*(2/3)); // 5 pm Brisbane
+ assert.equal(at('2026-11-24T07:00:00Z').status,'More than expected by now');
+ assert.equal(at('2026-11-24T09:30:00Z').allowance,10000); // 7:30 pm Brisbane
+ assert.equal(at('2026-11-24T09:30:00Z').status,'On track for now');
+ assert.equal(ctx.expected(60*9),.35);
+ assert.equal(ctx.expected(60*13),.61);
+ assert.equal(ctx.expected(60*17),2/3);
+ assert.equal(ctx.expected(60*19+29)>.99,true);
+ assert.equal(ctx.expected(60*19+29)<1,true);
+ assert.equal(ctx.expected(60*19+30),1);
+ assert.equal(ctx.expected(60*22),1);
+ assert.equal(ctx.pace({budget,total:0},day,false,new Date('2026-11-23T15:00:00Z')).status,'No food logged yet');
+ assert.equal(ctx.pace({budget,total:7500},day,true,new Date('2026-11-24T00:00:00Z')).allowance,3750);
+});
+test('Brisbane midnight changes a logged date to the full actual budget with no user action',()=>{
+ const day='2026-11-24',model={budget:8500,total:8400};
+ const before=ctx.pace(model,day,true,new Date('2026-11-24T13:59:00Z'));
+ const after=ctx.pace(model,day,true,new Date('2026-11-24T14:00:00Z'));
+ assert.equal(before.status,'On track for now');
+ assert.equal(after.status,'Within budget');
+ assert.equal(after.allowance,8500);
+ assert.equal(ctx.pace(model,day,false,new Date('2026-11-24T14:00:00Z')).colour,'#82908b');
+ assert.doesNotMatch(h,/toggleBudgetDayComplete|\/api\/complete/);
+});
+test('clock tick recolours the existing current ring, without re-rendering or rewriting its number',()=>{
+ const day='2026-11-24',forecast={colour:'rgb(22,123,101)',status:'On track for now'};
+ const selected={value:day};let label='Budget left 2500 kJ · More than expected by now',updates=0;
+ const ring={dataset:{budgetPace:'Budget left 2500 kJ'},style:{color:'orange'},getAttribute:()=>label,setAttribute:(key,value)=>{assert.equal(key,'aria-label');label=value;updates++}};
+ const dashboard={querySelector:()=>ring};
+ const env={
+  ready:true,document:{hidden:false},today:()=>day,state:{settings:{},complete:[]},
+  $:id=>id==='#day'?selected:dashboard,dayFoods:()=>[food(7500,null,null)],toKj:ctx.toKj,
+  nutritionTargetForDay:(metric,date)=>{assert.equal(metric,'energy_budget_kj');assert.equal(date,day);return 10000},
+  budgetPace:(m,date,hasFood)=>{assert.equal(m.total,7500);assert.equal(m.budget,10000);assert.equal(date,day);assert.equal(hasFood,true);return forecast},
+ };
+ const code=h.slice(h.indexOf('function refreshBudgetPace'),h.indexOf('setInterval(refreshBudgetPace'));
+ runInNewContext(code+';globalThis.tick=refreshBudgetPace',env);
+ env.tick();
+ assert.equal(label,'Budget left 2500 kJ · On track for now');
+ assert.equal(ring.style.color,forecast.colour);
+ env.tick();assert.equal(updates,1);
+ selected.value='2026-11-23';forecast.status='Unexpected';env.tick();assert.equal(updates,1);
+});
+test('energy detail speaks in expected remaining, with standard header alignment',()=>{
+ const day='2026-11-24';
+ const box={};
+ const env={$:()=>box,today:()=>day,showKj:n=>Math.round(n/4.184)+' kcal',budgetPace:(_model,d)=>d===day?{allowance:6000,status:'More than expected by now'}:{allowance:10000,status:'Within budget'}};
+ const source=h.slice(h.indexOf('function wireBudgetDayStatus'),h.indexOf('function openNutritionSheet'));
+ runInNewContext(source+';globalThis.wire=wireBudgetDayStatus',env);
+ env.wire('energy',[{}],{day,budget:10000});
+ assert.equal(box.textContent,'Usually about 956 kcal left by now.');
+ assert.equal(box.hidden,false);
+ env.wire('energy',[{}],{day:'2026-11-23',budget:10000});assert.equal(box.textContent,'Within budget');
+ env.wire('fibre',[{}],{day,budget:10000});assert.equal(box.hidden,true);assert.equal(box.textContent,'');
+ assert.match(h,/<header><div><h2 id="nutritionTitle"><\/h2><p id="nutritionTotal"><\/p><p id="budgetPaceExplanation" hidden><\/p><\/div>/);
+ assert.match(h,/showKj\(model.over\)\+' over budget · '/);
 });

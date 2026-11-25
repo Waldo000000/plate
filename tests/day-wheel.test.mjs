@@ -33,7 +33,7 @@ test('line/page deltas normalized; today ceiling consumes gesture without moving
 });
 test('wheel registration scoped to day card and two chart wrappers',()=>{
  assert.match(html,/wireDayWheel\(\$\('#budgetDashboard'\).parentElement\)/);
- assert.match(html,/wireDayWheel\(\$\('#chart'\)\)/);assert.match(html,/wireDayWheel\(\$\('#energyChart'\)\)/);
+ assert.match(html,/wireDayWheel\(\$\('#chart'\)\)/);assert.doesNotMatch(html,/wireDayWheel\(\$\('#energyChart'\)\)/);
  assert.match(html,/surface.addEventListener\('wheel',[^\n]+passive:false/);
 });
 

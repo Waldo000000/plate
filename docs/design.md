@@ -10,11 +10,13 @@ The **demo** replaces this external handoff with a canned fictional draft, but u
 
 The macro bar reports energy consumed. A separate visual allowance helps plan for the remaining protein target; it's not a reservation inside the database. The daily plate groups food, while the three rings answer how much protein and fibre are logged and how much of the energy budget is left. Food-group slices represent allocated **energy**, not grams or serving sizes. Expanding food or opening a nutrient detail explains the aggregates without adding clutter to the main view.
 
-Nutrition history normalises each measurement against its own budget or target so different units can share a chart. Weight remains in kilograms. Selecting a day in a chart also selects that day's food log. A missing weigh-in stays missing in storage; a nearby chart estimate is marked as approximate instead of logged as an actual measurement.
+Track Record uses a shared date axis for weight, stacked macro energy and targets. Weight is in kilograms; the energy bars use the selected unit. The dashed line on the bars shows the budget in effect on each day. Energy, protein and fibre trend percentages use their respective dated targets when available.
+
+Macros and Targets can be turned on independently, and the browser remembers the view and date range after reloading. Tapping a plot shows the selected day's details for that section. Tapping any tile selects its whole date column and shows all three targets. Tapping a nutrient label hides or shows just that trend line, not its strip. Missing data stays missing. Today's bars and tiles are muted to show that the day is still in progress.
 
 ## The everyday screens
 
-All four screens use fictional data from the local demo. Use `?shot=next-meal` for the midday example, `?shot=nutrition` for the fortnight, `?shot=high-energy` and pick five days ago for the over-budget day, or `?shot=weight` and select **All** for the bulk and cut.
+The screenshots use fictional data from the local demo. Open `/capture.html?shot=next-meal` for the midday example or `/capture.html?shot=high-energy` for the energy-sorted food log. The three Track Record views, `track-bulk`, `track-cut` and `track-fibre`, use the same log with different end dates and chart layers.
 
 ### Before deciding what to eat
 
@@ -24,15 +26,15 @@ All four screens use fictional data from the local demo. Use `?shot=next-meal` f
 
 ![Expanded food log, with mini bars showing the energy and macro composition of each item](images/day.jpg)
 
-### Across a fortnight
+### From bulk to cut
 
-![Energy, protein and fibre against a clear 100% reference](images/targets.jpg)
+![Weight and daily energy at the end of the bulk](images/track-bulk.jpg)
 
-Track record uses black for energy and the same garnet as the macro bars for protein. The legend toggles each series independently. A band marks the selected day. Today’s logged totals so far appear as hollow circles, separate from the historical lines. The lines connect logged observations across gaps but don’t create entries for unlogged dates. Protein uses the target in effect on each day; energy and fibre are shown against current settings.
+![Weight and daily energy a few weeks into the cut](images/track-cut.jpg)
 
-### Across a bulk and cut
+![Weight and nutrition targets later in the same cut, with fibre tiles turning green](images/targets.jpg)
 
-![Fictional weight record with a completed bulk and a cut in progress](images/weight.jpg)
+The tile colours show how each day went against its targets. The lines show by how much. Today’s target values appear as hollow dots rather than a line from the last completed day. Missing dates have faint tiles, and the trend lines connect logged observations without adding data for those dates.
 
 After onboarding, an inline tip appears the first time a user opens a day with at least two logged foods. It explains how to read the little bars and sort entries by tapping their energy or time. It doesn’t add another step to the first-meal flow.
 
@@ -57,5 +59,5 @@ Portfolio demo: same UI → local fixture and in-memory mock API
 
 - **UI:** plain HTML, CSS and JavaScript. Inline SVG draws charts and the plate; both share the app's selected date. The CSV parser lives in `weight-import.js`.
 - **Worker:** `backend.js` validates requests and exposes same-origin browser routes and Sites MCP tools. The production identity header must be supplied by trusted hosting infrastructure; don't expose the Worker behind an endpoint that lets browsers supply their own identity header.
-- **Storage:** SQL migrations define dated food and weight records, settings and effective-dated protein targets. The UI can display energy in kJ or kcal; the legacy storage field uses kcal. Food group allocations and CSV exports use kJ. Nutrient data and food-group energy allocations are different dimensions and can be absent independently.
-- **Build and tests:** `build.mjs` packages the Worker, inlines the CSV parser and computes content-security-policy hashes. The source snapshot has no deployment credentials, managed project configuration, user logs or production starter-chat link. The local demo does not exercise managed sign-in or D1. Its in-memory settings reset on reload.
+- **Storage:** SQL migrations define dated food and weight records, settings and effective-dated nutrition targets. The UI can display energy in kJ or kcal; the legacy storage field uses kcal. Food group allocations and CSV exports use kJ. Nutrient data and food-group energy allocations are different dimensions and can be absent independently.
+- **Build and tests:** `build.mjs` packages the Worker, inlines the CSV parser and computes content-security-policy hashes. The source snapshot has no deployment credentials, managed project configuration, user logs or production starter-chat link. The local demo does not exercise managed sign-in or D1. The hosted app includes a standalone web-app manifest and icons; the local demo is for trying the interface. Its sample data and diary edits reset on reload. Chart view preferences can persist in the browser.

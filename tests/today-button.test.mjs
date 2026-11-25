@@ -42,8 +42,8 @@ test('native Today action sits by the date and never changes chart ranges',()=>{
 });
 
 test('weight chart shows an exact reading, a labelled nearby estimate, or blank when no nearby data',()=>{
- const s=setup();s.c.state.weights=[{day:'2026-11-19',kg:86.4}];s.c.updateTodayButton();assert.equal(s.weight.textContent,'86.4 kg');
- s.picker.value='2026-11-18';s.c.updateTodayButton();assert.equal(s.weight.textContent,'≈ 86.4 kg');
- s.picker.value='2026-10-01';s.c.updateTodayButton();assert.equal(s.weight.textContent,'');
- assert.match(html,/<div class="sectionHead progress-head">[\s\S]*?id="selectedWeight"[\s\S]*?aria-label="Weight chart range"/);
+ const s=setup();s.c.state.weights=[{day:'2026-11-19',kg:86.4}];s.c.updateTodayButton();assert.equal(s.weight.textContent,'Selected day weight: 86.4 kg');
+ s.picker.value='2026-11-18';s.c.updateTodayButton();assert.equal(s.weight.textContent,'Estimated selected day weight: 86.4 kg');
+ s.picker.value='2026-10-01';s.c.updateTodayButton();assert.equal(s.weight.textContent,'No reliable estimate for the selected day');
+ assert.match(html,/<span id="selectedWeight" class="track-tile-sr"/);
 });

@@ -104,15 +104,23 @@ async function readState(db, user, {from, to} = {}) {
   const low = from === undefined ? "1900-01-01" : validatedDay(from);
   const high = to === undefined ? "2199-12-31" : validatedDay(to);
   if (low > high) fail("The start date must not be after the end date.");
-  const [foods, weights, completed, settings, history, targets] = await db.batch([
+  const [foods, weights, completed, settings, history, targets, nutritionHistory] = await db.batch([
     db.prepare("SELECT id, day, description, kcal, created_at, consumed_at, nutrition_json FROM food_entries WHERE user_id=? AND deleted=0 AND day BETWEEN ? AND ? ORDER BY day, COALESCE(consumed_at, created_at), id").bind(user, low, high),
     db.prepare("SELECT day, kg FROM weights WHERE user_id=? AND day BETWEEN ? AND ? ORDER BY day").bind(user, low, high),
     db.prepare("SELECT day FROM completed_days WHERE user_id=? AND day BETWEEN ? AND ? ORDER BY day").bind(user, low, high),
     db.prepare("SELECT protein_target_g FROM user_settings WHERE user_id=?").bind(user),
     db.prepare("SELECT effective_day, target_g FROM protein_target_history WHERE user_id=? AND effective_day<=? ORDER BY effective_day").bind(user, high),
     db.prepare("SELECT energy_budget_kj, fibre_target_g, weight_goal_kg FROM personal_targets WHERE user_id=?").bind(user),
+    db.prepare("SELECT metric,effective_day,target_value FROM nutrition_target_history WHERE user_id=? ORDER BY effective_day,metric").bind(user),
   ]);
-  return {settings: {...(settings.results[0] ?? {protein_target_g:null}), ...targets.results[0], ...(history.results.length?{protein_target_history:history.results}:{})}, food: foods.results.map(foodRecord), weights: weights.results, complete: completed.results.map(row => row.day)};
+  const datedTargets=nutritionHistory.results;
+  // Undated migrated values keep their legacy display only until that metric
+  // establishes a timeline. Do not reuse a newer value before its first date.
+  const legacyTargets=Object.fromEntries(nutritionTargetMetrics
+    .filter(metric=>targets.results[0]?.[metric]!=null&&!datedTargets.some(r=>r.metric===metric))
+    .map(metric=>[metric,targets.results[0][metric]]));
+  const visibleDates=datedTargets.filter(r=>r.effective_day<=high);
+  return {settings: {...(settings.results[0] ?? {protein_target_g:null}), ...targets.results[0], ...(history.results.length?{protein_target_history:history.results}:{}), ...(visibleDates.length?{nutrition_target_history:visibleDates}:{}), ...(Object.keys(legacyTargets).length?{nutrition_target_legacy:legacyTargets}:{})}, food: foods.results.map(foodRecord), weights: weights.results, complete: completed.results.map(row => row.day)};
 }
 async function saveSettings(db, user, data) {
   const value = data.protein_target_g;
@@ -120,19 +128,69 @@ async function saveSettings(db, user, data) {
       (value !== null && (typeof value !== "number" || !Number.isFinite(value) || value < 1 || value > 500))) {
     fail("Enter a protein target from 1 to 500 grams, or null to clear it.");
   }
-  // The pre-history version had one live target and did not capture its exact
-  // time. The tracking project began on 19 November 2026 Brisbane time.
   await db.batch(proteinWrites(db,user,value));
   return {ok:true, settings:{protein_target_g:value}};
 }
+function seedLegacyProteinTarget(db,user){
+  return db.prepare("INSERT OR IGNORE INTO protein_target_history (user_id,effective_day,target_g) SELECT user_id,'1900-01-01',protein_target_g FROM user_settings WHERE user_id=? AND protein_target_g IS NOT NULL AND NOT EXISTS (SELECT 1 FROM protein_target_history WHERE user_id=?)").bind(user,user);
+}
 function proteinWrites(db,user,value){
   return [
-    db.prepare("INSERT OR IGNORE INTO protein_target_history (user_id,effective_day,target_g) SELECT user_id,'2026-11-19',protein_target_g FROM user_settings WHERE user_id=? AND protein_target_g IS NOT NULL AND NOT EXISTS (SELECT 1 FROM protein_target_history WHERE user_id=?)").bind(user,user),
+    seedLegacyProteinTarget(db,user),
     db.prepare("INSERT INTO protein_target_history (user_id,effective_day,target_g) SELECT ?,date('now','+10 hours'),? WHERE ? IS NOT (SELECT protein_target_g FROM user_settings WHERE user_id=?) ON CONFLICT(user_id,effective_day) DO UPDATE SET target_g=excluded.target_g").bind(user,value,value,user),
     db.prepare("INSERT INTO user_settings (user_id,protein_target_g) VALUES (?,?) ON CONFLICT(user_id) DO UPDATE SET protein_target_g=excluded.protein_target_g").bind(user, value),
   ];
 }
 const preferenceLimits={energy_budget_kj:[1,50000],fibre_target_g:[1,150],weight_goal_kg:[20,800]};
+const nutritionTargetMetrics=["energy_budget_kj","fibre_target_g"];
+// An undated legacy value is the baseline across the supported range until a dated edit.
+const nutritionHistoryStart="1900-01-01";
+const localDay=()=>new Date(Date.now()+36000000).toISOString().slice(0,10);
+
+function seedLegacyNutritionTarget(db,user,metric,onlyIfChanged=false,value=null) {
+  // The column name comes from the fixed metric allowlist.
+  return db.prepare(`INSERT INTO nutrition_target_history (user_id,metric,effective_day,target_value)
+    SELECT user_id,?,?,${metric} FROM personal_targets WHERE user_id=? AND ${metric} IS NOT NULL
+    AND NOT EXISTS (SELECT 1 FROM nutrition_target_history WHERE user_id=? AND metric=? AND effective_day>=?)
+    AND (?=0 OR ${metric} IS NOT ?)`)
+    .bind(metric,nutritionHistoryStart,user,user,metric,nutritionHistoryStart,Number(onlyIfChanged),value);
+}
+function nutritionTargetWrite(db,user,metric,day,value) {
+  return db.prepare("INSERT INTO nutrition_target_history (user_id,metric,effective_day,target_value) VALUES (?,?,?,?) ON CONFLICT(user_id,metric,effective_day) DO UPDATE SET target_value=excluded.target_value")
+    .bind(user,metric,day,value);
+}
+async function saveNutritionTargetCorrection(db,user,data) {
+  const {metric,value,from,to}=data;
+  const protein=metric==="protein_target_g";
+  if(Object.keys(data).length!==4||(!protein&&!nutritionTargetMetrics.includes(metric)))fail("Choose an energy, protein or fibre target.");
+  const [min,max]=protein?[1,500]:preferenceLimits[metric];
+  if(value!==null&&(!Number.isFinite(value)||value<min||value>max))fail("The target is out of range.");
+  const first=validatedDay(from),last=validatedDay(to);
+  const span=(Date.parse(last)-Date.parse(first))/86400000;
+  if(span<0||span>365||last>=localDay())fail("Choose up to 366 past days, ending before today.");
+  const next=new Date(Date.parse(last)+86400000).toISOString().slice(0,10);
+  if(protein){
+    await db.batch([
+      seedLegacyProteinTarget(db,user),
+      db.prepare(`INSERT OR IGNORE INTO protein_target_history (user_id,effective_day,target_g) VALUES (?,?,(
+        SELECT target_g FROM protein_target_history WHERE user_id=? AND effective_day<=? ORDER BY effective_day DESC LIMIT 1))`)
+        .bind(user,next,user,next),
+      db.prepare("DELETE FROM protein_target_history WHERE user_id=? AND effective_day BETWEEN ? AND ?").bind(user,first,last),
+      db.prepare("INSERT INTO protein_target_history (user_id,effective_day,target_g) VALUES (?,?,?)").bind(user,first,value),
+    ]);
+    return {ok:true};
+  }
+  await db.batch([
+    seedLegacyNutritionTarget(db,user,metric),
+    // Restore the previously applicable value just outside the edit, including null.
+    db.prepare(`INSERT OR IGNORE INTO nutrition_target_history (user_id,metric,effective_day,target_value) VALUES (?,?,?,(
+      SELECT target_value FROM nutrition_target_history WHERE user_id=? AND metric=? AND effective_day<=? ORDER BY effective_day DESC LIMIT 1))`)
+      .bind(user,metric,next,user,metric,next),
+    db.prepare("DELETE FROM nutrition_target_history WHERE user_id=? AND metric=? AND effective_day BETWEEN ? AND ?").bind(user,metric,first,last),
+    nutritionTargetWrite(db,user,metric,first,value),
+  ]);
+  return {ok:true};
+}
 async function savePreferences(db,user,data){
   const keys=Object.keys(preferenceLimits);
   const hasProtein=Object.hasOwn(data,"protein_target_g"), protein=data.protein_target_g;
@@ -144,16 +202,24 @@ async function savePreferences(db,user,data){
   for(const key of keys){const v=data[key],[min,max]=preferenceLimits[key];if(v!==null&&(!Number.isFinite(v)||v<min||v>max))fail("One or more targets are out of range.");}
   const prefs=db.prepare("INSERT INTO personal_targets (user_id,energy_budget_kj,fibre_target_g,weight_goal_kg) VALUES (?,?,?,?) ON CONFLICT(user_id) DO UPDATE SET energy_budget_kj=excluded.energy_budget_kj,fibre_target_g=excluded.fibre_target_g,weight_goal_kg=excluded.weight_goal_kg")
     .bind(user,...keys.map(k=>data[k]));
-  const writes=[prefs];
+  const day=localDay();
+  const writes=nutritionTargetMetrics.flatMap(metric=>[
+    seedLegacyNutritionTarget(db,user,metric,true,data[metric]),
+    db.prepare(`INSERT INTO nutrition_target_history (user_id,metric,effective_day,target_value)
+      SELECT ?,?,?,? WHERE ? IS NOT (SELECT ${metric} FROM personal_targets WHERE user_id=?)
+      ON CONFLICT(user_id,metric,effective_day) DO UPDATE SET target_value=excluded.target_value`)
+      .bind(user,metric,day,data[metric],data[metric],user),
+  ]);
+  writes.push(prefs);
   if(hasProtein)writes.push(...proteinWrites(db,user,protein));
   if(hasInitialWeight)writes.push(db.prepare("INSERT OR IGNORE INTO weights (user_id,day,kg) SELECT ?,date('now','+10 hours'),? WHERE NOT EXISTS (SELECT 1 FROM weights WHERE user_id=?)")
     .bind(user,Math.round(initialWeight*1000)/1000,user));
-  if(writes.length>1)await db.batch(writes);else await prefs.run();
+  await db.batch(writes);
   return {ok:true};
 }
 async function deletePlateAccount(db,user,data){
   if(Object.keys(data).length!==1||data.confirmation!=="DELETE")fail("Type DELETE to confirm.");
-  const tables=["food_entries","weights","completed_days","user_settings","protein_target_history","personal_targets","food_chat_preferences","display_preferences","food_log_tip_seen"];
+  const tables=["food_entries","weights","completed_days","user_settings","protein_target_history","personal_targets","nutrition_target_history","food_chat_preferences","display_preferences","food_log_tip_seen"];
   await db.batch(tables.map(table=>db.prepare("DELETE FROM "+table+" WHERE user_id=?").bind(user)));
   return {ok:true};
 }
@@ -385,6 +451,9 @@ export async function handleData(request, env) {
         case "/api/food-chat": return json(await saveFoodChat(env.DB, user, await input(request)));
         case "/api/display-preferences": return json(await saveDisplayPreferences(env.DB, user, await input(request)));
         case "/api/food-log-tip": return json(await claimFoodLogTip(env.DB, user, await input(request)));
+        case "/api/target-history":
+          if(request.headers.get("origin")!==url.origin)fail("Only this dashboard may change target history.",403);
+          return json(await saveNutritionTargetCorrection(env.DB,user,await input(request)));
         case "/api/preferences": return json(await savePreferences(env.DB, user, await input(request)));
         case "/api/settings": return json(await saveSettings(env.DB, user, await input(request)));
         case "/api/food": return json(await logFood(env.DB, user, await input(request)));

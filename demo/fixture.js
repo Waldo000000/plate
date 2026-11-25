@@ -4,8 +4,13 @@
   const dayMs = 86_400_000;
   const date = new Intl.DateTimeFormat('en-AU', {timeZone:'Australia/Brisbane',year:'numeric',month:'2-digit',day:'2-digit'});
   const parts = Object.fromEntries(date.formatToParts(new Date()).map(({type,value})=>[type,value]));
-  const latest = [parts.year,parts.month,parts.day].join('-');
-  const dayAt = offset => new Date(Date.parse(latest+'T00:00:00Z') + offset * dayMs).toISOString().slice(0,10);
+  const shot=new URLSearchParams(location.search).get('shot');
+  const storyCutoffs=new Map([['track-bulk',-31],['track-cut',-10],['track-fibre',0],['track',0]]);
+  const isTrack=storyCutoffs.has(shot);
+  const cutoff=storyCutoffs.get(shot)??0;
+  const seriesEnd=isTrack?'2026-11-25':[parts.year,parts.month,parts.day].join('-');
+  const dayAt = offset => new Date(Date.parse(seriesEnd+'T00:00:00Z') + offset * dayMs).toISOString().slice(0,10);
+  const latest=dayAt(cutoff);
   // These dishes, portions, goals and time series are invented for this demo.
   const meals = [
     {description:'Overnight oats • oats, pear and yoghurt',kj:1590,time:'07:35',macros:{protein_g:18,carbs_g:50,fat_g:10,fibre_g:9},groups:{grains:800,fruit:320,dairy:470}},
@@ -26,7 +31,14 @@
     {description:'Tofu soba bowl • estimated one medium bowl',kj:1520,time:'12:25',macros:{protein_g:19,carbs_g:40,fat_g:10,fibre_g:6},groups:{protein:480,grains:710,vegetables:230,added_fats_oils:100}},
     {description:'Mandarin • estimated one medium',kj:160,time:'12:25',macros:{protein_g:0.6,carbs_g:8,fat_g:0.2,fibre_g:1.5},groups:{fruit:160}},
   ];
-  const shot=new URLSearchParams(location.search).get('shot');
+  if(shot==='next-meal'||isTrack){
+    const Clock=window.Date;
+    const shotTime=Clock.parse(latest+'T16:45:00+10:00');
+    window.Date=class DemoClock extends Clock {
+      constructor(...args){super(...(args.length?args:[shotTime]))}
+      static now(){return shotTime}
+    };
+  }
   const onboarding = new URLSearchParams(location.search).get('onboarding') === '1';
   if(onboarding){
     example.splice(0,example.length,{description:'Tofu soba bowl • fictional serving',kj:2092,macros:{protein_g:24,carbs_g:62,fat_g:16,fibre_g:7},groups:{protein:570,grains:1020,vegetables:282,added_fats_oils:220}});
@@ -66,12 +78,52 @@
     [111,96,54],[108,104,60],null,[110,97,62],[105,104,57],
     [108,99,67],[102,105,70],[101,96,74],[104,97,78],
   ];
+  // Fictional 72-day bulk → cut. Recorded weigh-ins, not historical goal lines.
+  const trackWeights=[
+    [-71,85.6],[-69,86.3],[-67,86.2],[-65,86.7],[-62,86.2],[-59,86.0],
+    [-57,86.6],[-55,87.5],[-53,88.0],[-50,87.1],[-48,87.5],[-46,87.3],
+    [-43,88.6],[-40,89.0],[-38,88.6],[-36,89.1],[-34,88.6],[-32,89.3],
+    [-31,90.0],[-29,89.8],[-27,88.9],[-25,88.4],[-22,88.1],[-20,88.9],
+    [-18,88.7],[-16,88.3],[-14,88.4],[-13,87.5],[-11,86.9],[-9,87.2],
+    [-8,87.7],[-6,87.3],[-4,86.3],[-2,86.7],[0,86.4]
+  ];
+  const trackCut=[
+    [117,94,52],[110,102,55],[116,99,60],[108,105,55],[113,96,58],
+    [105,103,66],[110,100,61],[106,91,64],[109,107,58],[104,98,72],
+    [113,101,68],[107,95,69],[103,104,63],[109,100,77],null,
+    [104,96,75],[112,105,71],[102,101,82],[106,96,76],[104,108,79],
+    [101,101,74],[110,94,86],[105,103,81],[103,98,89],[100,106,79],
+    [104,97,87],null,[99,102,95],[103,104,87],[100,98,93]
+  ];
+  const trackBigDays=new Map([
+    [-54,{description:'Pizza and garlic bread • extra shared slices',kj:3250,time:'20:00',macros:{protein_g:21,carbs_g:88,fat_g:34,fibre_g:3},groups:{grains:1850,dairy:550,discretionary:850}}],
+    [-12,{description:'Sticky date pudding with ice cream • large restaurant serve',kj:3400,time:'20:15',macros:{protein_g:8,carbs_g:112,fat_g:35,fibre_g:2},groups:{dairy:670,discretionary:2730}}],
+  ]);
+  const trackPearDays=new Set([-18,-9,-8,-7,-6,-5,-3,-2,-1]);
+  const trackPear={description:'Pear • one large',kj:450,time:'15:40',macros:{protein_g:0.7,carbs_g:22,fat_g:0.3,fibre_g:6},groups:{fruit:450}};
+  const trackWeightByDay=new Map(trackWeights);
+  const dailyVariance=n=>{
+    const mixed=Math.imul(n+271,0x45d9f3b);
+    return ((mixed^(mixed>>>16))>>>0)%100;
+  };
+  const trackBulk=t=>{
+    if([-63,-48,-37].includes(t))return null;
+    return [92+dailyVariance(t*3)%18,91+dailyVariance(t*5)%17,47+dailyVariance(t*7)%24];
+  };
   const mealEnergy=meals.reduce((n,dish)=>n+dish.kj,0);
   const mealProtein=meals.reduce((n,dish)=>n+dish.macros.protein_g,0);
   const mealFibre=meals.reduce((n,dish)=>n+dish.macros.fibre_g,0);
-  if(shot==='weight')log.settings.weight_goal_kg=85;
+  if(shot==='weight'||isTrack)log.settings.weight_goal_kg=cutoff===-31?90:85;
   if(shot==='high-energy')log.settings.food_log_tip_seen=true;
-  for(let t=shot==='weight'?-145:-34;t<=0;t++) {
+  if(isTrack){
+    log.settings.energy_budget_kj=cutoff<-30?10500:7800;
+    log.settings.nutrition_target_history=[
+      {metric:'energy_budget_kj',effective_day:dayAt(-71),target_value:10500},
+      {metric:'energy_budget_kj',effective_day:dayAt(-30),target_value:7800},
+      {metric:'fibre_target_g',effective_day:dayAt(-71),target_value:29}
+    ].filter(row=>row.effective_day<=latest).sort((a,b)=>a.effective_day.localeCompare(b.effective_day));
+  }else log.settings.nutrition_target_legacy={energy_budget_kj:log.settings.energy_budget_kj,fibre_target_g:log.settings.fibre_target_g};
+  for(let t=shot==='weight'?-145:isTrack?-71:-34;t<=cutoff;t++) {
     const day=dayAt(t),i=t+34;
     if (shot==='weight') {
       // Uneven fictional gaining and cut phases with pauses, daily variation and missing weigh-ins.
@@ -79,10 +131,28 @@
       if(t===0||d===0||(d%7!==6&&(d*17+3)%19<13&&!(d>=43&&d<=47)&&!(d>=94&&d<=98))){
         log.weights.push({day,kg:fictionalWeight(d)});
       }
+    } else if(isTrack){
+      if(trackWeightByDay.has(t))log.weights.push({day,kg:trackWeightByDay.get(t)});
     } else if(i%8!==3 || t===0) log.weights.push({day,kg:Math.round((70.9-i*.08+Math.sin(i*1.35)*.29+Math.cos(i*.52)*.15)*10)/10});
-    if(t<-13 || t===-6) continue;
+    if(!isTrack&&(t<-13||t===-6)) continue;
     if(shot==='high-energy'&&t===-5){
       for(const dish of overBudgetMeals)log.food.push(food(dish,day,1));
+      log.complete.push(day);
+      continue;
+    }
+    if(isTrack&&t<0){
+      const point=t<-30?trackBulk(t):trackCut[t+30];
+      if(!point)continue;
+      const [budgetPct,proteinPct,fibrePct]=point,budget=t<-30?10500:7800;
+      for(const dish of meals){
+        const item=food(dish,day,budgetPct*budget/(100*mealEnergy));
+        item.nutrition.macros.protein_g=Math.round(dish.macros.protein_g*proteinPct*112/(10*mealProtein))/10;
+        item.nutrition.macros.fibre_g=Math.round(dish.macros.fibre_g*fibrePct*29/(10*mealFibre))/10;
+        log.food.push(item);
+      }
+      const extra=trackBigDays.get(t);
+      if(extra)log.food.push(food(extra,day,1));
+      if(trackPearDays.has(t))log.food.push(food(trackPear,day,1));
       log.complete.push(day);
       continue;
     }
@@ -102,7 +172,7 @@
     meals.forEach((dish,m)=>{
       // Vary the nutrition series independently, not only total serving size.
       if(t!==0 && ((i+m*3)%9===0 || (m===3 && i%3===1))) return;
-      if(shot==='next-meal'&&t===0&&m>2)return;
+      if((shot==='next-meal'||isTrack)&&t===0&&m>2)return;
       const scale=t===0 ? 1 : 0.9 + .3*(1+Math.sin(i*1.72+m*.82));
       log.food.push(food(dish,day,scale));
     });

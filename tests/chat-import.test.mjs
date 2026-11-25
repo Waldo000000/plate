@@ -5,7 +5,7 @@ import {runInNewContext} from 'node:vm';
 const html=readFileSync('index.html','utf8');
 const script=html.slice(html.indexOf('const CHAT_IMPORT_LIMIT='),html.indexOf('function make(tag,'));
 function setup(){
- const nodes={},calls=[];let id=0,reloads=0,failId=null,trayOpen=false;
+ const nodes={},calls=[];let id=0,reloads=0,failId=null,trayOpen=false,refreshHook;
  const n=(sel)=>nodes[sel]??={value:'',children:[],focus(){},close(){this.open=false},scrollIntoView(){this.scrolled=true},closest(){return false},reportValidity:()=>true,replaceChildren(){this.children=[]},append(...items){this.children.push(...items)}};
  n('#day').value='2026-11-22';n('#chatImportPreview').hidden=true;
  const location={hash:'',origin:'https://plate.example',pathname:'/',search:'?test=1'};
@@ -17,9 +17,9 @@ function setup(){
  make:(tag,text)=>({...n(tag+'-'+id+Math.random()),tag,textContent:text}),
  status(message,error,sel){n(sel).textContent=message;},btnState(){context.refreshButtons()},
  async api(path,data){calls.push([path,data]);if(data.id===failId){failId=null;throw Error('lost request');}if(path==='/api/food-chat')return {ok:true,food_chat_url:data.url};},
- async refresh(){reloads++},revealSavedFood(draft){trayOpen=true;n('#foodListCard').scrolled=true;n('#foodListCard').firstMeal=draft.firstMeal},consumedAtOnDay(day,time){return day+'T'+time+':00+10:00'}};
+ async refresh(){reloads++;await refreshHook?.()},revealSavedFood(draft){trayOpen=true;n('#foodListCard').scrolled=true;n('#foodListCard').firstMeal=draft.firstMeal},consumedAtOnDay(day,time){return day+'T'+time+':00+10:00'}};
  runInNewContext(script+';globalThis.parse=parseChatImport;globalThis.refreshButtons=chatImportButtons;globalThis.handleLink=handleFoodImportLink;globalThis.prompt=foodChatPrompt;',context);
- return {context,n,calls,get reloads(){return reloads},get trayOpen(){return trayOpen},fail(key){failId=key}};
+ return {context,n,calls,get reloads(){return reloads},get trayOpen(){return trayOpen},fail(key){failId=key},onRefresh(hook){refreshHook=hook}};
 }
 const coffee={description:'Coffee',kj:540,time:'14:00',macros:{protein_g:7,fibre_g:0},groups:{dairy:540}};
 test('strict ChatGPT JSON accepts plain/fenced entries and refuses account, date, invalid numbers or unknown fields',()=>{
@@ -53,7 +53,7 @@ test('changing the date or JSON invalidates the confirmation',async()=>{
 
 
 test('shared starter is the first action; imported links wait for auth and preview before save',async()=>{
- assert.match(html,/<button [^>]*id="plateStarter"[^>]*>Log food in ChatGPT<\/button>/);
+ assert.match(html,/<section data-chat-step="starter">[^]*?href="https:\/\/chatgpt.com\/"[^]*?Log food in ChatGPT/);
  assert.doesNotMatch(html,/id="returnedFoodChatUrl"|id="openFoodChat"/);
  const s=setup(),{context:c}=s;
  c.location.hash='#import='+encodeURIComponent(JSON.stringify([coffee]));
@@ -71,6 +71,34 @@ test('shared starter is the first action; imported links wait for auth and previ
 
 test('starter uses one aligned primary action with no duplicate hint',()=>{
  const starter=html.match(/<section data-chat-step="starter">([^]*?)<\/section>/)?.[1];
- assert.match(starter,/^<button[^>]*>Log food in ChatGPT<\/button>$/);
+ assert.match(starter,/^<a[^>]*>Log food in ChatGPT<\/a>$/);
  assert.match(html,/\.chat-primary\{display:flex;width:100%;align-items:center;justify-content:center/);
+});
+
+test('the import review remains visible through refresh and closes without exposing the starter',async()=>{
+ const s=setup();
+ s.context.location.hash='#import='+encodeURIComponent(JSON.stringify([coffee]));
+ s.context.handleLink();
+ let resume,entered;
+ const updating=new Promise(resolve=>{entered=resolve});
+ s.onRefresh(()=>new Promise(resolve=>{resume=resolve;entered()}));
+ const saving=s.n('#chatImportSave').onclick();
+ await updating;
+ assert.equal(s.n('#logSheet').open,true);
+ assert.equal(s.n('#chatImportPreview').hidden,false,'the starter must not flash during refresh');
+ assert.equal(s.n('#closeLogSheet').disabled,true);
+ resume();await saving;
+ assert.equal(s.n('#logSheet').open,false);
+ assert.equal(s.n('#chatImportPreview').hidden,true);
+ assert.equal(s.trayOpen,true);
+});
+test('a failed refresh after posting leaves the review and recovery message visible without resending',async()=>{
+ const s=setup();s.context.location.hash='#import='+encodeURIComponent(JSON.stringify([coffee]));
+ s.context.handleLink();s.onRefresh(()=>{throw Error('offline')});
+ await s.n('#chatImportSave').onclick();await s.n('#chatImportSave').onclick();
+ assert.equal(s.calls.length,1);
+ assert.equal(s.n('#logSheet').open,true);
+ assert.equal(s.n('#chatImportPreview').hidden,false);
+ assert.equal(s.n('#closeLogSheet').disabled,false);
+ assert.match(s.n('#chatImportStatus').textContent,/Entries were saved/);
 });

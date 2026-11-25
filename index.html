@@ -1,6 +1,8 @@
 <!doctype html>
-<html lang="en-AU">
+<html lang="en-AU" data-history-scope="">
 <head>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/plate-192.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f8f7f1">
@@ -20,14 +22,51 @@
 @media(min-width:560px){.day-breakdown{grid-template-columns:minmax(156px,204px) 1fr;place-items:center stretch;gap:16px}.day-stats{padding:6px 8px 6px 0}}
 .day-stack{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}.day-stack h3{font-size:15px;margin:0 0 5px}.day-stack svg{display:block;width:100%;max-width:420px;height:auto;margin:auto}.day-stack p{font-size:14px;margin:5px 0 0}
 
-.day-progress{padding:12px;background:#fff;border:0;margin-top:12px}.budget-line{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px;font-size:14px;margin-bottom:10px}.budget-line span{color:#54665e}.macro-budget{display:flex;position:relative;background:#e4eae6;height:30px;border-radius:6px}.macro-budget>span{height:100%;flex:none}.macro-budget i{position:absolute;top:-4px;bottom:-4px;border-left:2px solid #142920}.protein-reserve{background:radial-gradient(circle,#a55b71 1px,transparent 1.3px) 0 0/6px 6px #f9edf0}.reserve-label{font-size:12px;color:#54665e;margin:6px 0 0}.budget-dials{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 8px;margin-top:14px}.budget-mini{display:grid;grid-template-columns:76px minmax(0,1fr);align-items:center;min-width:0;min-height:76px}.budget-mini svg{width:76px;height:76px;overflow:visible}.budget-mini b{display:block;font-size:14px}.budget-mini small{display:block;font-size:13px;line-height:1.25;margin-top:3px;font-variant-numeric:tabular-nums}.budget-glow{}.budget-plate{border:0;padding:7px;background:transparent;width:76px;height:76px;cursor:pointer}.food-plate{display:block;width:100%;height:100%;overflow:visible}.food-plate .mosaic-rim{fill:#fdfcf7;stroke:#d7ded1;stroke-width:1.25}.food-plate .mosaic-icon{font-size:22px;text-anchor:middle;dominant-baseline:central}.budget-mini:focus-within{outline:2px solid #418dff}.mast{padding:17px 0}.mast .tag{display:none}.mast h1{font-size:30px}.mast p{margin-top:4px}.main{padding-top:12px}.day-progress{padding:0}.macro-inputs{grid-template-columns:repeat(2,minmax(0,1fr))}@media(min-width:700px){.budget-dials{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.budget-mini{grid-template-columns:90px 1fr}.budget-mini svg{width:90px;height:90px}}@media(max-width:390px){.date-row{flex-wrap:wrap}.date-row h2{margin-right:auto}.date-row .label{font-size:12px}input[type=date]{font-size:14px;max-width:150px}.budget-mini{grid-template-columns:70px minmax(0,1fr)}.budget-mini svg{width:70px;height:70px}.budget-plate{width:70px;height:70px;padding:4px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
-.main>section:first-of-type{margin-bottom:12px}.date-row{justify-content:flex-end}.food-row-track{display:block;width:100%;height:4px;background:#e4eae6;margin-top:5px;border-radius:2px;overflow:hidden}.food-row-track>span{display:block;height:100%;background:#5a8874}.budget-dials,.budget-mini,#budgetDashboard,.day-progress{overflow:visible}.budget-mini svg{isolation:isolate}@media(max-width:360px){.mast h1{font-size:1.125rem}.mast-title{gap:5px}.mast #day{inline-size:128px;font-size:.75rem;padding-inline:4px}.mast .shell{gap:6px}.selected-weight{font-size:.6875rem}}
+.day-progress{padding:12px;background:#fff;border:0;margin-top:12px}.budget-line{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px;font-size:14px;margin-bottom:10px}.budget-line span{color:#54665e}.macro-budget{display:flex;position:relative;background:#e4eae6;height:30px;border-radius:6px}.macro-budget>span{height:100%;flex:none}.macro-budget i{position:absolute;top:-4px;bottom:-4px;border-left:2px solid #142920}.protein-reserve{background:radial-gradient(circle,#a55b71 1px,transparent 1.3px) 0 0/6px 6px #f9edf0}.reserve-label{font-size:12px;color:#54665e;margin:6px 0 0}.budget-dials{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 8px;margin-top:14px}.budget-mini{display:grid;grid-template-columns:76px minmax(0,1fr);align-items:center;min-width:0;min-height:76px}.budget-mini svg{width:76px;height:76px;overflow:visible}.budget-mini b{display:block;font-size:14px}.budget-mini small{display:block;font-size:13px;line-height:1.25;margin-top:3px;font-variant-numeric:tabular-nums}.budget-glow{}.budget-plate{border:0;padding:7px;background:transparent;width:76px;height:76px;cursor:pointer}.food-plate{display:block;width:100%;height:100%;overflow:visible}.food-plate .mosaic-rim{fill:#fdfcf7;stroke:#d7ded1;stroke-width:1.25}.food-plate .mosaic-icon{font-size:22px;text-anchor:middle;dominant-baseline:central}.budget-mini:focus-within{outline:2px solid #418dff}.mast{padding:17px 0}.mast .tag{display:none}.mast h1{font-size:30px}.mast p{margin-top:4px}.main{padding-top:12px}.day-progress{padding:0}.macro-inputs{grid-template-columns:repeat(2,minmax(0,1fr))}@media(min-width:700px){
+.budget-dials{--desktop-dial-size:clamp(72px,10vw,90px);grid-template-columns:repeat(3,minmax(0,1fr)) minmax(126px,.76fr);gap:14px}
+.budget-dials>.budget-mini:not([data-metric="plate"]){grid-template-columns:var(--desktop-dial-size) minmax(0,1fr)}
+.budget-dials>.budget-mini:not([data-metric="plate"])>svg{width:var(--desktop-dial-size);height:var(--desktop-dial-size)}
+.budget-dials>.budget-mini[data-metric="plate"]{display:grid;grid-template-columns:minmax(0,1fr);place-items:center}
+.budget-dials .budget-plate{width:min(100%,114px);height:auto;aspect-ratio:1;padding:0}
+.budget-dials .food-plate{width:100%;height:100%}
+}@media(max-width:390px){.date-row{flex-wrap:wrap}.date-row h2{margin-right:auto}.date-row .label{font-size:12px}input[type=date]{font-size:14px;max-width:150px}.budget-mini{grid-template-columns:70px minmax(0,1fr)}.budget-mini svg{width:70px;height:70px}.budget-plate{width:70px;height:70px;padding:4px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.shared-history-card{min-width:0;padding-inline-start:13px}@media(min-width:700px){.shared-history-card{padding-inline-start:17px}}@media(max-width:390px){.shared-history-card{padding-inline-start:8px}}.shared-history-head{display:flex;align-items:center;justify-content:space-between;gap:4px;flex-wrap:wrap;margin-bottom:8px}
+.linked-chart-cards{display:grid;gap:12px}.linked-chart-cards>section{min-width:0}
+.linked-chart-cards>section+section{border-top:1px solid var(--line);padding-top:10px}
+@media(min-width:900px){
+ .linked-chart-cards{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:16px}
+ .linked-chart-cards>section+section{border-top:0;border-left:1px solid var(--line);padding:0 0 0 16px}
+}
+.date-row{justify-content:flex-end}.food-row-track{display:block;width:100%;height:4px;background:#e4eae6;margin-top:5px;border-radius:2px;overflow:hidden}.food-row-track>span{display:block;height:100%;background:#5a8874}.budget-dials,.budget-mini,#budgetDashboard,.day-progress{overflow:visible}.budget-mini svg{isolation:isolate}@media(max-width:360px){.mast h1{font-size:1.125rem}.mast-title{gap:5px}.mast #day{inline-size:128px;font-size:.75rem;padding-inline:4px}.mast .shell{gap:6px}.selected-weight{font-size:.6875rem}}
+.log-direct-close{display:none}
+#logSheet[data-direct-entry] #closeLogSheet{min-width:44px;min-height:44px}
+#logSheet[data-direct-entry] .log-direct-close{display:inline;font-size:1.4rem;line-height:1}
+#logSheet[data-direct-entry] .log-standard-close{display:none}
+#logSheet[data-direct-entry]:has(#chatImportPreview:not([hidden])) .log-direct-close{display:none}
+#logSheet[data-direct-entry] :is(.log-entry-choices,.log-modes,#backToGuidedFood){display:none}
+#logSheet[data-direct-entry] .log-manual{border-top:0;padding-top:0;margin-top:0}
+#logSheet[data-direct-entry=manualFood]:has(#manualFood:not([hidden])) #manualDate{display:none}
+#directFoodWays,#returnToDirectFood,#directFoodSave{display:none}
+#logSheet[data-direct-entry=manualFood] #directFoodWays{display:block;margin-bottom:6px}
+#logSheet[data-direct-entry=manualFood] #returnToDirectFood:not([hidden]){display:inline-flex}
+#logSheet[data-direct-entry=manualFood]:has(#chatImportPreview:not([hidden])) #returnToDirectFood{display:none}
+#logSheet[data-direct-entry=manualFood] #foodSubmit{display:none}
+#logSheet[data-direct-entry=manualFood] #directFoodSave{display:block;width:100%;min-height:46px}
+#logSheet[data-direct-entry=manualFood] .food-entry-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+#logSheet:not([data-direct-entry=manualFood]) .food-entry-fields{display:contents}
+#logSheet:not([data-direct-entry=manualFood]) .food-entry-fields .form-row{display:grid}
+#logSheet[data-direct-entry=manualFood] .food-entry-fields .form-row{display:block;align-self:end}
+#logSheet[data-direct-entry=manualWeight] #weightForm button{background:#2f6043;color:white;border:0;min-height:44px}
+.log-recovery summary,.direct-food-links :is(a,button){color:#275840}
+.direct-food-links{display:flex;gap:6px;flex-wrap:wrap;padding-top:6px}
+.direct-food-links button,#returnToDirectFood{background:none;border:0;padding:8px 5px;min-height:44px;font-weight:650;color:#275840}
+#returnToDirectFood{align-items:center;margin-top:6px}
 .first-meal-heading{display:none}
 #logSheet[data-first-meal] .first-meal-heading{display:block}
 #logSheet[data-first-meal] :is(#logTitleText,.log-modes,#chatAlternatives){display:none}
 .target-estimator .form-row{grid-template-columns:repeat(2,minmax(0,1fr))}
 .target-estimator .input{width:100%;min-width:0}
-#appSettings[data-guided-targets] :is(#targetEstimator>summary,#importCard,#export,#deletePlateDetails,.plate-signout,#weightGoalField,#energyDisplaySettings){display:none}
+#appSettings[data-guided-targets] :is(#targetEstimator>summary,#importCard,#export,#deletePlateDetails,.plate-signout,#weightGoalField,#energyDisplaySettings,#targetHistoryDetails){display:none}
 #appSettings[data-guided-targets]:has(#targetEstimator[open]) #personalTargets{display:none}
 #appSettings:not([data-guided-targets]) #enterTargetsManually{display:none}
 #appSettings[data-guided-targets] .target-estimator{margin-top:0}
@@ -37,9 +76,13 @@
 .account-delete button:disabled{opacity:.55}
 #targetEstimateNote:empty,#deletePlateStatus:empty,.target-save-result:empty{display:none}
 .target-save-result{margin:0;min-height:0}
-.manual-food-route{display:block;width:100%;margin-top:8px}
-#logSheet:has(#chatImportPreview:not([hidden])) .manual-food-route{display:none}
+.log-entry-choices{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:8px;margin-top:8px}
+.log-entry-choices>.button{padding-inline:8px;min-height:42px;font-size:.8125rem}
+#logSheet[data-first-meal] .log-entry-choices{grid-template-columns:minmax(0,1fr)}
+#logSheet[data-first-meal] #logModeWeight{display:none}
+#logSheet:has(#chatImportPreview:not([hidden])) .log-entry-choices{display:none}
 .log-modes{border-top:1px solid var(--line);margin-top:12px}
+.log-modes:has(#logModeFood[hidden]){display:none}
 .log-modes button{min-height:42px}
 .food-saved-feedback{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0 0;scroll-margin-block:24px;color:var(--ink);font-size:.875rem}
 .food-saved-feedback button{white-space:nowrap}
@@ -70,6 +113,7 @@
 #chatImportRows li{gap:12px}
 #chatImportRows li small{white-space:nowrap}
 #chatImportRows li span{min-width:0;overflow-wrap:anywhere}
+.weight-macro-detail{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.weight-macro-detail[hidden]{display:none}
 </style>
 <style>
 button.budget-mini{width:100%;padding:0;border:0;border-radius:8px;background:none;color:inherit;text-align:left;touch-action:manipulation}
@@ -103,7 +147,7 @@ button.budget-mini.pointer-focus:focus,.macro-legend>summary.pointer-focus:focus
 
 </style>
 <style>
- .nutrition-key{display:flex;flex-wrap:wrap;gap:6px 15px;list-style:none;padding:0;margin:0;color:var(--muted);font-size:.8125rem}.nutrition-key li{display:inline-flex;align-items:center;gap:5px}.nutrition-key span{height:8px;width:8px;flex:none;border-radius:50%;background:var(--series)}.nutrition-key li:last-child span{border-radius:1px}.chart-notes{margin:9px 0 0;padding-left:18px;color:var(--muted);font-size:.8125rem;line-height:1.45}.chart-notes li+li{margin-top:4px}.nutrition-chart-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:4px 10px}.nutrition-chart-head>.range,.progress-head>.range{background:transparent;gap:2px;padding:0}.nutrition-chart-head .range button,.progress-head .range button{min-height:34px;padding:4px 6px;font-weight:650;color:#52665b;font-size:.75rem}.nutrition-chart-head .range button[aria-pressed=true],.progress-head .range button[aria-pressed=true]{background:#edf3ed;box-shadow:none;color:#173b2d}.nutrition-chart-head>h2{font-size:.875rem;font-weight:750;line-height:1.25;letter-spacing:-.015em;white-space:nowrap;margin-inline-end:auto}.nutrition-chart-head>.range{margin-inline-start:auto}.nutrition-chart-head .range button{min-inline-size:clamp(29px,8.6vw,38px);padding-inline:4px}.nutrition-chart-head+.chart{margin-top:8px}.nutrition-key li[data-series="protein"] span{border-radius:0;transform:rotate(45deg);width:7px;height:7px}.nutrition-key li[data-series="fibre"] span{border-radius:0}.history-entry{flex-wrap:wrap}.loglist .history-entry small{white-space:normal;line-height:1.45}.settings-cog{margin-left:auto;flex:0 0 44px;width:44px;height:44px;display:grid;place-items:center;border:1px solid #466658;border-radius:12px;background:#203c32;color:#eff8f0}.settings-cog:disabled{opacity:.45}.settings-body{padding:0 16px 16px}.settings-body>details{border-top:1px solid var(--line);padding:12px 0}.settings-body form p{margin:0}.manual-entry{margin-top:14px;border-top:1px solid var(--line);padding-top:14px}.manual-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}.manual-buttons [aria-expanded=true]{background:#e4efe8;border-color:#8bac9b}.manual-entry .status:empty,.settings-body .status:empty{display:none}.date-row{justify-content:flex-end;margin-top:12px}.day-progress{margin-top:0}[aria-label="Daily log"]>.status:empty{display:none}
+ .nutrition-key{display:flex;flex-wrap:wrap;gap:6px 15px;list-style:none;padding:0;margin:0;color:var(--muted);font-size:.8125rem}.nutrition-key li{display:inline-flex;align-items:center;gap:5px}.nutrition-key span{height:8px;width:8px;flex:none;border-radius:50%;background:var(--series)}.nutrition-key li:last-child span{border-radius:1px}.chart-notes{margin:9px 0 0;padding-left:18px;color:var(--muted);font-size:.8125rem;line-height:1.45}.chart-notes li+li{margin-top:4px}.nutrition-chart-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:4px 10px}.nutrition-chart-head>.range,.progress-head>.range{background:transparent;gap:2px;padding:0}.nutrition-chart-head .range button,.progress-head .range button{min-height:34px;padding:4px 6px;font-weight:650;color:#52665b;font-size:.75rem}.nutrition-chart-head .range button[aria-pressed=true],.progress-head .range button[aria-pressed=true]{background:#edf3ed;box-shadow:none;color:#173b2d}.nutrition-chart-head>h2{font-size:.875rem;font-weight:750;line-height:1.25;letter-spacing:-.015em;white-space:nowrap;margin-inline-end:auto}.nutrition-chart-head>.range{margin-inline-start:auto}.nutrition-chart-head .range button{min-inline-size:clamp(29px,8.6vw,38px);padding-inline:4px}.nutrition-chart-head+.chart{margin-top:8px}.nutrition-key li[data-series="protein"] span{border-radius:0;transform:rotate(45deg);width:7px;height:7px}.nutrition-key li[data-series="fibre"] span{border-radius:0}.history-entry{flex-wrap:wrap}.loglist .history-entry small{white-space:normal;line-height:1.45}.settings-cog{margin-left:auto;flex:0 0 44px;width:44px;height:44px;display:grid;place-items:center;border:1px solid #466658;border-radius:12px;background:#203c32;color:#eff8f0}.settings-cog:disabled{opacity:.45}.settings-body{padding:0 16px 16px}#energyDisplaySettings{padding-block-start:12px}.settings-body>details{border-top:1px solid var(--line);padding:12px 0}.settings-body form p{margin:0}.manual-entry{margin-top:14px;border-top:1px solid var(--line);padding-top:14px}.manual-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}.manual-buttons [aria-expanded=true]{background:#e4efe8;border-color:#8bac9b}.manual-entry .status:empty,.settings-body .status:empty{display:none}.date-row{justify-content:flex-end;margin-top:12px}.day-progress{margin-top:0}[aria-label="Daily log"]>.status:empty{display:none}
 @media(max-width:699px){
 .budget-dials{grid-template-columns:minmax(0, .9fr) minmax(0, 1.1fr);grid-template-rows:repeat(3, minmax(52px, auto));gap:4px 9px}
 .budget-dials>.budget-mini:not([data-metric="plate"]){grid-column:1;grid-template-columns:clamp(48px, 13.5vw, 58px) minmax(0, 1fr);gap:3px;min-height:52px}
@@ -123,24 +167,26 @@ button.budget-mini.pointer-focus:focus,.macro-legend>summary.pointer-focus:focus
 .food-entry{display:flex;gap:8px;align-items:start;min-width:0}.food-icon{flex:none;line-height:1.2;font-size:1.1rem}.food-entry time{display:block;line-height:1.25;margin-top:3px;color:var(--muted);font-size:.75rem}.food-list-card .loglist{margin-top:7px}.macro-legend{position:relative;margin:0}.macro-legend>summary{display:block;list-style:none;position:relative;padding:0;cursor:pointer}.macro-legend>summary::-webkit-details-marker{display:none}.macro-legend>summary:focus-visible{outline:2px solid #418dff;outline-offset:4px;border-radius:4px}.macro-key{position:absolute;z-index:2;inset:calc(100% + 4px) 0 auto;list-style:none;display:flex;justify-content:flex-start;align-items:center;gap:8px;overflow-x:auto;scrollbar-width:thin;white-space:nowrap;padding:0;margin:0;color:var(--muted);font-size:.75rem;line-height:1.25}.macro-key:has(.reserve-key-label){gap:clamp(3px,1.3vw,8px)}.macro-key>li{flex:none}.macro-legend[open]+.reserve-label{visibility:hidden}.macro-key button{display:inline-flex;gap:5px;align-items:center;min-height:27px;padding:2px 1px;border:1px solid transparent;border-radius:6px;background:transparent;color:#344d42;font:inherit;touch-action:manipulation}.macro-key button[aria-pressed=true]{border-color:var(--key-colour);background:color-mix(in srgb,var(--key-colour) 12%,white)}.macro-key-swatch{width:11px;height:11px;border-radius:3px;box-shadow:inset 0 0 0 1px #14292030;flex:none}.macro-legend[open] .macro-key{animation:key-reveal .17s ease-out both}.macro-key-link{display:none;position:absolute;top:100%;left:0;width:100%;height:11px;overflow:visible;pointer-events:none}.macro-legend[open] .macro-key-link{display:block}@keyframes key-reveal{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:reduce){.macro-legend[open] .macro-key{animation:none}}
 </style>
 <style>
-.mast{--mast-control-size:.75rem;--mast-line:#dfdfd5;--mast-ink:#353a31;--mast-control:#fffdf9;padding:11px 0;background:#f8f7f1;border-bottom:1px solid var(--mast-line);color:var(--mast-ink)}
+.mast{--mast-control-size:.75rem;--mast-line:#dfdfd5;--mast-ink:#353a31;--mast-tools-ink:#486048;--mast-control:#fffdf9;padding:11px 0;background:#f8f7f1;border-bottom:1px solid var(--mast-line);color:var(--mast-ink)}
 .mast .shell{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px}
 .mast-mark{display:block;inline-size:1em;block-size:1em;flex:none;color:#77806d}
 .mast h1{display:flex;align-items:center;gap:.32em;margin:0;white-space:nowrap;font-size:clamp(1.375rem,5vw,1.625rem);line-height:1.12;letter-spacing:-.045em;font-weight:790}
 .mast p{margin:3px 0 0;color:#535e6d;font-size:.875rem;line-height:1.25}
-.mast .settings-cog{margin:0;border:1px solid var(--mast-line);background:var(--mast-control);color:#5d6658}
-.mast .settings-cog:hover:not(:disabled){background:#f2f0e8;color:var(--mast-ink)}
-.mast #day{inline-size:auto;max-inline-size:100%;min-block-size:44px;padding:5px 7px;font-size:var(--mast-control-size);font-weight:650;background:var(--mast-control);border-color:var(--mast-line);color:var(--mast-ink)}
+.mast .settings-cog{margin:0;border:1px solid var(--mast-line);background:var(--mast-control);color:var(--mast-tools-ink)}
+.mast .settings-cog:hover:not(:disabled){background:#f2f0e8}
+.mast-date{position:relative;display:grid;place-items:center;padding-inline:9px;border:1px solid var(--mast-line);background:var(--mast-control);color:var(--mast-tools-ink);font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mast-date:focus-within:not(:has(#day.date-pointer-focus)){outline:2px solid #487353;outline-offset:2px}
+@media(hover:hover) and (pointer:fine){.mast-date:has(#day:not(:disabled,.date-pointer-focus)):hover{background:#eeefe6}}
 :root{--bg:#f9fbf4;--ink:#233a28;--muted:#526953;--line:#e1ebda;--green:#316344}
 .mast{--mast-control-height:44px;--mast-control-radius:9px}
-.mast .mast-dates :is(#day,#todayButton){font-size:var(--mast-control-size)}
-.mast .mast-dates #day,.mast .mast-dates #todayButton,.mast .settings-cog,.mast .mast-log{box-sizing:border-box;height:var(--mast-control-height);block-size:var(--mast-control-height);min-block-size:var(--mast-control-height);max-block-size:var(--mast-control-height);border-radius:var(--mast-control-radius)}
+.mast .mast-dates :is(.mast-date,#day,#todayButton){font-size:var(--mast-control-size)}
+.mast .mast-dates .mast-date,.mast .mast-dates #todayButton,.mast .settings-cog,.mast .mast-log{box-sizing:border-box;height:var(--mast-control-height);block-size:var(--mast-control-height);min-block-size:var(--mast-control-height);max-block-size:var(--mast-control-height);border-radius:var(--mast-control-radius)}
 .mast .settings-cog,.mast .mast-log{inline-size:var(--mast-control-height);flex-basis:var(--mast-control-height);padding:0}
 .mast .settings-cog svg{width:22px;height:22px}
-.mast #day{-webkit-appearance:none;appearance:none}
-.mast #day::-webkit-date-and-time-value{margin:0;text-align:center}
-#day{position:relative}.mast #day::-webkit-calendar-picker-indicator{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;opacity:0;cursor:pointer}
-.mast-tools{display:flex;align-items:center;gap:6px;min-width:0}.mast-dates{display:flex;align-items:center;gap:2px;min-width:0}.mast .mast-dates #todayButton{border-color:var(--mast-line);background:var(--mast-control);color:#486048;white-space:nowrap;touch-action:manipulation}.mast .mast-dates #todayButton:not(:disabled):hover{background:#eeefe6}.mast-tools .today-action{min-height:44px;font-size:var(--mast-control-size);background:var(--mast-control);border-color:var(--mast-line);color:var(--mast-ink)}.mast-tools .mast-log{display:grid;place-items:center;flex:0 0 44px;inline-size:44px;block-size:44px;padding:0;border-color:transparent;background:#e0ebd9;color:#294b34}.mast-tools .mast-log:not(:disabled):hover{background:#d6e6ce}.mast-tools .mast-log:not(:disabled):active{background:#cbdcc3}.mast-tools .mast-log:disabled{opacity:.55}.mast-tools .mast-log:focus-visible{outline:2px solid #487353;outline-offset:2px}@media(max-width:360px){.mast .mast-tools{gap:4px}.mast #day{max-inline-size:106px;padding-inline:4px}.mast .today-action{padding-inline:5px}}.progress-head .selected-weight{font-size:.8125rem;color:var(--muted)}@media(max-width:360px){.mast-tools{gap:5px}}
+.mast #day{position:absolute;inset:0;-webkit-appearance:none;appearance:none;width:100%;height:100%;min-height:0;margin:0;padding:0;border:0;opacity:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+@media(max-width:360px){.mast .shell:has(#todayButton:not([hidden])){grid-template-columns:minmax(0,1fr);row-gap:5px}.mast .shell:has(#todayButton:not([hidden])) .mast-tools{justify-self:end}}
+.mast #day::-webkit-calendar-picker-indicator{-webkit-tap-highlight-color:transparent;position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;opacity:0;cursor:pointer}
+.mast-tools{display:flex;align-items:center;gap:6px;min-width:0}.mast-dates{display:flex;align-items:center;gap:2px;min-width:0}.mast .mast-dates #todayButton{border-color:var(--mast-line);background:var(--mast-control);color:var(--mast-tools-ink);white-space:nowrap;touch-action:manipulation}.mast .mast-dates #todayButton:not(:disabled):hover{background:#eeefe6}.mast-tools .today-action{min-height:44px;font-size:var(--mast-control-size);background:var(--mast-control);border-color:var(--mast-line);color:var(--mast-ink)}.mast-tools .mast-log{display:grid;place-items:center;flex:0 0 44px;inline-size:44px;block-size:44px;padding:0;border-color:transparent;background:#e0ebd9;color:#294b34}.mast-tools .mast-log:not(:disabled):hover{background:#d6e6ce}.mast-tools .mast-log:not(:disabled):active{background:#cbdcc3}.mast-tools .mast-log:disabled{opacity:.55}.mast-tools .mast-log:focus-visible{outline:2px solid #487353;outline-offset:2px}@media(max-width:360px){.mast .mast-tools{gap:4px}.mast .mast-date{padding-inline:7px}.mast .today-action{padding-inline:5px}}.progress-head .selected-weight{font-size:.8125rem;color:var(--muted)}@media(max-width:360px){.mast-tools{gap:5px}}
 .range{background:#f1f6ec}.macro-budget{background:#e8efdf}
 @media(max-width:420px){.mast h1{font-size:1.25rem}}
 @media(max-width:360px){.mast h1{font-size:1.0625rem;gap:.24em}.mast-mark{inline-size:.92em;block-size:.92em}}
@@ -159,7 +205,11 @@ button.budget-mini.pointer-focus:focus,.macro-legend>summary.pointer-focus:focus
 .budget-over::before{flex:none;content:'';width:12px;height:10px;border:1px solid #a63929;border-radius:2px;background:repeating-linear-gradient(135deg,#a63929 0 2px,#fff2eb 2px 5px)}
 .macro-budget .macro-overflow{position:absolute;top:0;bottom:0;border-block:2px solid #a63929;border-right:solid #a63929;border-right-width:min(2px, .4vw);background:repeating-linear-gradient(135deg,transparent 0 4px,#a63929a0 4px 6px);pointer-events:none}
 .macro-budget i{top:-2px;bottom:-2px;border-left:1.5px solid #697b66}.macro-budget.is-over i{border-color:#a34a36}
-.progress-head{display:grid;grid-template-columns:54px minmax(0,1fr);align-items:center;gap:8px}.progress-head>.range{justify-self:end;min-width:0}.today-slot{min-width:0;min-height:34px;display:flex;align-items:center;gap:5px}.mast-title{display:flex;align-items:baseline;gap:7px;margin:0;min-width:0}.selected-weight{font-size:.75rem;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}.today-action{min-height:34px;padding:4px 8px;border:1px solid #c9d9cd;border-radius:7px;background:#f7faf7;color:var(--green);font-size:.75rem;font-weight:650}.today-action:disabled{opacity:.5;cursor:default}@media(max-width:520px){.progress-head .range button{min-width:0;padding:4px 2px;font-size:.6875rem}.progress-head>.range{width:100%;max-width:238px}}
+.progress-head{display:grid;grid-template-columns:54px minmax(0,1fr);align-items:center;gap:8px}.progress-head>.range{justify-self:end;min-width:0}
+.progress-head.weight-chart-head{grid-template-columns:minmax(54px,1fr) auto}
+#weightMacrosToggle{justify-self:end;min-height:36px;white-space:nowrap}
+#weightMacrosToggle[aria-pressed=true]{background:#e4efe8;border-color:#8bac9b;color:#184c38}
+.today-slot{min-width:0;min-height:34px;display:flex;align-items:center;gap:5px}.mast-title{display:flex;align-items:baseline;gap:7px;margin:0;min-width:0}.selected-weight{font-size:.75rem;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}.today-action{min-height:34px;padding:4px 8px;border:1px solid #c9d9cd;border-radius:7px;background:#f7faf7;color:var(--green);font-size:.75rem;font-weight:650}.today-action:disabled{opacity:.5;cursor:default}@media(max-width:520px){.progress-head .range button{min-width:0;padding:4px 2px;font-size:.6875rem}.progress-head>.range{width:100%;max-width:238px}}
 #energyChart,#chart{position:relative}
 .linked-chart:focus{outline:none}
 .linked-chart:focus-visible:not(.pointer-focus){outline:2px solid #367d68;outline-offset:-2px;border-radius:5px}
@@ -179,6 +229,12 @@ button.budget-mini.pointer-focus:focus,.macro-legend>summary.pointer-focus:focus
 .food-log-tip button{margin-top:2px}
 .linked-chart{-webkit-tap-highlight-color:transparent}
 .nutrition-callout{position:absolute;z-index:1;pointer-events:none;min-width:136px;max-width:80%;background:#fff;border:1px solid #c9d8cf;box-shadow:0 4px 14px #19372b24;border-radius:10px;padding:7px 8px;color:var(--ink);font-size:.75rem;line-height:1.36;font-variant-numeric:tabular-nums}
+.record-callout{pointer-events:auto;touch-action:none;user-select:none;cursor:grab;min-width:0;width:max-content;max-width:min(92%,270px);padding:9px 11px;z-index:4;display:grid;gap:5px;background:#fffefa}
+.record-callout[data-dragging]{cursor:grabbing}
+.record-callout .nutrition-callout-row{gap:7px;grid-template-columns:6px minmax(0,1fr) auto}
+.record-callout .nutrition-callout-row strong{white-space:normal}
+.record-callout small{font-size:.68rem;color:#52665b;margin-inline-start:5px;font-weight:500}
+.record-callout:focus-visible{outline:2px solid #367d68;outline-offset:2px}
 .weight-callout{min-width:0;width:max-content;max-width:80%;white-space:nowrap}
 .nutrition-callout>b{display:block;margin-bottom:3px}
 .nutrition-callout-row{display:grid;grid-template-columns:7px minmax(0,1fr) auto;align-items:center;gap:5px}
@@ -214,12 +270,12 @@ button.budget-mini.pointer-focus:focus,.macro-legend>summary.pointer-focus:focus
 /* The food drawer sits behind the day card; only its bottom handle stays visible. */
 #dailyLog{padding:0;background:#f0f4eb;overflow:visible}#swipeCurrent>.day-progress,#swipePreview>.day-progress,.day-swipe-outgoing>.day-progress{position:relative;z-index:1;background:#fff;border-radius:10px;padding:16px;margin:0;box-shadow:0 2px 5px #213c2412}
 #dailyLog .food-list-card{height:0;overflow:hidden;visibility:hidden;margin:0;border:0;padding:0}#dailyLog .food-list-card.open{height:auto;visibility:visible}.food-list-inner{padding:5px 15px 4px}.food-tray-toggle:hover{background:#e6eedf}
-.food-tray-close,.food-tray-toggle,.food-tray-preview{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;height:35px;min-height:35px;padding:0;border:0;border-top:1px solid transparent;background:transparent;font-size:.8125rem;line-height:1.2;color:#46604b}
+.food-tray-toggle,.food-tray-preview{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;height:35px;min-height:35px;padding:0;border:0;border-top:1px solid transparent;background:transparent;font-size:.8125rem;line-height:1.2;color:#46604b}
 .food-tray-toggle,.food-tray-preview{border-radius:0 0 10px 10px}.food-tray-toggle[aria-expanded=true]{border-top-color:#d7e3d3}.tray-chevron{display:block;width:7px;height:7px;border:solid #4d6759;border-width:0 2px 2px 0;transform:rotate(45deg);margin-top:-4px}.food-tray-toggle[aria-expanded=true] .tray-chevron{transform:rotate(225deg);margin-top:4px}#dailyLog>.status:not(:empty){padding:8px 16px}
 .adaptive-food-row .entry-details>summary{grid-template-columns:22px minmax(0,1fr) 99px 67px}.adaptive-food-row .food-energy{display:grid;grid-template-columns:minmax(0,1fr) 19px;align-items:center;gap:5px}.adaptive-food-row .food-row-track{margin:0;width:19px;height:3px}.food-list-card .loglist{margin-top:0}@media(max-width:380px){#swipeCurrent>.day-progress,#swipePreview>.day-progress,.day-swipe-outgoing>.day-progress{padding:12px}.food-list-inner{padding-inline:11px}.adaptive-food-row .entry-details>summary{grid-template-columns:19px minmax(0,1fr) 86px 60px;gap:4px}}
 </style><style>
 #dailyLog .food-list-card{position:relative}.food-list-inner{padding-top:12px}
-.food-tray-close:focus-visible{outline:2px solid #418dff;outline-offset:-2px;background:#e6eedf}
+
 .food-grid .adaptive-food-row{display:grid;grid-template-columns:minmax(0,1fr) 99px 67px;gap:7px;align-items:start}
 .adaptive-food-row .entry-details>summary{display:grid;grid-template-columns:22px minmax(0,1fr);gap:7px;min-height:32px;align-items:center}
 .food-sort-metric{border:0;background:transparent;padding:0;min-width:0;min-height:32px;line-height:1.2;border-radius:3px;cursor:pointer;align-self:start}
@@ -228,7 +284,7 @@ button.budget-mini.pointer-focus:focus,.macro-legend>summary.pointer-focus:focus
 .food-time-label{display:block;line-height:1.2}
 @media(max-width:380px){.food-grid .adaptive-food-row{grid-template-columns:minmax(0,1fr) 86px 60px;gap:4px}.adaptive-food-row .entry-details>summary{grid-template-columns:19px minmax(0,1fr);gap:4px}}
 </style><style>
-.food-list-inner{padding-top:0}.food-tray-close{border-radius:0}.food-tray-close .tray-chevron{transform:rotate(225deg);margin-top:4px}.food-tray-close:hover{background:#e6eedf}
+.food-list-inner{padding-top:0}
 .food-grid .adaptive-food-row{grid-template-columns:minmax(0,1fr) 24px 99px 67px;gap:4px}
 .food-edit{display:flex;align-items:center;justify-content:center;width:24px;height:32px;padding:0;border:0;border-radius:3px;background:transparent;color:#526b57;cursor:pointer;align-self:start}.food-edit:hover{color:#173b2d;background:#e6eedf}.food-sort-metric{font-family:inherit}.food-edit:focus:not(:focus-visible){outline:none}
 .macro-key button{gap:3px;padding-inline:1px}.macro-key-swatch{width:8px;height:8px}
@@ -236,7 +292,8 @@ button.budget-mini.pointer-focus:focus,.macro-legend>summary.pointer-focus:focus
 </style><style>
 /* End bracket: same budget boundary and overflow math, a quieter closing shape. */
 .budget-line{align-items:baseline;gap:6px;flex-wrap:wrap;font-variant-numeric:tabular-nums}
-.budget-line>b{font-size:clamp(.8125rem,3.85vw,1rem)}
+:root{--plate-card-title-size:clamp(.8125rem,3.85vw,1rem);--plate-card-title-weight:700}
+.budget-line>b{font-size:var(--plate-card-title-size);font-weight:var(--plate-card-title-weight)}
 .budget-line>span:not(.budget-over),.budget-line .budget-over{font-size:clamp(.75rem,3.4vw,.875rem);font-weight:650;white-space:nowrap;margin-left:auto}
 .budget-line .budget-limit{color:#45634c}.budget-line .budget-over{color:#943e30}
 @media(max-width:350px){.budget-line{gap:3px;margin-inline:-1px}.budget-line .budget-over{font-size:.6875rem}}
@@ -278,6 +335,12 @@ button.budget-mini.pointer-focus:focus,.macro-legend>summary.pointer-focus:focus
 </style><style>.chat-import{margin-bottom:12px}.chat-import-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:6px 0 12px}.chat-import-actions a{color:var(--green);font-size:.875rem}.chat-import .label{margin:8px 0}.chat-import textarea{font:inherit;resize:vertical}.chat-import-extra{display:block}.chat-import #chatImportSave{margin-top:8px}.chat-import #chatImportDate{font-weight:700;margin-top:12px}</style>
 <style>
 .log-modes{padding:10px 0 0}[data-chat-step="starter"]{margin-top:8px}.log-modes button[aria-pressed=true]{background:#e4efe8;border-color:#8bac9b}.chat-primary{display:flex;width:100%;align-items:center;justify-content:center;text-align:center;text-decoration:none}.chat-secondary{display:flex;flex-wrap:wrap;gap:0 12px;margin-top:8px}.chat-secondary button{padding:5px 0;min-height:36px;border:0;background:transparent;color:var(--green);font-weight:650;font-size:.8125rem;text-align:left;text-decoration:underline;text-underline-offset:2px}.log-manual{margin-top:0;padding-top:0;border:0}.chat-import{margin-bottom:0}.chat-import .status:empty{display:none}
+#chatLinkRecovery{flex:1 0 100%;margin:0}
+#chatLinkRecovery summary{min-height:44px;padding:13px 0}
+#chatLinkRecovery button{display:flex;width:100%;align-items:center;min-height:44px;padding:8px 12px;border-radius:8px;background:#edf3ed}
+#chatLinkRecovery button+button{margin-top:6px}
+#chatLinkRecovery button:hover{background:#e4efe8}
+
 </style><style>
 /* Placeholders live in the final dashboard slots. */
 .plate-skeleton{--sk-fill:#e5ebe3;--sk-line:#eef2ec}
@@ -302,6 +365,81 @@ button.budget-mini.pointer-focus:focus,.macro-legend>summary.pointer-focus:focus
 @keyframes plate-breathe{50%{opacity:.55}}
 #plateMain[data-load=error] :is(.plate-skeleton *, .sk-weight){animation:none}
 @media(prefers-reduced-motion:reduce){.plate-skeleton *,.sk-weight{animation:none!important}}
+#historyRange{
+ display:flex;gap:0;padding:1px;background:#f0f4ef;border-radius:8px;white-space:nowrap
+}
+#historyRange button{
+ border:1px solid transparent;border-radius:7px;min-width:24px;min-height:42px;
+ padding:2px 7px;font-size:.73rem;font-weight:650;color:#52665b;background:transparent
+}
+#historyRange button[aria-pressed=true]{
+ background:#fff;border-color:#d6e1d7;color:#235945;font-weight:720;box-shadow:none
+}
+@media(max-width:440px){
+ #historyRange button{padding-inline:3px;font-size:.6875rem}
+}
+
+.track-chart-tools{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-block:5px 2px}
+
+.track-chart-tools .track-mode,.track-chart-tools .nutrition-series-legend{margin-top:0;flex:none}
+.track-chart-tools .nutrition-series-legend{flex-wrap:nowrap;gap:3px}
+@media(max-width:380px){
+ .track-chart-tools .track-mode button{padding-inline:5px;font-size:.6875rem}
+ .track-chart-tools .nutrition-series-button{gap:2px;padding-inline:2px;font-size:.625rem}
+ .track-chart-tools .nutrition-series-button svg{width:10px}
+}
+.track-mode{display:flex;gap:1px;width:max-content;margin-top:5px;background:#f0f4ef;padding:1px;border-radius:8px}
+.track-mode button{border:1px solid transparent;border-radius:7px;background:transparent;padding:4px 8px;min-height:34px;color:#52665b;font-size:.75rem;font-weight:650}.track-mode button[aria-pressed=true]{background:#fff;border-color:#d6e1d7;color:#235945}.track-mode button:disabled{opacity:.5}
+.shared-history-head h2{font-size:.875rem;font-weight:750;white-space:nowrap}
+.history-controls{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-inline-start:auto}
+.history-controls .track-mode{margin-top:0}
+.history-controls #weightMacrosToggle{min-height:36px}
+@media(max-width:380px){
+ .shared-history-head h2{font-size:.75rem}
+ .history-controls{gap:2px}
+ .history-controls #historyRange button,.history-controls .track-mode button,.history-controls #weightMacrosToggle{padding-inline:2px;font-size:.625rem;min-height:34px}
+ .history-controls #historyRange button{min-width:22px}
+}
+#energyChart[data-track-view=tiles]{height:auto;min-height:0}
+.linked-chart-cards[data-track-layout=tiles]{grid-template-columns:minmax(0,1fr);gap:8px}
+.linked-chart-cards[data-track-layout=tiles]>section+section{border-left:0;border-top:1px solid var(--line);padding:8px 0 0}
+.nutrition-series-legend.reserved[hidden]{display:flex!important;visibility:hidden;min-height:32px}.nutrition-series-legend.reserved[hidden]>button{visibility:hidden}
+.track-tile-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.shared-history-head{flex-wrap:nowrap;gap:4px}
+.shared-history-head h2{font-size:var(--plate-card-title-size);font-weight:var(--plate-card-title-weight);white-space:normal;line-height:1.1;min-width:0}
+.history-controls{flex-wrap:nowrap;flex:none;gap:4px}
+.history-layers{display:flex;gap:2px}
+.history-controls :is(#weightMacrosToggle,#trackTargetsToggle),.history-controls #historyRange button{position:relative;min-height:34px;padding-block:3px;font-size:.75rem}
+.history-controls :is(#weightMacrosToggle,#trackTargetsToggle)::after,.history-controls #historyRange button::after{content:"";position:absolute;inset:-5px 0}
+.history-controls #historyRange button{min-width:40px}
+.history-controls .history-layers button{padding-inline:7px}
+.history-controls .history-layers button[aria-pressed=true]{background:#e0efe8;border-color:#a8c9b7;color:#235945}
+#historyScrollTail{height:0;overflow-anchor:none;pointer-events:none}
+html.history-scroll-held{overflow-anchor:none}
+.history-plot{position:relative;margin-top:8px}
+.history-plot #chart{margin-top:0}
+#nutritionSeriesLegend{position:absolute;inset-inline-start:0;display:grid;gap:0;margin:0}
+#nutritionSeriesLegend button{justify-content:flex-start;min-height:14px;padding:0 2px;gap:0;font-size:.73rem;line-height:1;background:none;touch-action:manipulation}
+#nutritionSeriesLegend button[aria-pressed=false] span{text-decoration:none;color:#68786e}
+@media(max-width:440px){
+ .history-controls .history-layers button{padding-inline:3px}
+ .history-controls #historyRange button{min-width:33px;padding-inline:2px}
+}
+.mast-log-anchor{position:relative;flex:none}
+.mast-log-menu{position:absolute;z-index:30;inset-block-start:calc(100% + 9px);inset-inline-end:0;display:grid;gap:2px;width:min(290px,calc(100vw - 24px));padding:6px;border:1px solid #d3d9cd;border-radius:12px;background:#fdfbf7;box-shadow:0 8px 24px #17392b2b}
+.mast-log-menu::before{content:'';position:absolute;z-index:-1;inset-block-start:-7px;inset-inline-end:calc(var(--mast-control-height)/2 - 7px);width:12px;height:12px;transform:rotate(45deg);border:solid #d3d9cd;border-width:1px 0 0 1px;background:#fdfbf7}
+.mast-log-menu :is(a,button){box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;border:0;border-radius:8px;background:none;text-align:start;padding:8px 14px;font-size:.9375rem;font-weight:500;color:#22382b;white-space:normal}
+.mast-log-menu a{min-height:48px;background:#2f6043;color:white;font-weight:700;text-decoration:none}
+.food-grid .food-log-empty{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;padding-block:9px;border-top:0}
+.food-log-empty p{margin:0}
+.food-log-empty .food-log-chat{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:48px;padding:10px 14px;color:white;background:#2f6043;border-radius:8px;text-decoration:none;font-weight:700}
+.food-log-empty .food-log-chat:hover{background:#244f37}
+.food-log-empty .food-log-chat:focus-visible{outline:2px solid #367d68;outline-offset:3px}
+.mast-log-menu a:hover{background:#244f37}
+.mast-log-menu button:hover{background:#edf3ed}
+.mast-log-menu button+button{border-radius:0 0 8px 8px;border-block-start:1px solid #e7e6db}
+.mast-log-menu svg{flex:none}
+.mast #openLog[aria-expanded=true]:not(:disabled){background:#2f6043;border-color:#2f6043;color:white}
 </style>
 <style>
 /* Keep mobile fields at Safari’s focus-zoom threshold without restricting pinch zoom. */
@@ -312,40 +450,31 @@ button.budget-mini.pointer-focus:focus,.macro-legend>summary.pointer-focus:focus
 </style>
 </head>
 <body>
-<header class="mast"><div class="shell"><h1><svg class="mast-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.6"/><circle cx="12" cy="12" r="6.3"/></svg>Plate</h1><div class="mast-tools"><div class="mast-dates" role="group" aria-label="Log date controls"><button type="button" id="todayButton" class="today-action" hidden disabled aria-label="Return to today">Today</button><input aria-label="Log date" id="day" class="date-input" type="date" required disabled></div><button type="button" id="openSettings" class="settings-cog" disabled aria-label="Settings" aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path stroke-linejoin="round" d="M10 2h4l.5 3 1.7.9 2.8-1.1 2 3.4-2.3 1.9v2l2.3 2-2 3.4-2.8-1.1-1.7.9-.5 3h-4l-.5-3-1.7-.9-2.8 1.1-2-3.4 2.3-2v-2L3 8.2l2-3.4 2.8 1.1 1.7-.9z" transform="translate(0 1)"/><circle cx="12" cy="12" r="3"/></svg></button><button type="button" id="openLog" class="today-action mast-log" disabled aria-label="Log" title="Log food or weight" aria-haspopup="dialog"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg></button></div></div></header>
+<header class="mast"><div class="shell"><h1><svg class="mast-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.6"/><circle cx="12" cy="12" r="6.3"/></svg>Plate</h1><div class="mast-tools"><div class="mast-dates" role="group" aria-label="Log date controls"><button type="button" id="todayButton" class="today-action" hidden disabled aria-label="Return to today">Today</button><span class="mast-date"><span id="dayLabel" aria-hidden="true">Date</span><input aria-label="Log date" id="day" class="date-input" type="date" required disabled></span></div><button type="button" id="openSettings" class="settings-cog" disabled aria-label="Settings" aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path stroke-linejoin="round" d="M10 2h4l.5 3 1.7.9 2.8-1.1 2 3.4-2.3 1.9v2l2.3 2-2 3.4-2.8-1.1-1.7.9-.5 3h-4l-.5-3-1.7-.9-2.8 1.1-2-3.4 2.3-2v-2L3 8.2l2-3.4 2.8 1.1 1.7-.9z" transform="translate(0 1)"/><circle cx="12" cy="12" r="3"/></svg></button><div class="mast-log-anchor"><button type="button" id="openLog" class="today-action mast-log" disabled aria-label="Log" title="Log food or weight" aria-expanded="false" aria-controls="logActionMenu"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg></button><div id="logActionMenu" class="mast-log-menu" role="group" aria-label="Log an entry" hidden><a id="logMenuChat" target="_blank" rel="noopener noreferrer">Log food in ChatGPT<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M3 13 13 3m-6 0h6v6"/></svg></a><button type="button" data-log-action="manualFood">Enter food manually<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true" focusable="false"><path d="m6 3 5 5-5 5"/></svg></button><button type="button" data-log-action="manualWeight">Log weight<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true" focusable="false"><path d="m6 3 5 5-5 5"/></svg></button></div></div></div></div></header>
 <p id="plateLoadStatus" class="plate-load-status" role="status">Loading your log</p>
 <div id="plateLoadError" class="shell plate-load-error" hidden><p id="plateLoadErrorText" role="alert"></p><button id="plateLoadRetry" type="button" class="button secondary tight">Retry</button></div>
 <main id="plateMain" class="shell main" data-load="pending" aria-busy="true">
 <aside id="guide-habit" class="plate-guide" aria-label="Log your next meal" tabindex="-1" hidden></aside>
-<section class="card" aria-label="Weight progress">
-<div class="sectionHead progress-head"><span class="today-slot"><span id="selectedWeight" class="selected-weight" aria-live="polite"><span class="sk-weight" aria-hidden="true"></span></span></span><div class="range" role="group" aria-label="Weight chart range"><button type="button" data-chart="weight" data-range="14" aria-pressed="false" aria-label="14 days">14d</button><button type="button" data-chart="weight" data-range="30" aria-pressed="false" aria-label="30 days">30d</button><button type="button" data-chart="weight" data-range="90" aria-pressed="false" aria-label="90 days">90d</button><button type="button" data-chart="weight" data-range="6m" aria-pressed="false" aria-label="6 months">6m</button><button type="button" data-chart="weight" data-range="1y" aria-pressed="false" aria-label="1 year">1y</button><button type="button" data-chart="weight" data-range="all" aria-pressed="true" aria-label="All history">All</button></div></div>
-<div hidden><div class="kpis"><div class="kpi"><small>Latest weight</small><b id="latest">—</b></div><div class="kpi"><small>7-day average</small><b id="mean">—</b></div></div>
-</div><aside id="guide-weight" class="plate-guide" aria-label="First weigh-in" tabindex="-1" hidden></aside><div id="chart" class="chart"><div class="plate-skeleton sk-chart" aria-hidden="true"><div class="sk-plot"></div><div class="sk-ticks"><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i></div><div class="sk-dates"><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i></div></div></div>
-
-</section>
-
 <div class="cards">
 <section class="card" id="dailyLog" aria-label="Daily log">
 <div id="swipeViewport"><div id="swipeCurrent">
-<div class="day-progress"><div id="budgetDashboard" aria-live="polite"><div class="plate-skeleton" aria-hidden="true"><div class="budget-line"><b class="sk-block sk-total"></b><span class="sk-block sk-budget"></span></div><div class="macro-budget sk-block"></div><p class="reserve-label"></p><div class="budget-dials"><div class="budget-mini" data-metric="protein"><svg class="sk-ring" viewBox="-7 -7 164 164" focusable="false"><circle cx="75" cy="75" r="55" stroke="currentColor" fill="none" stroke-width="15"/></svg><span class="sk-dial-text"><span class="sk-block"></span><span class="sk-block"></span></span></div><div class="budget-mini" data-metric="fibre"><svg class="sk-ring" viewBox="-7 -7 164 164" focusable="false"><circle cx="75" cy="75" r="55" stroke="currentColor" fill="none" stroke-width="15"/></svg><span class="sk-dial-text"><span class="sk-block"></span><span class="sk-block"></span></span></div><div class="budget-mini" data-metric="plate"><span class="budget-plate"><svg class="food-plate" viewBox="0 0 192 192" focusable="false"><circle class="sk-rim" cx="96" cy="96" r="90"/></svg></span></div><div class="budget-mini" data-metric="energy"><svg class="sk-ring" viewBox="-7 -7 164 164" focusable="false"><circle cx="75" cy="75" r="55" stroke="currentColor" fill="none" stroke-width="15"/></svg><span class="sk-dial-text"><span class="sk-block"></span><span class="sk-block"></span></span></div></div></div></div><aside id="guide-reserve" class="plate-guide" aria-label="Protein reserve" tabindex="-1" hidden></aside><aside id="guide-impact" class="plate-guide" aria-label="First meal impact" tabindex="-1" hidden></aside><aside id="guide-finish" class="plate-guide" aria-label="Decide what to eat next" tabindex="-1" hidden></aside></div>
-<div id="foodListCard" class="food-list-card" role="region" aria-label="Food log"><div class="food-list-inner"><button type="button" id="foodTrayClose" class="food-tray-close" aria-controls="foodListCard" aria-expanded="true"><span class="tray-label">Food log</span><span class="tray-chevron" aria-hidden="true"></span></button><p id="foodSavedFeedback" class="food-saved-feedback" hidden><strong id="foodSavedText" role="status"></strong></p><aside id="guide-meal" class="plate-guide" aria-label="First meal saved" tabindex="-1" hidden></aside><aside id="foodLogTip" class="food-log-tip" aria-labelledby="foodLogTipTitle" hidden><h3 id="foodLogTipTitle">Spot what blows your budget</h3><p>Longer bars mean more energy. The colours show the mix of macros, so you can spot foods with more fat or carbs than you expected.</p><p>Tap an energy amount to put the highest-energy foods first, or tap a time to put them back in meal order.</p><button id="foodLogTipDone" type="button" class="button secondary tight">Got it</button></aside><ul id="foodList" class="loglist food-grid" aria-label="Food logged for this day"></ul></div></div><button type="button" id="foodTrayToggle" class="food-tray-toggle" aria-controls="foodListCard" aria-expanded="false"><span class="tray-label">Food log</span><span class="tray-chevron" aria-hidden="true"></span></button>
+<div class="day-progress"><div id="budgetDashboard" aria-live="polite"><div class="plate-skeleton" aria-hidden="true"><div class="budget-line"><b class="sk-block sk-total"></b><span class="sk-block sk-budget"></span></div><div class="macro-budget sk-block"></div><p class="reserve-label"></p><div class="budget-dials"><div class="budget-mini" data-metric="protein"><svg class="sk-ring" viewBox="-7 -7 164 164" focusable="false"><circle cx="75" cy="75" r="55" stroke="currentColor" fill="none" stroke-width="15"/></svg><span class="sk-dial-text"><span class="sk-block"></span><span class="sk-block"></span></span></div><div class="budget-mini" data-metric="fibre"><svg class="sk-ring" viewBox="-7 -7 164 164" focusable="false"><circle cx="75" cy="75" r="55" stroke="currentColor" fill="none" stroke-width="15"/></svg><span class="sk-dial-text"><span class="sk-block"></span><span class="sk-block"></span></span></div><div class="budget-mini" data-metric="energy"><svg class="sk-ring" viewBox="-7 -7 164 164" focusable="false"><circle cx="75" cy="75" r="55" stroke="currentColor" fill="none" stroke-width="15"/></svg><span class="sk-dial-text"><span class="sk-block"></span><span class="sk-block"></span></span></div><div class="budget-mini" data-metric="plate"><span class="budget-plate"><svg class="food-plate" viewBox="0 0 192 192" focusable="false"><circle class="sk-rim" cx="96" cy="96" r="90"/></svg></span></div></div></div></div><aside id="guide-reserve" class="plate-guide" aria-label="Protein reserve" tabindex="-1" hidden></aside><aside id="guide-impact" class="plate-guide" aria-label="First meal impact" tabindex="-1" hidden></aside><aside id="guide-finish" class="plate-guide" aria-label="Decide what to eat next" tabindex="-1" hidden></aside></div>
+<div id="foodListCard" class="food-list-card" role="region" aria-label="Food log"><div class="food-list-inner"><p id="foodSavedFeedback" class="food-saved-feedback" hidden><strong id="foodSavedText" role="status"></strong></p><aside id="guide-meal" class="plate-guide" aria-label="First meal saved" tabindex="-1" hidden></aside><aside id="foodLogTip" class="food-log-tip" aria-labelledby="foodLogTipTitle" hidden><h3 id="foodLogTipTitle">Spot what blows your budget</h3><p>Longer bars mean more energy. The colours show the mix of macros, so you can spot foods with more fat or carbs than you expected.</p><p>Tap an energy amount to put the highest-energy foods first, or tap a time to put them back in meal order.</p><button id="foodLogTipDone" type="button" class="button secondary tight">Got it</button></aside><ul id="foodList" class="loglist food-grid" aria-label="Food logged for this day"></ul></div></div><button type="button" id="foodTrayToggle" class="food-tray-toggle" aria-controls="foodListCard" aria-expanded="false"><span class="tray-label">Food log</span><span class="tray-chevron" aria-hidden="true"></span></button>
 </div><div id="swipePreview" inert aria-hidden="true" hidden></div></div>
-<dialog class="nutrition-sheet" id="nutritionSheet" aria-labelledby="nutritionTitle" aria-describedby="nutritionTotal" closedby="any">
-<header><div><h2 id="nutritionTitle"></h2><p id="nutritionTotal"></p></div><form method="dialog"><button class="button secondary tight" type="submit" aria-label="Close breakdown" autofocus>Close</button></form></header>
+<dialog class="nutrition-sheet" id="nutritionSheet" aria-labelledby="nutritionTitle" aria-describedby="nutritionTotal budgetPaceExplanation" closedby="any">
+<header><div><h2 id="nutritionTitle"></h2><p id="nutritionTotal"></p><p id="budgetPaceExplanation" hidden></p></div><form method="dialog"><button class="button secondary tight" type="submit" aria-label="Close breakdown" autofocus>Close</button></form></header>
 <ul class="nutrition-items" id="nutritionItems"></ul>
 </dialog>
 <div id="status" class="status" role="status" aria-live="polite"></div>
 <div id="swipeDayLabel" role="status" hidden></div>
 </section>
 </div>
-<section class="card" aria-labelledby="trackRecordTitle">
-<div class="energy-panel">
-<div class="nutrition-chart-head">
-<h2 id="trackRecordTitle">Track record</h2>
-<div class="range" role="group" aria-label="Track record range"><button type="button" data-chart="energy" data-range="14" aria-pressed="true" aria-label="14 days">14d</button><button type="button" data-chart="energy" data-range="30" aria-pressed="false" aria-label="30 days">30d</button><button type="button" data-chart="energy" data-range="90" aria-pressed="false" aria-label="90 days">90d</button><button type="button" data-chart="energy" data-range="6m" aria-pressed="false" aria-label="6 months">6m</button><button type="button" data-chart="energy" data-range="1y" aria-pressed="false" aria-label="1 year">1y</button><button type="button" data-chart="energy" data-range="all" aria-pressed="false" aria-label="All history">All</button></div></div>
-<div id="nutritionSeriesLegend" class="nutrition-series-legend" role="group" aria-label="Show chart lines"></div>
-<aside id="guide-history" class="plate-guide" aria-label="Track record guide" tabindex="-1" hidden></aside><div id="energyChart" class="chart"><div class="plate-skeleton sk-chart" aria-hidden="true"><div class="sk-plot"></div><div class="sk-ticks"><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i></div><div class="sk-dates"><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i></div></div></div>
-</div>
+<section class="card shared-history-card" aria-label="History charts">
+<div class="shared-history-head"><h2 id="trackRecordTitle">Track Record</h2><div class="history-controls"><div class="history-layers" role="group" aria-label="History layers"><button id="weightMacrosToggle" type="button" class="button secondary tight" aria-pressed="false" aria-controls="chart weightMacrosDetails" disabled>Macros</button><button id="trackTargetsToggle" type="button" class="button secondary tight" aria-pressed="true" aria-controls="chart nutritionSeriesLegend" disabled>Targets</button></div><div id="historyRange" class="range" role="group" aria-label="Shared history date range"><button type="button" aria-controls="chart" data-range="30" aria-pressed="true" aria-label="30 days">30d</button><button type="button" aria-controls="chart" data-range="6m" aria-pressed="false" aria-label="6 months">6m</button><button type="button" aria-controls="chart" data-range="all" aria-pressed="false" aria-label="All history">All</button></div></div></div>
+<aside id="guide-history" class="plate-guide" aria-label="Track record guide" tabindex="-1" hidden></aside><aside id="guide-weight" class="plate-guide" aria-label="First weigh-in" tabindex="-1" hidden></aside>
+<div class="history-plot"><div id="chart" class="chart"><div class="plate-skeleton sk-chart" aria-hidden="true"><div class="sk-plot"></div><div class="sk-ticks"><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i></div><div class="sk-dates"><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i><i class="sk-block"></i></div></div></div>
+<div id="nutritionSeriesLegend" class="nutrition-series-legend" role="group" aria-label="Show target lines" hidden></div></div>
+<span id="selectedWeight" class="track-tile-sr" aria-live="polite"></span><span id="trackTileSelection" class="track-tile-sr" role="status"></span><p id="weightMacrosDetails" class="weight-macro-detail" role="status" aria-live="polite" hidden></p>
 </section>
 <dialog class="nutrition-sheet settings-sheet" id="appSettings" aria-labelledby="settingsTitle" closedby="any"><header><h2 id="settingsTitle">Settings</h2><form method="dialog"><button class="button secondary tight" type="submit" autofocus>Close</button></form></header><div class="settings-body"><div id="energyDisplaySettings"><label class="label">Energy units<select class="input" id="energyDisplayUnit"><option value="kj">Kilojoules (kJ)</option><option value="kcal">Calories (kcal)</option></select></label><p class="status target-save-result" id="energyDisplayStatus" role="status"></p></div><details class="target-estimator" id="targetEstimator"><summary>Help me choose targets</summary>
 <form class="form" id="targetEstimateForm">
@@ -366,6 +495,18 @@ button.budget-mini.pointer-focus:focus,.macro-legend>summary.pointer-focus:focus
 <label class="label">Fibre target (g/day)<input class="input" name="fibre_target_g" type="number" min="1" max="150" step="any"></label>
 <label class="label" id="weightGoalField">Weight goal (kg)<input class="input" name="weight_goal_kg" type="number" min="20" max="800" step="any"></label>
 <button type="submit" class="button" id="saveTargetsButton">Save targets</button><p class="status target-save-result" id="personalTargetsStatus" role="status"></p></form>
+<details id="targetHistoryDetails">
+ <summary>Correct past targets</summary>
+ <form id="targetHistoryForm" class="form">
+  <p class="muted">Use this for dates when you know your target was different. Both dates are included. Today’s targets and your log stay unchanged. Leave the amount blank to remove the target on those days.</p>
+  <label class="label">Target<select name="metric" class="input"><option value="energy_budget_kj">Energy budget</option><option value="protein_target_g">Protein target</option><option value="fibre_target_g">Fibre target</option></select></label>
+  <label class="label">From<input name="from" type="date" class="input" required></label>
+  <label class="label">Through<input name="to" type="date" class="input" required></label>
+  <label class="label"><span id="targetHistoryAmountLabel">Amount (kJ/day)</span><input name="amount" type="number" class="input" min="1" step="any"></label>
+  <button type="submit" class="button secondary tight">Save past target</button>
+  <p id="targetHistoryStatus" class="status" role="status"></p>
+ </form>
+</details>
 <p class="plate-signout"><a href="/signout-with-chatgpt?return_to=%2F" target="_top">Sign out of Plate</a></p><details id="importCard">
  <summary>Import weight history</summary>
  <p class="muted import-intro">Choose a CSV, TSV or text file, or paste two columns from a spreadsheet. You’ll review the dates and weights before saving. Existing dates stay unchanged.</p>
@@ -393,25 +534,26 @@ button.budget-mini.pointer-focus:focus,.macro-legend>summary.pointer-focus:focus
 <p>This permanently deletes your Plate food log, weigh-ins and targets. It does not delete your ChatGPT account. Export a CSV above if you want a copy.</p>
 <label class="label">Type DELETE to confirm<input id="deletePlateConfirm" class="input" required autocomplete="off" autocapitalize="characters" spellcheck="false"></label>
 <button type="submit" class="button secondary" id="deletePlateSubmit" disabled>Delete my Plate data</button><p id="deletePlateStatus" role="status"></p></form></details></div></dialog>
-<dialog class="nutrition-sheet settings-sheet" id="logSheet" aria-labelledby="logTitle" closedby="any"><header><h2 id="logTitle"><span id="logTitleText">Log</span><span class="first-meal-heading">Log your first meal</span><span class="import-review-heading">Review meal</span></h2><form method="dialog"><button class="button secondary tight" type="submit" id="closeLogSheet" autofocus><span class="log-standard-close">Close</span><span class="import-review-cancel">Cancel</span></button></form></header><div class="settings-body">
+<dialog class="nutrition-sheet settings-sheet" id="logSheet" aria-labelledby="logTitle" closedby="any"><header><h2 id="logTitle"><span id="logTitleText">Log</span><span class="first-meal-heading">Log your first meal</span><span class="import-review-heading">Review meal</span></h2><form method="dialog"><button class="button secondary tight" type="submit" id="closeLogSheet" autofocus><span class="log-standard-close">Close</span><span class="log-direct-close" aria-label="Close">×</span><span class="import-review-cancel">Cancel</span></button></form></header><div class="settings-body">
 
 <section class="chat-import" id="guidedFood" aria-label="Log food with ChatGPT">
  <div id="chatSteps">
-  <section data-chat-step="starter"><button class="button chat-primary" id="plateStarter" type="button">Log food in ChatGPT</button></section>
+  <section data-chat-step="starter"><a class="button chat-primary" id="plateStarter" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Log food in ChatGPT</a></section>
   <section data-chat-step="copy" hidden><p class="muted">Set up your food chat once. It turns meals and photos into entries you can review in Plate.</p><button class="button" type="button" id="chatImportCopy">Copy setup prompt</button><textarea id="chatImportPrompt" class="input" aria-label="Plate prompt" readonly hidden rows="4"></textarea><button class="button" type="button" id="chatCopied" hidden>I’ve copied it</button></section>
   <section data-chat-step="open" hidden><p class="muted">Paste the prompt into a new ChatGPT chat and send it.</p><a class="button chat-primary" id="startFoodChat" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Open ChatGPT ↗</a></section>
   <section data-chat-step="waiting" hidden><p class="muted">When ChatGPT replies, tap <b>Open in Plate</b> to review and save.</p><button type="button" id="chatWaitingPaste" class="button secondary tight">Paste a reply instead</button></section>
   <section data-chat-step="paste" hidden><label class="label">Paste ChatGPT’s reply<textarea id="chatImportPaste" class="input" rows="4" maxlength="24000" spellcheck="false" placeholder='[{"description":"…","kj":500}]'></textarea></label><button class="button" type="button" id="chatImportReview" disabled>Review entries</button></section>
  </div>
  <div id="chatImportPreview" hidden><p id="chatImportDate"></p><ul id="chatImportRows" class="loglist" aria-label="Entries to save"></ul><button class="button" type="button" id="chatImportSave" disabled>Save entries</button></div>
- <button class="button secondary manual-food-route" type="button" data-manual="manualFood" aria-expanded="false" aria-controls="manualFood">Enter food manually</button>
- <div class="chat-secondary" id="chatAlternatives"><button type="button" id="chatBack" hidden>Back</button><button type="button" id="chatCopyAgain">Copy setup prompt</button><button type="button" id="chatPasteInstead">Paste a reply</button></div>
+ <div class="log-entry-choices"><button class="button secondary manual-food-route" type="button" data-manual="manualFood" aria-expanded="false" aria-controls="manualFood">Enter food manually</button><button type="button" class="button secondary tight" id="logModeWeight">Log weight</button></div>
+ <div class="chat-secondary" id="chatAlternatives"><button type="button" id="chatBack" hidden>Back</button><details class="log-recovery" id="chatLinkRecovery"><summary>Link not working?</summary><button type="button" id="chatCopyAgain">Copy setup prompt</button><button type="button" id="chatPasteInstead">Paste a ChatGPT reply</button></details></div>
+ <button type="button" id="returnToDirectFood" hidden>Return to manual entry</button>
  <div class="status" id="chatImportStatus" role="status" aria-live="polite"></div>
 </section>
 <section class="manual-entry log-manual" aria-label="Manual entry">
- <button type="button" id="backToGuidedFood" class="button secondary tight" hidden>Back to food chat</button><p id="manualDate" class="muted sub" hidden></p><div id="manualFood" hidden><form id="foodForm" class="form"><label class="label">Food or drink<input class="input" id="description" placeholder="e.g. Flat white, regular" required maxlength="300"></label><div class="form-row"><label class="label"><span>Energy (<span id="foodEnergyUnit">kJ</span>)</span><input class="input" id="kj" type="number" inputmode="decimal" min="0" max="83680" step="any" placeholder="e.g. 500" required></label><button class="button" type="submit" id="foodSubmit">Log food</button></div><label class="label">Time eaten (optional, Brisbane)<input class="input" id="consumedTime" type="time"></label><details class="food-nutrition" id="nutritionDetails"><summary>Add a food group or macros <span class="muted">(optional)</span></summary>
+ <button type="button" id="backToGuidedFood" class="button secondary tight" hidden>Back to food chat</button><p id="manualDate" class="muted sub" hidden></p><div id="manualFood" hidden><form id="foodForm" class="form"><label class="label">Food or drink<input class="input" id="description" placeholder="e.g. Flat white, regular" required maxlength="300"></label><div class="form-row food-entry-fields"><div class="form-row"><label class="label"><span>Energy (<span id="foodEnergyUnit">kJ</span>)</span><input class="input" id="kj" type="number" inputmode="decimal" min="0" max="83680" step="any" placeholder="e.g. 500" required></label><button class="button" type="submit" id="foodSubmit">Log food</button></div><label class="label">Time eaten (optional, Brisbane)<input class="input" id="consumedTime" type="time"></label></div><details class="food-nutrition" id="nutritionDetails"><summary>Add a food group or macros <span class="muted">(optional)</span></summary>
 <div class="nutrition-inputs"><label class="label" for="entryGroup">Food group for the whole item<select id="entryGroup" class="input"><option value="">Not specified / mixed</option><option value="vegetables">Vegetables</option><option value="fruit">Fruit</option><option value="grains">Grains</option><option value="protein">Meat, fish, eggs and alternatives</option><option value="dairy">Dairy and alternatives</option><option value="added_fats_oils">Added fats &amp; oils</option><option value="supplements">Supplements</option><option value="discretionary">Discretionary foods</option></select></label><div class="macro-inputs"><label class="label">Protein (g)<input id="entryProtein" class="input" type="number" min="0" max="5000" step="any" inputmode="decimal"></label><label class="label">Carbohydrate (g)<input id="entryCarbs" class="input" type="number" min="0" max="5000" step="any" inputmode="decimal"></label><label class="label">Fat (g)<input id="entryFat" class="input" type="number" min="0" max="5000" step="any" inputmode="decimal"></label><label class="label">Fibre (g)<input id="entryFibre" class="input" type="number" min="0" max="5000" step="any" inputmode="decimal"></label></div><p class="muted sub" id="nutritionHint">Leave unknown amounts blank.</p></div></details>
-<button type="button" class="button secondary tight" id="removeEditedFood" hidden>Remove entry</button><button type="button" class="button secondary tight" id="cancelEdit" hidden>Cancel edit</button></form></div><div id="manualWeight" hidden><form id="weightForm" class="form"><div class="form-row"><label class="label">Weight (kg)<input class="input" id="kg" type="number" inputmode="decimal" min="20" max="500" step=".01" placeholder="e.g. 90.5" required></label><button class="button secondary" type="submit">Save weight</button></div></form></div><div id="manualStatus" class="status" role="status"></div></section><div class="manual-buttons log-modes"><button type="button" class="button secondary tight" id="logModeWeight">Log weight</button><button type="button" class="button secondary tight" id="logModeFood" hidden>Back to food logging</button></div></div></dialog>
+<button type="submit" id="directFoodSave" class="button">Save food</button><button type="button" class="button secondary tight" id="removeEditedFood" hidden>Remove entry</button><button type="button" class="button secondary tight" id="cancelEdit" hidden>Cancel edit</button></form><details id="directFoodWays"><summary>Other ways to log food</summary><div class="direct-food-links"><button type="button" id="directFoodChat">Log food in ChatGPT</button><button type="button" id="directFoodPaste">Paste a ChatGPT reply</button></div></details></div><div id="manualWeight" hidden><form id="weightForm" class="form"><div class="form-row"><label class="label">Weight (kg)<input class="input" id="kg" type="number" inputmode="decimal" min="20" max="500" step=".01" placeholder="e.g. 90.5" required></label><button class="button secondary" type="submit">Save weight</button></div></form></div><div id="manualStatus" class="status" role="status"></div></section><div class="manual-buttons log-modes"><button type="button" class="button secondary tight" id="logModeFood" hidden>Back to food logging</button></div></div></dialog>
 <dialog class="nutrition-sheet settings-sheet" id="removeFoodSheet" aria-labelledby="removeFoodTitle" closedby="none">
 <header><h2 id="removeFoodTitle">Remove this entry?</h2></header>
 <div class="settings-body"><p id="removeFoodName"></p><div class="manual-buttons">
@@ -420,6 +562,7 @@ button.budget-mini.pointer-focus:focus,.macro-legend>summary.pointer-focus:focus
 </div><p id="removeFoodStatus" class="status" role="status"></p></div>
 </dialog>
 <p id="guideTargetsNotice" class="guide-notice" role="status" hidden></p></main>
+<div id="historyScrollTail" aria-hidden="true"></div>
 <!-- WEIGHT_IMPORT_PARSER -->
 <script>
 "use strict";
@@ -469,15 +612,39 @@ function applyEnergyPresentation(unit){
  putEnergyInput(food,previous[1]);
 }
 const svgNS="http://www.w3.org/2000/svg";
-let state={food:[],weights:[],complete:[]}, weightRange="all", energyRange="14", proteinRange="14", breakdownMode="groups", ready=false, busy=false, editId=null, importEntries=[], importRaw="", importTimer, importGeneration=0;
-$("#day").value=today();$("#day").max=today();
+let weightMacrosVisible=false,trackTargetsVisible=true;
+let state={food:[],weights:[],complete:[]}, chartRange="30", proteinRange="14", breakdownMode="groups", ready=false, busy=false, editId=null, importEntries=[], importRaw="", importTimer, importGeneration=0;
+const historyScope=document.documentElement.dataset.historyScope;
+const historyStorageKey=historyScope?'plate.history-view.v1.'+historyScope:null;
+let savedHistoryView={};
+function restoreHistoryView(){
+ if(!historyStorageKey)return;
+ try{
+  const stored=JSON.parse(localStorage.getItem(historyStorageKey));
+  if(!stored||typeof stored!=='object'||Array.isArray(stored))return;
+  if(['30','6m','all'].includes(stored.range))savedHistoryView.range=chartRange=stored.range;
+  if(typeof stored.macros==='boolean')savedHistoryView.macros=weightMacrosVisible=stored.macros;
+  if(typeof stored.targets==='boolean')savedHistoryView.targets=trackTargetsVisible=stored.targets;
+ }catch{}
+ for(const button of document.querySelectorAll('#historyRange [data-range]'))button.setAttribute('aria-pressed',String(button.dataset.range===chartRange));
+ $('#weightMacrosToggle').setAttribute('aria-pressed',String(weightMacrosVisible));
+ $('#trackTargetsToggle').setAttribute('aria-pressed',String(trackTargetsVisible));
+ $('#weightMacrosDetails').hidden=!weightMacrosVisible;
+}
+function saveHistoryView(change){
+ if(!historyStorageKey)return;
+ Object.assign(savedHistoryView,change);
+ try{localStorage.setItem(historyStorageKey,JSON.stringify(savedHistoryView))}catch{}
+}
+restoreHistoryView();
+$("#day").value=today();$("#day").max=today();syncMastDate();
 function status(message,error=false,selector="#status"){const el=$(selector);el.textContent=message;el.classList.toggle("err",error)}
 function btnState(){
- for(const el of document.querySelectorAll('[data-range],#foodTrayToggle'))el.disabled=!ready;
+ for(const el of document.querySelectorAll('[data-range],#foodTrayToggle,#weightMacrosToggle,#trackTargetsToggle'))el.disabled=!ready;
  $("#day").disabled=!ready;
  updateTodayButton();
  chatImportButtons();
-  $("#foodSubmit").disabled=busy||!ready;
+  $("#foodSubmit").disabled=$("#directFoodSave").disabled=busy||!ready;
   $("#weightForm button").disabled=busy||!ready;
   $("#personalTargets button[type=submit]").disabled=busy||!ready;
   $("#submitTargetEstimate").disabled=busy||!ready;
@@ -559,6 +726,7 @@ function chatImportStatus(message,error=false){status(message,error,'#chatImport
 function showChatStep(step){
  guidedStep=step;
  for(const element of document.querySelectorAll('[data-chat-step]'))element.hidden=element.dataset.chatStep!==step;
+ $('#chatLinkRecovery').hidden=step!=='starter';
  $('#chatCopyAgain').hidden=step!=='starter';
  $('#chatPasteInstead').hidden=step!=='starter';
  $('#chatBack').hidden=step==='starter';
@@ -580,7 +748,7 @@ async function copyFoodPrompt(advance){
   chatImportStatus('Copy the selected prompt.');
  }
 }
-$('#plateStarter').onclick=$('#chatImportCopy').onclick=()=>copyFoodPrompt(true);
+$('#chatImportCopy').onclick=()=>copyFoodPrompt(true);
 $('#chatCopyAgain').onclick=()=>copyFoodPrompt(true);
 $('#chatCopied').onclick=()=>showChatStep('open');
 $('#startFoodChat').onclick=()=>{showChatStep('waiting');chatImportStatus('')};
@@ -640,15 +808,12 @@ chatSave.onclick=async()=>{
     ...(Object.keys(nutrition).length?{nutrition}:{})});
    draft.pending.shift();
   }
-  chatPaste.value='';resetChatImport();showChatStep('starter');
-  try{
-   await refresh();
-   if(!chatImportDraft){
-    $('#logSheet').close();
-    revealSavedFood(draft);
-   }
-  }
-  catch{ready=false;chatImportStatus('Entries were saved. Reload to see them.',true)}
+  // Keep the review in the dialog while the updated log loads. Reset only after closing.
+  try{await refresh()}
+  catch{ready=false;chatImportStatus('Entries were saved. Reload to see them.',true);return}
+  $('#logSheet').close();
+  chatPaste.value='';resetChatImport();showChatStep('starter');chatImportStatus('');
+  revealSavedFood(draft);
  }catch{
   chatSave.textContent='Retry '+draft.pending.length+(draft.pending.length===1?' entry':' entries');
   chatImportStatus((draft.total-draft.pending.length)+' of '+draft.total+' confirmed saved. Retry to continue without duplicates.',true);
@@ -763,8 +928,9 @@ function nutrientSummary(items,key){
  const values=items.map(f=>f.nutrition?.macros?.[key]);const known=values.filter(v=>typeof v==='number'&&Number.isFinite(v)&&v>=0);
  return {grams:known.reduce((a,b)=>a+b,0),known:known.length,missing:items.length-known.length};
 }
-function dialColour(ratio,unknown){
- if(unknown)return '#82908b';const stops=[[0,[174,58,45]],[.3,[190,112,35]],[.65,[176,153,40]],[1,[22,123,101]]];const x=Math.max(0,Math.min(1,ratio));
+const DIAL_TONES=[[0,[174,58,45]],[.3,[190,112,35]],[.65,[176,153,40]],[1,[22,123,101]]];
+function dialColour(ratio,unknown,stops=DIAL_TONES){
+ if(unknown)return '#82908b';const x=Math.max(0,Math.min(1,ratio));
  for(let i=1;i<stops.length;i++)if(x<=stops[i][0]){const [a,c]=stops[i-1],[b,d]=stops[i],t=(x-a)/(b-a);return 'rgb('+c.map((v,j)=>Math.round(v+(d[j]-v)*t)).join(',')+')'}return '#167b65';
 }
 function budgetModel(items,goal,budget){
@@ -772,9 +938,52 @@ function budgetModel(items,goal,budget){
  const reserve=goal!==null&&!protein.missing?Math.max(0,goal-protein.grams)*17:0;
  return {protein,fibre,macros,groups,total:macros.total,reserve,budget,goal,over:budget===null?0:Math.max(0,macros.total-budget),left:budget===null?0:Math.max(0,budget-macros.total)};
 }
-function budgetDial(key,label,value,unit,ratio,unknown,detail,partial=false){
- const col=dialColour(ratio,unknown),fraction=unknown?0:Math.min(1,Math.max(0,ratio));
- return '<button type="button" class="budget-mini" data-metric="'+key+'" aria-haspopup="dialog"><svg viewBox="-7 -7 164 164" role="img" aria-label="'+label+' '+value+' '+unit+' '+detail+'" style="color:'+col+'"><defs><filter id="halo-'+key+'" filterUnits="userSpaceOnUse" x="-20" y="-20" width="190" height="190"><feGaussianBlur stdDeviation="4"/></filter><mask id="outside-'+key+'" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="-20" y="-20" width="190" height="190"><rect x="-20" y="-20" width="190" height="190" fill="white"/><circle cx="75" cy="75" r="63" fill="black"/></mask></defs><g mask="url(#outside-'+key+')"><circle filter="url(#halo-'+key+')" class="budget-glow" cx="75" cy="75" r="57" fill="none" stroke="currentColor" stroke-width="25" opacity="'+(unknown?.15:partial?.28:.65)+'"/></g><circle cx="75" cy="75" r="55" fill="none" stroke="#e4eae6" stroke-width="15"/><circle cx="75" cy="75" r="55" fill="none" stroke="currentColor" stroke-width="15" pathLength="100" stroke-dasharray="'+(fraction*100)+' 100" transform="rotate(-90 75 75)"/><text x="75" y="75" dominant-baseline="central" text-anchor="middle" fill="#142920" font-size="'+(String(value).length>4?24:30)+'" font-weight="750">'+value+'</text></svg><span><b>'+label+'</b><small>'+detail+'</small></span></button>';
+// An adjustable model rather than meal records: breakfast, lunch and dinner
+// get the largest increases; the intervening slopes allow for snacks.
+const BRISBANE_ENERGY_PACE=[[0,0],[6*60,0],[9*60,.35],[11*60,.40],[13*60,.61],[17*60,2/3],[19*60+30,1]];
+const ENERGY_PACE_TONES=[[0,[22,123,101]],[.05,[180,145,20]],[.15,[194,100,30]],[.30,[174,58,45]]];
+const ENERGY_PACE_NEUTRAL='#82908b';
+function expectedEnergyFraction(minutes){
+ for(let i=1;i<BRISBANE_ENERGY_PACE.length;i++){
+  const [a,x]=BRISBANE_ENERGY_PACE[i-1],[b,y]=BRISBANE_ENERGY_PACE[i];
+  if(minutes<=b)return x+(y-x)*Math.max(0,(minutes-a)/(b-a));
+ }
+ return 1;
+}
+function energyPaceColour(over,tones=ENERGY_PACE_TONES){
+ const fraction=Math.max(0,Math.min(.30,over));
+ for(let i=1;i<tones.length;i++){
+  const [a,x]=tones[i-1],[b,y]=tones[i];
+  if(fraction<=b){
+   const t=(fraction-a)/(b-a);
+   return 'rgb('+x.map((v,j)=>Math.round(v+(y[j]-v)*t)).join(',')+')';
+  }
+ }
+ return 'rgb('+tones.at(-1)[1].join(',')+')';
+}
+function budgetPace(model,day,hasFood,now=new Date(),tones=ENERGY_PACE_TONES){
+ const neutral=status=>({colour:ENERGY_PACE_NEUTRAL,status,allowance:null});
+ if(model.budget===null)return neutral('No energy budget');
+ const current=today(now);
+ if(day>current)return neutral('Future day');
+ if(!hasFood)return neutral(day===current?'No food logged yet':'No food logged');
+ const finished=day<current;
+ const local=new Date(now.getTime()+10*3600000); // Brisbane has no DST.
+ const allowance=finished?model.budget:model.budget*expectedEnergyFraction(local.getUTCHours()*60+local.getUTCMinutes());
+ const excess=model.total-allowance;
+ return {colour:energyPaceColour(excess/model.budget,tones),allowance,status:finished
+  ?excess>1e-8?'Over budget':'Within budget'
+  :excess>1e-8?'More than expected by now':'On track for now'};
+}
+function budgetDial(key,label,value,unit,ratio,unknown,detail,partial=false,pace=null){
+ const col=pace?.colour??dialColour(ratio,unknown),fraction=unknown?0:Math.min(1,Math.max(0,ratio));
+ const labelText=(label+' '+value+' '+unit+' '+detail).trim();
+ const paceLabel=pace?' · '+pace.status:'';
+ const paceAttributes=pace?' data-budget-pace="'+labelText+'"':'';
+ // When there is no remaining arc, use an outlined track, not a full fill
+ // that could be mistaken for a full day's budget remaining.
+ const rim=pace&&!unknown&&fraction===0?' stroke="currentColor" opacity=".7"':' stroke="#e4eae6"';
+ return '<button type="button" class="budget-mini" data-metric="'+key+'" aria-haspopup="dialog"><svg viewBox="-7 -7 164 164" role="img" aria-label="'+labelText+paceLabel+'"'+paceAttributes+' style="color:'+col+'"><defs><filter id="halo-'+key+'" filterUnits="userSpaceOnUse" x="-20" y="-20" width="190" height="190"><feGaussianBlur stdDeviation="4"/></filter><mask id="outside-'+key+'" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="-20" y="-20" width="190" height="190"><rect x="-20" y="-20" width="190" height="190" fill="white"/><circle cx="75" cy="75" r="63" fill="black"/></mask></defs><g mask="url(#outside-'+key+')"><circle filter="url(#halo-'+key+')" class="budget-glow" cx="75" cy="75" r="57" fill="none" stroke="currentColor" stroke-width="25" opacity="'+(unknown?.15:partial?.28:.65)+'"/></g><circle cx="75" cy="75" r="55" fill="none"'+rim+' stroke-width="15"/><circle cx="75" cy="75" r="55" fill="none" stroke="currentColor" stroke-width="15" pathLength="100" stroke-dasharray="'+(fraction*100)+' 100" transform="rotate(-90 75 75)"/><text x="75" y="75" dominant-baseline="central" text-anchor="middle" fill="#142920" font-size="'+(String(value).length>4?24:30)+'" font-weight="750">'+value+'</text></svg><span><b>'+label+'</b><small>'+detail+'</small></span></button>';
 }
 function nutritionRows(items,key){
  const energy=key==='energy'||key==='plate',nutrient=key==='protein'?'protein_g':'fibre_g';
@@ -832,12 +1041,22 @@ function bindNutritionTile(tile,items,model){
   event.preventDefault();activate(true);
  },{passive:false});
 }
+function wireBudgetDayStatus(key,items,model){
+ const explanation=$('#budgetPaceExplanation');
+ explanation.hidden=key!=='energy';
+ if(explanation.hidden){explanation.textContent='';return}
+ const pace=budgetPace(model,model.day,items.length>0);
+ explanation.textContent=model.day===today()&&pace.allowance!==null
+  ?'Usually about '+showKj(Math.max(0,model.budget-pace.allowance))+' left by now.'
+  :pace.status;
+}
 function openNutritionSheet(key,items,model){
  const modal=$('#nutritionSheet'),list=$('#nutritionItems'),rows=nutritionRows(items,key),nutrient=key==='protein'?model.protein:key==='fibre'?model.fibre:null,target=key==='protein'?model.goal:key==='fibre'?model.fibreGoal??null:null;
  const amount=v=>nutrient?kgf.format(v)+' g':showKj(v);
  $('#nutritionTitle').textContent={protein:'Protein',fibre:'Fibre',energy:'Energy',plate:'Plate'}[key];
  $('#nutritionTotal').textContent=nutrient?(nutrient.known||!items.length?amount(nutrient.grams)+(target!==null?' / '+amount(target):''):'Not recorded'):
- key==='plate'?showKj(model.total):showKj(model.total)+' eaten'+(model.budget===null?'':model.over?' · '+showKj(model.over)+' over': ' · '+showKj(model.left)+' left');
+ key==='plate'?showKj(model.total):(model.budget===null?'':model.over?showKj(model.over)+' over budget · ':showKj(model.left)+' left · ')+showKj(model.total)+' eaten';
+ wireBudgetDayStatus(key,items,model);
  list.replaceChildren();
  if(!rows.length)list.append(make('li','No food entries'));
  else if(key==='plate'){
@@ -942,8 +1161,8 @@ function mosaicPlate(segments){
 }
 function drawBreakdown(items,day,el=$('#budgetDashboard'),interactive=true){
  const goal=proteinTargetForDay(day,state.settings);
- const fibreGoal=state.settings?.fibre_target_g??null;
- const s={...budgetModel(items,goal,state.settings?.energy_budget_kj??null),fibreGoal};
+ const fibreGoal=nutritionTargetForDay('fibre_target_g',day,state.settings);
+ const s={...budgetModel(items,goal,nutritionTargetForDay('energy_budget_kj',day,state.settings)),fibreGoal,day};
  if(interactive)macroLegendRepaint=()=>{};
  if(!ready)return;
  const fmt=v=>nf.format(Math.round(v)),p=s.protein,f=s.fibre,scale=Math.max(s.total+s.reserve,s.budget||0,1),parts=s.macros.segments;
@@ -959,8 +1178,9 @@ function drawBreakdown(items,day,el=$('#budgetDashboard'),interactive=true){
  const key=macroBarKey(parts,s.reserve,s.left,s.budget);
  const barLabel='Macronutrient energy '+showKj(s.total)+(s.over?', '+showKj(s.over)+' over '+showKj(s.budget)+' budget':s.budget!==null?', '+showKj(s.budget)+' budget':'')+(s.reserve?', plus hypothetical protein reserve '+showKj(s.reserve)+(s.budget!==null&&s.total+s.reserve>s.budget?', exceeds remaining budget':''):'');
  const budgetBar='<div class="macro-budget'+(s.over?' is-over':'')+'" role="img" aria-label="'+barLabel+'">'+bar+overSpan+macroBudgetBracket(s,scale)+'</div>';
- const reserve=s.reserve?showKj(s.reserve)+' reserved'+(s.budget!==null&&s.total+s.reserve>s.budget?' · exceeds remaining budget':''):'';
- const markup='<div class="budget-line"><b>'+showKj(s.total)+' eaten</b>'+budgetLabel+'</div>'+(key?'<details class="macro-legend"'+(macroLegendOpen?' open':'')+'><summary aria-label="Energy bar, show colour key">'+budgetBar+'<svg class="macro-key-link" aria-hidden="true"></svg></summary>'+key+'</details>':'<div class="macro-no-key">'+budgetBar+'</div>')+'<p class="reserve-label">'+reserve+'</p><div class="budget-dials">'+budgetDial('protein','Protein',pval,'g',goal===null?0:p.grams/goal,(!p.known&&pUnknown)||goal===null,pd,p.known>0&&p.missing>0)+budgetDial('fibre','Fibre',fval,'g',fibreGoal===null?0:f.grams/fibreGoal,(!f.known&&fUnknown)||fibreGoal===null,fd,f.known>0&&f.missing>0)+plate+budgetDial('energy',elabel,displayEnergyNumber(evalue),energySymbol(),s.budget===null?0:s.left/s.budget,s.budget===null,s.budget===null||s.over?'':s.left===0?'Budget used':'')+'</div>';
+ const reserve=s.reserve?showKj(s.reserve)+' reserved for your protein target'+(s.budget!==null&&s.total+s.reserve>s.budget?' · exceeds remaining budget':''):'';
+ const pace=budgetPace(s,day,items.length>0);
+ const markup='<div class="budget-line"><b>'+showKj(s.total)+' eaten</b>'+budgetLabel+'</div>'+(key?'<details class="macro-legend"'+(macroLegendOpen?' open':'')+'><summary aria-label="Energy bar, show colour key">'+budgetBar+'<svg class="macro-key-link" aria-hidden="true"></svg></summary>'+key+'</details>':'<div class="macro-no-key">'+budgetBar+'</div>')+'<p class="reserve-label">'+reserve+'</p><div class="budget-dials">'+budgetDial('protein','Protein',pval,'g',goal===null?0:p.grams/goal,(!p.known&&pUnknown)||goal===null,pd,p.known>0&&p.missing>0)+budgetDial('fibre','Fibre',fval,'g',fibreGoal===null?0:f.grams/fibreGoal,(!f.known&&fUnknown)||fibreGoal===null,fd,f.known>0&&f.missing>0)+budgetDial('energy',elabel,displayEnergyNumber(evalue),energySymbol(),s.budget===null?0:s.left/s.budget,s.budget===null,s.budget===null||s.over?'':s.left===0?'Budget used':'',false,pace)+plate+'</div>';
  el.innerHTML=interactive?markup:markup.replace(/(halo|outside)-(protein|fibre|energy)/g,'$1-$2-peek');
  if(!interactive)return;
  const macroLegend=el.querySelector('.macro-legend');if(macroLegend)wireMacroLegend(macroLegend,barEntries,scale);
@@ -975,6 +1195,7 @@ function openSettings(guided=false){
  status('',false,'#targetEstimateStatus');
  $('#targetEstimator').open=guided;
  $('#firstWeightSetupNote').hidden=!guided||state.weights.length>0;
+ if(!guided)updateTargetHistoryForm();
  status('',false,'#energyDisplayStatus');
  for(const input of $('#personalTargets').querySelectorAll('input')){
   if(input.name==='energy_budget_kj')putEnergyInput(input,state.settings?.[input.name]);
@@ -1032,7 +1253,7 @@ function guideImpact(entries){
 }
 function guideReserveModel(day){
  const settings=state.settings;
- const budget=settings?.energy_budget_kj, goal=proteinTargetForDay(day,settings);
+ const budget=nutritionTargetForDay('energy_budget_kj',day,settings), goal=proteinTargetForDay(day,settings);
  if(!Number.isFinite(budget)||budget<=0||!Number.isFinite(goal)||goal<=0)return null;
  const model=budgetModel(dayFoods(day),goal,budget);
  return model.reserve>=1?model:null;
@@ -1043,10 +1264,8 @@ function showGuideStage(stage){
  if(stage){
   firstMealGuide.stage=stage;
   if(stage==='meal')renderFoodTray(true);
-  if(stage==='history'&&dateNum(firstMealGuide.day)<startForRange(energyRange,dateNum(today()),firstMealGuide.day)){
-   energyRange='all';
-   for(const button of document.querySelectorAll('[data-chart="energy"][data-range]'))button.setAttribute('aria-pressed',String(button.dataset.range==='all'));
-   draws();
+  if(stage==='history'&&dateNum(firstMealGuide.day)<startForRange(chartRange,dateNum(today()),firstMealGuide.day)){
+   setSharedChartRange('all');
   }
  }
  else firstMealGuide=null;
@@ -1103,7 +1322,7 @@ function paintGuide(move=false){
   $('#openLog').classList?.add('guide-log-highlight');
  }else{
   title='Decide what to eat next';
-  const hasBudget=Number.isFinite(state.settings?.energy_budget_kj),hasProtein=Number.isFinite(proteinTargetForDay(guide.day,state.settings)),hasFibre=Number.isFinite(state.settings?.fibre_target_g);
+  const hasBudget=Number.isFinite(nutritionTargetForDay('energy_budget_kj',guide.day,state.settings)),hasProtein=Number.isFinite(proteinTargetForDay(guide.day,state.settings)),hasFibre=Number.isFinite(nutritionTargetForDay('fibre_target_g',guide.day,state.settings));
   info=hasBudget&&hasProtein&&hasFibre?'Before you eat, check how much protein and fibre you still need today and how much room you have in your energy budget.':'Before you eat, check what you’ve had so far and what fits your day.';
   primary='Done';action=()=>{showGuideStage(null);$('#budgetDashboard').querySelector('[data-metric]')?.focus({preventScroll:true})};
  }
@@ -1137,18 +1356,60 @@ function revealSavedFood(draft){
  (row??$('#foodListCard')).scrollIntoView({block:'nearest'});
  if(row)row.focus({preventScroll:true});
 }
-function openLog(manual=null,firstMeal=false){
+function openLog(manual=null,firstMeal=false,direct=false){
  if(!ready)return;
  const sheet=$('#logSheet'),firstMealScreen=firstMeal&&!manual;
  sheet.toggleAttribute('data-first-meal',firstMealScreen);
+ if(direct){sheet.dataset.directEntry=manual;$('#directFoodWays').open=false}
+ else delete sheet.dataset.directEntry;
  $('#plateStarter').textContent=firstMealScreen?'Log with voice or a photo':'Log food in ChatGPT';
  showManual(manual);
  if(!sheet.open){sheet.clearNutritionExit?.();sheet.showModal();sheet.scrollTop=0}
 }
-$('#openLog').onclick=()=>openLog();
+const logMenuButton=$('#openLog'),logActionMenu=$('#logActionMenu'),logMenuChat=$('#logMenuChat');
+// Use the same starter as onboarding; other builds retain their own configured link.
+logMenuChat.href=$('#plateStarter').href;
+function preparePublicChat(event){
+ event.preventDefault();
+ openLog();copyFoodPrompt(true);
+}
+$('#plateStarter').addEventListener('click',preparePublicChat);
+function setLogMenu(open,restoreFocus=false){
+ logActionMenu.hidden=!open;
+ logMenuButton.setAttribute('aria-expanded',String(open));
+ if(open)logMenuChat.focus({preventScroll:true});
+ else if(restoreFocus)logMenuButton.focus({preventScroll:true});
+}
+logMenuButton.onclick=()=>{if(ready)setLogMenu(logActionMenu.hidden)};
+logMenuChat.addEventListener('click',event=>{setLogMenu(false,true);preparePublicChat(event)});
+logActionMenu.addEventListener('click',event=>{
+ const action=event.target.closest('[data-log-action]')?.dataset.logAction;
+ if(!action||!ready)return;
+ setLogMenu(false,true);
+ openLog(action,false,true);
+ if(action==='manualFood')$('#description').focus();
+ if(action==='manualWeight')$('#kg').focus();
+});
+document.addEventListener('pointerdown',event=>{
+ if(!logActionMenu.hidden&&!event.target.closest('.mast-log-anchor'))setLogMenu(false);
+});
+document.addEventListener('focusin',event=>{
+ if(!logActionMenu.hidden&&!event.target.closest('.mast-log-anchor'))setLogMenu(false);
+});
+document.addEventListener('keydown',event=>{
+ if(event.key==='Escape'&&!logActionMenu.hidden){event.preventDefault();setLogMenu(false,true)}
+});
 $('#logModeFood').onclick=()=>{showManual(null);$('#plateStarter').focus()};
 $('#logModeWeight').onclick=()=>{showManual('manualWeight');$('#kg').focus()};
 $('#backToGuidedFood').onclick=()=>showManual(null);
+function showDirectFoodRecovery(step){
+ resetChatImport();showManual(null);showChatStep(step);chatImportStatus('');
+ $('#logTitleText').textContent=step==='paste'?'Paste a ChatGPT reply':'Log food in ChatGPT';
+ $(step==='paste'?'#chatImportPaste':'#plateStarter').focus();
+}
+$('#directFoodChat').onclick=()=>showDirectFoodRecovery('starter');
+$('#directFoodPaste').onclick=()=>showDirectFoodRecovery('paste');
+$('#returnToDirectFood').onclick=()=>{resetChatImport();showManual('manualFood');$('#description').focus()};
 window.addEventListener('hashchange',handleFoodImportLink);
 $('#personalTargets').oninput=()=>{
  $('#saveTargetsButton').textContent='Save targets';
@@ -1171,6 +1432,24 @@ $('#personalTargets').onsubmit=async e=>{
   finishGuidedTargets(sheet);
  });
 };
+const targetHistoryForm=$('#targetHistoryForm');
+function updateTargetHistoryForm(){
+ const {metric,amount,from,to}=targetHistoryForm.elements;
+ const energy=metric.value==='energy_budget_kj';
+ $('#targetHistoryAmountLabel').textContent='Amount ('+(energy?'kJ':'g')+'/day)';
+ amount.max=energy?50000:metric.value==='protein_target_g'?500:150;
+ const yesterday=today(new Date(Date.now()-86400000));
+ from.max=to.max=yesterday;
+}
+targetHistoryForm.elements.metric.onchange=()=>{
+ targetHistoryForm.elements.amount.value='';
+ updateTargetHistoryForm();
+};
+targetHistoryForm.onsubmit=async e=>{
+ e.preventDefault();
+ const {metric,amount,from,to}=targetHistoryForm.elements;
+ await commit('/api/target-history',{metric:metric.value,from:from.value,to:to.value,value:amount.value===''?null:Number(amount.value)},'Past target saved. Today is unchanged.',null,'#targetHistoryStatus');
+};
 $('#logSheet').addEventListener('cancel',event=>{if(busy&&chatImportDraft)event.preventDefault()});
 $('#logSheet').addEventListener('close',()=>{
  if(editId!==null)cancelEdit();
@@ -1180,6 +1459,7 @@ $('#appSettings').addEventListener('close',()=>{
  $('#targetEstimateForm').reset();$('#targetEstimateNote').textContent='';
  $('#deletePlateForm').reset();$('#deletePlateSubmit').disabled=true;$('#deletePlateDetails').open=false;
  $('#deletePlateStatus').textContent='';
+ targetHistoryForm.reset();$('#targetHistoryDetails').open=false;status('',false,'#targetHistoryStatus');
 });
 function suggestedTargets({age,sex,height,weight,activity,proteinGoal}){
  if(!Number.isInteger(age)||age<19||age>78||!['female','male'].includes(sex)||!(height>=120&&height<=230)||!(weight>=35&&weight<=250)||![1.4,1.6,1.8,2].includes(activity))return null;
@@ -1245,6 +1525,7 @@ function showManual(id){
  const weight=id==='manualWeight';
  $('#manualFood').hidden=id!=='manualFood';$('#manualWeight').hidden=!weight;$('#guidedFood').hidden=!!id;
  $('#backToGuidedFood').hidden=id!=='manualFood';
+ $('#returnToDirectFood').hidden=!!id||$('#logSheet').dataset.directEntry!=='manualFood';
  $('#logModeFood').hidden=!weight;$('#logModeWeight').hidden=!!id;
  $('#logTitleText').textContent=weight?'Log weight':id==='manualFood'?'Log food':'Log';
  document.querySelector('[data-manual="manualFood"]').setAttribute('aria-expanded',String(id==='manualFood'));
@@ -1406,7 +1687,7 @@ function foodDisplayName(description){
 }
 function dayFoods(day){return state.food.filter(f=>f.day===day)}
 function drawDay(){
- updateTodayButton();
+ updateTodayButton();syncMastDate();
  if(!ready)return;
  const day=$("#day").value||today(),items=dayFoods(day);
  const weight=state.weights.find(w=>w.day===day);
@@ -1447,7 +1728,16 @@ function foodEntryDetails(food,interactive=false){
 }
 function drawFoodList(list,items,interactive=true){
  list.replaceChildren();list.dataset.sort=foodSort;
- if(!items.length)list.append(make("li","No food entries","muted"));
+ if(!items.length){
+  const empty=make('li',undefined,'food-log-empty'),link=make('a',undefined,'food-log-chat');
+  empty.append(make('p','No food logged yet.','muted'));
+  link.href=logMenuChat.href;link.target='_blank';link.rel='noopener noreferrer';
+  const cue=make('span','↗');cue.setAttribute('aria-hidden','true');
+  link.addEventListener('click',preparePublicChat);
+  link.append(make('span','Log food in ChatGPT'),cue);
+  empty.append(link);list.append(empty);
+  return;
+ }
  const maxFoodEnergy=Math.max(1,...items.map(toKj));
  for(const f of sortedFoods(items)){
   const li=make("li",undefined,"adaptive-food-row"),details=make("details",undefined,"entry-details"),summary=make("summary"),icon=make("span",foodIcon(f),"food-icon");
@@ -1596,7 +1886,7 @@ function updateTodayButton(){
  const day=$('#day').value,reading=state.weights.find(w=>w.day===day),weight=$('#selectedWeight');
  const estimate=reading?null:selectedWeightEstimate(day,state.weights);
  const exact=reading?roundKg(Number(reading.kg)):null,approx=estimate?roundKg(estimate.value):null;
- weight.textContent=exact??(approx?'≈ '+approx:'');
+ weight.textContent=exact?'Selected day weight: '+exact:approx?'Estimated selected day weight: '+approx:'No reliable estimate for the selected day';
  weight.title=estimate?(estimate.onTrend?'Estimated from the weight trend':'Estimated from the nearest weigh-in'):'';
  weight.setAttribute('aria-label',exact?'Selected day weight: '+exact:approx?'About '+approx:'No reliable estimate for the selected day');
  const button=$('#todayButton'),hide=!$('#day').value||$('#day').value===today();
@@ -1649,7 +1939,7 @@ function captureDayScrollAnchor(origin=null){
  const scrollable=scroll&&scroll.scrollHeight-scroll.clientHeight>24;
  const atBottom=scrollable&&scroll.scrollHeight-scroll.clientHeight-scroll.scrollTop<=24;
  if(atBottom){
-  const chart=$('#energyChart'),rect=chart?.getBoundingClientRect?.();
+  const chart=$('#energyChart')??$('#chart'),rect=chart?.getBoundingClientRect?.();
   if(rect&&rect.top<window.innerHeight&&rect.bottom>0)return {element:chart,top:rect.top};
  }
  const element=$('#dailyLog'),tray=$('#foodListCard'),trayRect=tray?.open?tray.getBoundingClientRect():null;
@@ -1712,7 +2002,7 @@ function handleDayWheel(event,surface){
  const direction=dayWheel.total>0?1:-1;
  dayWheel.used=true;
  const day=$('#day').value||today(),next=dayAfterFlick(day,direction,today());
- if(next)selectChartDay(next,null,captureDayScrollAnchor());
+ if(next)selectChartDay(next,null,captureDayScrollAnchor(surface?.id==='chart'||surface?.id==='energyChart'?surface:null));
 }
 function wireDayWheel(surface){
  if(!surface)return;
@@ -1721,21 +2011,84 @@ function wireDayWheel(surface){
  surface.addEventListener('keydown',()=>{if(dayWheel)dayWheel.used=true});
 }
 function wireLinkedChart(frame,wrap,kind,start,end,values,paintSelection){
- const {svg,width,left,right,top,bottom,x}=frame;
+ const {svg,width,left,right,top,bottom,x,height=202,selectionBottom=bottom}=frame;
  const band=addSvg(svg,'rect',{fill:'#26775f',opacity:.075,'pointer-events':'none','aria-hidden':'true',rx:2});
- svg.insertBefore(band,svg.children[1]??null);
+ svg.insertBefore(band,svg.children[frame.macroTint?2:1]??null);
  const focus=addSvg(svg,'g',{'aria-hidden':'true','pointer-events':'none'});
- const tip=make('div',undefined,'nutrition-callout'+(kind==='weight'?' weight-callout':''));tip.hidden=true;tip.setAttribute('role','status');tip.setAttribute('aria-atomic','true');wrap.append(tip);
+ const record=frame.record;
+ const tip=make('div',undefined,'nutrition-callout'+(record?' record-callout':kind==='weight'?' weight-callout':''));
+ tip.hidden=true;tip.setAttribute('role','status');tip.setAttribute('aria-atomic','true');wrap.append(tip);
+ let recordContext='weight',recordY=top+12,recordPosition=null,recordDrag=null;
+ function placeRecordTip(left,top,visible=false){
+  const box=svg.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight;
+  const low=visible?Math.max(3,8-box.top):3;
+  const high=visible?Math.min(box.height-h-3,window.innerHeight-box.top-h-8):box.height-h-3;
+  const clamp=(v,min,max)=>Math.max(min,Math.min(Math.max(min,max),v));
+  const position={left:clamp(left,3,box.width-w-3),top:clamp(top,high>=low?low:3,high>=low?high:box.height-h-3)};
+  tip.style.left=position.left+'px';tip.style.top=position.top+'px';return position;
+ }
+ if(record){
+  tip.setAttribute('tabindex','0');
+  tip.setAttribute('aria-label','Selected day values. Use arrow keys to move this pop-up or Escape to close.');
+  tip.addEventListener('pointerdown',event=>{
+   if(!event.isPrimary||event.button!==0)return;
+   recordDrag={id:event.pointerId,x:event.clientX,y:event.clientY,left:parseFloat(tip.style.left),top:parseFloat(tip.style.top)};
+   tip.setPointerCapture(event.pointerId);tip.setAttribute('data-dragging','');event.preventDefault();
+  });
+  tip.addEventListener('pointermove',event=>{
+   if(recordDrag?.id!==event.pointerId)return;
+   recordPosition=placeRecordTip(recordDrag.left+event.clientX-recordDrag.x,recordDrag.top+event.clientY-recordDrag.y);
+  });
+  const finish=event=>{if(recordDrag?.id===event.pointerId){recordDrag=null;tip.removeAttribute('data-dragging')}};
+  tip.addEventListener('pointerup',finish);tip.addEventListener('pointercancel',finish);tip.addEventListener('lostpointercapture',finish);
+  tip.addEventListener('keydown',event=>{
+   if(event.key==='Escape'){event.preventDefault();event.stopPropagation();dismissChartValues();svg.focus({preventScroll:true});return}
+   const movement={ArrowLeft:[-12,0],ArrowRight:[12,0],ArrowUp:[0,-12],ArrowDown:[0,12]}[event.key];
+   if(!movement)return;
+   event.preventDefault();
+   recordPosition=placeRecordTip(parseFloat(tip.style.left)+movement[0],parseFloat(tip.style.top)+movement[1]);
+  });
+ }
+ function paintRecordTip(detail,px){
+  tip.replaceChildren();tip.setAttribute('data-record-context',recordContext);
+  for(const value of detail){
+   if(recordContext==='weight'){
+    tip.append(make('span','Weight: ','track-tile-sr'),make('strong',value.text));
+    continue;
+   }
+   const row=make('div',undefined,'nutrition-callout-row'),mark=make('i'),amount=make('strong',value.text);
+   mark.style.background=value.colour;mark.setAttribute('aria-hidden','true');
+   if(value.amount)amount.append(make('small',' '+value.amount));
+   row.append(mark,make('span',value.name),amount);tip.append(row);
+  }
+  const box=svg.getBoundingClientRect(),anchor=px*box.width/width,gap=10,w=tip.offsetWidth,h=tip.offsetHeight;
+  const preferred=anchor+gap+w<box.width?anchor+gap:anchor-gap-w;
+  if(recordPosition)recordPosition=placeRecordTip(recordPosition.left,recordPosition.top);
+  else{
+   const hit=recordY*box.height/height;
+   const side=preferred>=3&&preferred+w<=box.width-3;
+   placeRecordTip(preferred,side?hit-h/2:hit-h-gap>=3?hit-h-gap:hit+gap,true);
+  }
+ }
  let painted=false,wasInside=false;
  function paint(){
   const day=$('#day').value,t=dateNum(day),inside=t>=start&&t<=end;
   const px=x(t),plot=width-left-right,interval=plot/(Math.round((end-start)/DAY)+1),bw=Math.max(4,interval*.84);
+  if(kind==='tiles'||kind==='weight')svg.setAttribute('data-selected-day-x',inside?px:'');
   band.setAttribute('visibility',inside?'visible':'hidden');
-  if(inside){const bx=Math.max(left,px-bw/2);band.style.transition=painted&&wasInside&&!(typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches)?'transform .17s ease-out':'none';band.setAttribute('x',0);band.style.transform='translateX('+bx+'px)';band.setAttribute('y',top);band.setAttribute('width',Math.max(0,Math.min(width-right,bx+bw)-bx));band.setAttribute('height',bottom-top)}
+  if(inside){const bx=Math.max(left,px-bw/2);band.style.transition=painted&&wasInside&&!(typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches)?'transform .17s ease-out':'none';band.setAttribute('x',0);band.style.transform='translateX('+bx+'px)';band.setAttribute('y',top);band.setAttribute('width',Math.max(0,Math.min(width-right,bx+bw)-bx));band.setAttribute('height',selectionBottom-top)}
   painted=true;wasInside=inside;
   focus.replaceChildren();
-  if(inside&&paintSelection)paintSelection(focus,day,px);
-  tip.hidden=!(inside&&chartPopup===kind);if(tip.hidden)return;
+  const recordDetail=record&&inside&&chartPopup==='record'?record.values(recordContext,day):null;
+  if(recordDetail?.length===0)chartPopup=null;
+  if(inside&&paintSelection)paintSelection(focus,day,px,record?(recordDetail?.length?recordContext:null):undefined);
+  if(record){
+   tip.hidden=!recordDetail?.length;
+   if(tip.hidden){recordPosition=null;return}
+   paintRecordTip(recordDetail,px);
+   return;
+  }
+  tip.hidden=kind==='tiles'||!(inside&&chartPopup===kind);if(tip.hidden)return;
   const detail=values(day);tip.replaceChildren();
   if(kind==='weight')tip.append(make('strong',detail.text));
   else{
@@ -1743,16 +2096,24 @@ function wireLinkedChart(frame,wrap,kind,start,end,values,paintSelection){
   }
   addSvg(focus,'line',{x1:px,x2:px,y1:top,y2:bottom,stroke:'#607c70','stroke-width':1.15,'stroke-dasharray':'3 3'});
   if(kind==='weight')for(const point of detail.points)addSvg(focus,'circle',{cx:px,cy:point.y,r:5,fill:'none',stroke:point.colour,'stroke-width':1.5});
-  const box=svg.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight,sx=box.width/width,sy=box.height/202,gap=12;
+  const box=svg.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight,sx=box.width/width,sy=box.height/height,gap=12;
   const available=kind==='nutrition'?(width-right)*sx:box.width;
   const preferred=px*sx+w+gap<=available?px*sx+gap:px*sx-w-gap;
   const anchorY=detail.points.length?Math.min(...detail.points.map(p=>p.y)):top+20;
   tip.style.left=Math.max(0,Math.min(available-w,preferred))+'px';tip.style.top=Math.max(1,Math.min(box.height-h-6,anchorY*sy-24))+'px';
  }
- linkedCharts.set(kind,paint);paint();
+ linkedCharts.set(kind==='tiles'?'nutrition':kind,paint);paint();
  svg.classList.add('linked-chart');
- svg.setAttribute('tabindex','0');svg.setAttribute('aria-keyshortcuts','ArrowLeft ArrowRight Enter Escape');
+ svg.setAttribute('tabindex','0');svg.setAttribute('aria-keyshortcuts',record?'ArrowLeft ArrowRight ArrowUp ArrowDown Enter Escape':'ArrowLeft ArrowRight Enter Escape');
  svg.addEventListener('blur',()=>svg.classList.remove('pointer-focus'));
+ // A date click selects the day, but needn't give the SVG native mouse focus.
+ // Keep the chart tabbable so its visible keyboard focus and shortcuts still work.
+ if(record||kind==='nutrition'||kind==='tiles')svg.addEventListener('mousedown',event=>{
+  if(event.button!==0)return;
+  event.preventDefault();
+  // If focus never entered, no blur will clear the pointer flag before Tab.
+  if(svg.ownerDocument?.activeElement!==svg)svg.classList.remove('pointer-focus');
+ });
  let chartFlick=null,suppressChartClick=false;
  svg.style.touchAction='pan-y pinch-zoom';
  svg.addEventListener('pointerdown',(event={})=>{
@@ -1761,7 +2122,7 @@ function wireLinkedChart(frame,wrap,kind,start,end,values,paintSelection){
   if(event.pointerType!=='touch')return;
   cancelDayNavigation();
   if(!event.isPrimary){chartFlick=null;return}
-  chartFlick={id:event.pointerId,x:event.clientX,y:event.clientY,time:event.timeStamp,epoch:navigationEpoch,anchor:captureDayScrollAnchor()};
+  chartFlick={id:event.pointerId,x:event.clientX,y:event.clientY,time:event.timeStamp,epoch:navigationEpoch,anchor:captureDayScrollAnchor(wrap)};
  });
  svg.addEventListener('pointermove',event=>{
   if(chartFlick?.id!==event.pointerId)return;
@@ -1785,43 +2146,75 @@ function wireLinkedChart(frame,wrap,kind,start,end,values,paintSelection){
  svg.addEventListener('click',event=>{
   event.stopPropagation();
   if(suppressChartClick&&event.detail!==0){suppressChartClick=false;event.preventDefault();return}
-  const box=svg.getBoundingClientRect(),px=(event.clientX-box.left)*width/box.width,py=(event.clientY-box.top)*202/box.height;
-  if(px<left||px>width-right||py<top-4||py>bottom+4){dismissChartValues();return}
-  selectChartDay(calendarDayAt(px,left,width-left-right,start,end),kind,wrap);
+  const box=svg.getBoundingClientRect(),px=(event.clientX-box.left)*width/box.width,py=(event.clientY-box.top)*height/box.height;
+  if(px<left||px>width-right||py<top-4||py>selectionBottom+4){dismissChartValues();return}
+  if(record){
+   const panel=record.panels.find(([,a,b])=>py>=a&&py<=b);
+   if(!panel){dismissChartValues();return}
+   recordContext=panel[0];recordY=py;recordPosition=null;
+  }
+  selectChartDay(calendarDayAt(px,left,width-left-right,start,end),record?'record':kind==='tiles'?null:kind,wrap);
  });
  svg.addEventListener('keydown',event=>{
   svg.classList.remove('pointer-focus');
   if(event.key==='Escape'){event.preventDefault();dismissChartValues();return}
-  if(event.key==='Enter'){event.preventDefault();const t=dateNum($('#day').value);if(t>=start&&t<=end){chartPopup=kind==='weight'?null:kind;syncChartSelection()}return}
+  if(record&&['ArrowUp','ArrowDown'].includes(event.key)){
+   event.preventDefault();const i=record.panels.findIndex(([name])=>name===recordContext);
+   const [name,a,b]=record.panels[Math.max(0,Math.min(record.panels.length-1,i+(event.key==='ArrowUp'?-1:1)))];
+   recordContext=name;recordY=(a+b)/2;recordPosition=null;chartPopup='record';syncChartSelection();return;
+  }
+  if(event.key==='Enter'){event.preventDefault();const t=dateNum($('#day').value);if(t>=start&&t<=end){chartPopup=record?'record':kind==='weight'||kind==='tiles'?null:kind;syncChartSelection()}return}
+  if((kind==='tiles'||frame.composite)&&['Home','End'].includes(event.key)){
+   event.preventDefault();selectChartDay(toDay(event.key==='Home'?start:end),record&&chartPopup==='record'?'record':null,wrap);return;
+  }
   if(!['ArrowLeft','ArrowRight'].includes(event.key))return;
   event.preventDefault();const prior=dateNum($('#day').value),step=event.key==='ArrowLeft'?-DAY:DAY;
-  selectChartDay(toDay(Math.max(start,Math.min(end,Number.isFinite(prior)?prior+step:end))),kind,wrap);
+  selectChartDay(toDay(Math.max(start,Math.min(end,Number.isFinite(prior)?prior+step:end))),record?(chartPopup==='record'?'record':null):kind==='tiles'?null:kind,wrap);
  });
 }
-document.addEventListener('click',event=>{if(chartPopup&&!event.target.closest('#chart svg,#energyChart svg'))dismissChartValues()});
+document.addEventListener('click',event=>{if(chartPopup&&!event.target.closest('#chart svg,#energyChart svg,.record-callout,#nutritionSeriesLegend'))dismissChartValues()});
 
-function chartFrame(wrap,kind,start,end){
- const width=Math.max(235,Math.floor(wrap.clientWidth||325)), height=202, left=kind==="combined"?40:49;
- const right=9,plot=width-left-right;
- const top=20,bottom=170,span=Math.round((end-start)/DAY)+1,interval=plot/span;
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&chartPopup==='record'&&!event.defaultPrevented)dismissChartValues()});
+
+function chartFrame(wrap,kind,start,end,macroStrip=false,panels=0){
+ const width=Math.max(235,Math.floor(wrap.clientWidth||325)),left=kind==="combined"?40:kind==="weight"?51:49;
+ const gridPitch=20,panelTint='#eef3ed';
+ const right=9,plot=width-left-right,top=kind==='tiles'?5:kind==='weight'?13:20,bottom=kind==='tiles'?77:kind==='weight'?135:170;
+ const macroTop=bottom+18,macroScaleTop=macroTop+13,macroScaleBottom=macroScaleTop+3*gridPitch,macroEnd=macroScaleBottom+7;
+ const targetTop=macroStrip?macroEnd+8:bottom+18,targetEnd=targetTop+141;
+ const selectionBottom=kind==='weight'?(panels?targetEnd:(macroStrip?macroScaleBottom:bottom)):bottom;
+ const height=kind==='tiles'?100:kind==='weight'?(panels?targetEnd+32:macroStrip?macroEnd+32:168):202;
+ const span=Math.round((end-start)/DAY)+1,interval=plot/span;
  const x=t=>left+interval*((t-start)/DAY+.5);
  const startDay=toDay(start),endDay=toDay(end),sameYear=startDay.slice(0,4)===endDay.slice(0,4),fmt=sameYear?dateFmt:dateYearFmt;
  const id=kind+"PlotTitle";
  const svg=addSvg(wrap,"svg",{viewBox:"0 0 "+width+" "+height,role:"img","aria-labelledby":id});
- addSvg(svg,"title",{id},(kind==="weight"?"Weight (kg)":kind==="protein"?"Recorded protein (g)":kind==="combined"?"Energy budget used and protein and fibre targets reached (%)":"Logged food energy ("+energySymbol()+")")+", "+dateFullFmt.format(start)+" to "+dateFullFmt.format(end)+". Select a date to see its values.");
+ addSvg(svg,"title",{id},(kind==="weight"?"Weight (kg)"+(macroStrip?" and logged macro energy ("+energySymbol()+")":""):kind==="tiles"?"Daily energy, protein and fibre tiles":kind==="protein"?"Recorded protein (g)":kind==="combined"?"Energy budget used and protein and fibre targets reached (%)":"Logged food energy ("+energySymbol()+")")+", "+dateFullFmt.format(start)+" to "+dateFullFmt.format(end)+". Select a date to see its values.");
  const label=(x,y,text,opts={})=>addSvg(svg,"text",{x,y,fill:"#53675b","font-size":"10","font-family":"system-ui,sans-serif",...opts},text);
+ const axisTick=(y,text,unit='')=>{
+  const edge=left-7,style={fill:'#576a5d','font-size':'11','font-weight':'500'};
+  label(edge,y+4,text,{...style,'text-anchor':'end','data-history-y-tick':'',...(unit?{'aria-label':text+' '+unit}:{})});
+ };
+ const axisGrid=(y,text,kind,unit='',opts={})=>{
+  // Unit aligned with its top tick, with a small fixed clearance for system font fallbacks.
+  const unitSpace={kg:20,kJ:18,kcal:27,'%':16}[unit]??0;
+  line(left+unitSpace,y,width-right,y,{'data-history-grid':kind,...opts});
+  axisTick(y,text,unit);
+  if(unit)label(left+1,y+4,unit,{fill:'#576a5d','font-size':'10.5','font-weight':'650','data-history-y-unit':'','aria-hidden':'true'});
+ };
  const line=(x1,y1,x2,y2,opts={})=>addSvg(svg,"line",{x1,y1,x2,y2,stroke:"#e5ece6",...opts});
  const coord=n=>String(Math.round(n*100)/100);
  function dateAxis(){
-   if(span===1){label(x(end),193,fmt.format(end),{"text-anchor":"middle"});return}
+   if(span===1){label(x(end),height-9,fmt.format(end),{"text-anchor":"middle"});return}
    const intervals=Math.min(span-1,Math.max(1,Math.floor(plot/(sameYear?77:84))));
    for(let k=0;k<=intervals;k++){
      const value=start+Math.round((span-1)*k/intervals)*DAY;
      const anchor=k===0?"start":k===intervals?"end":"middle";
-     label(k===0?left:k===intervals?width-right:x(value),193,fmt.format(value),{"text-anchor":anchor});
+     label(k===0?left:k===intervals?width-right:x(value),height-9,fmt.format(value),{"text-anchor":anchor});
    }
  }
- return {svg,width,left,right,top,bottom,span,interval,x,label,line,coord,dateAxis};
+ const macroTint=macroStrip?addSvg(svg,'rect',{x:left,y:macroTop,width:plot,height:macroEnd-macroTop,rx:6,fill:panelTint,'aria-hidden':'true','class':'weight-macro-tint','pointer-events':'none'}):null;
+ return {svg,width,height,left,right,top,bottom,selectionBottom,gridPitch,panelTint,macroTop,macroScaleTop,macroScaleBottom,macroEnd,targetTop,targetEnd,span,interval,x,label,axisTick,axisGrid,line,coord,dateAxis,macroTint};
 }
 function weightEstimate(t,trend,gaps,points){
  for(const [a,b,value] of trend)if(t>=a&&t<=b)return {value,onTrend:true};
@@ -1833,22 +2226,28 @@ function weightEstimate(t,trend,gaps,points){
  }
  return nearest===null?null:{value:nearest,onTrend:false};
 }
-function drawWeightChart(wrap,start,end,points,goalKg=null){
+function drawWeightChart(wrap,start,end,points,goalKg=null,macroRows=null,panels=null){
  const trend=trendIntervals(points,start,end), inWeights=points.filter(([t])=>t>=start&&t<=end);
- const frame=chartFrame(wrap,"weight",start,end);
+ const frame=chartFrame(wrap,"weight",start,end,macroRows!==null,panels?.targets?1:0);
  const {svg,width,left,right,top,bottom,span,x,label,line,coord,dateAxis}=frame;
  let low=goalKg??inWeights[0]?.[1]??trend[0]?.[2]??70,high=low;
  for(const [,v] of inWeights){low=Math.min(low,v);high=Math.max(high,v)}
  for(const [,,v] of trend){low=Math.min(low,v);high=Math.max(high,v)}
- const {min,max,ticks}=niceBounds(low-.32,high+.32);
- const y=w=>top+(max-w)/(max-min)*(bottom-top);
- const goal=goalKg===null?null:y(goalKg);
- label(0,10,"kg");
- for(const v of ticks){
-  const ty=y(v); if(goal!==null&&Math.abs(ty-goal)<13)continue;
-  line(left,ty,width-right,ty);label(0,ty+4,kgf.format(v));
+ const slots=Math.floor((bottom-top)/frame.gridPitch);
+ const minData=low-.32,maxData=high+.32;
+ let step=Math.max(1,Math.ceil((maxData-minData)/slots));
+ let lower,upper;
+ do{lower=Math.floor(minData/step);upper=Math.ceil(maxData/step);if(upper-lower>slots)step++}while(upper-lower>slots);
+ const min=(lower-Math.floor((slots-upper+lower)/2))*step,max=min+slots*step;
+ const y=w=>bottom-(w-min)/step*frame.gridPitch;
+ for(let v=min;v<=max;v+=step){
+  const ty=y(v);
+  frame.axisGrid(ty,kgf.format(v),'weight',v===max?'kg':'');
  }
- if(goal!==null){line(left,goal,width-right,goal,{stroke:"#7d9d90","stroke-dasharray":"4 4"});label(0,goal+4,roundKg(goalKg),{fill:"#46685c"});}
+ if(goalKg!==null){
+  const goalLine=line(left,y(goalKg),width-right,y(goalKg),{stroke:"#7d9d90","stroke-dasharray":"4 4"});
+  addSvg(goalLine,'title',{},'Weight goal '+roundKg(goalKg));
+ }
  const markRadius=span>365?1:span>90?1.65:span>30?2.2:3.5;
  const dots=inWeights.map(([t,v])=>{
    const py=coord(y(v));
@@ -1864,13 +2263,210 @@ function drawWeightChart(wrap,start,end,points,goalKg=null){
    }
    addSvg(svg,"path",{d:wave,fill:"none",stroke:"#125e43","stroke-width":2,"stroke-linecap":"round","stroke-linejoin":"round"});
  }
- wireLinkedChart(frame,wrap,'weight',start,end);
+ const paintMacros=macroRows===null?undefined:drawWeightMacros(frame,macroRows,toDay(end),panels?.budgetRuns);
+ if(!panels){wireLinkedChart(frame,wrap,'weight',start,end,undefined,paintMacros);dateAxis();return}
+ frame.composite=true;
+ svg.setAttribute('aria-describedby','selectedWeight trackTileSelection weightMacrosDetails');
+ const {targets,daily}=panels,paints=[];
+ const recordedWeights=new Map(inWeights);
+ const recordPanels=[['weight',top-4,bottom+4]];
+ if(macroRows!==null)recordPanels.push(['macros',frame.macroTop,frame.macroEnd]);
+ let tileRows=null;
+
+ if(targets){
+  const title=svg.querySelector('title');
+  title.textContent+=' Nutrition target colour strips and trend lines.';
+  const {targetTop,targetEnd}=frame;
+  addSvg(svg,'rect',{x:left,y:targetTop,width:width-left-right,height:targetEnd-targetTop,rx:7,fill:frame.panelTint,'data-target-tint':'','aria-hidden':'true','pointer-events':'none'});
+  const legend=drawNutritionLegend(wrap);
+  const scale=svg.getBoundingClientRect().height/frame.height||1;
+  legend.style.top=((targetTop+8)*scale)+'px';
+  legend.style.width=((left-6)*scale)+'px';
+  tileRows={...frame,top:targetTop+9.5,bottom:targetTop+48.5};
+  recordPanels.push(['tiles',targetTop,targetTop+65],['lines',targetTop+74,targetEnd]);
+  drawTrackTiles(wrap,start,end,daily,tileRows);
+  paints.push(drawEnergyChart(wrap,start,end,daily,{...frame,top:targetTop+76,bottom:targetEnd-5}));
+ }
+ const dataByDay=targets?new Map(daily.map(row=>[row.day,row])):null;
+ const announce=$('#trackTileSelection');
+ frame.record={panels:recordPanels,values:(context,day)=>{
+  if(context==='weight'){
+   const kg=recordedWeights.get(dateNum(day));
+   return [{name:'Weight',colour:'#376747',text:kg===undefined?'No weigh-in':roundKg(kg)}];
+  }
+  if(context==='macros'){
+   const data=macroRows?.get(day);
+   if(!data)return [{name:'Energy',colour:'#252d26',text:'No food logged'}];
+   return [{name:'Energy',colour:'#252d26',text:showKj(data.total)},...[['Protein','protein'],['Carbs','carbs'],['Fat','fat'],['Fibre','fibre']].map(([name,key])=>{
+    const value=data.grams?.[key];
+    return {name,colour:NUTRITION_COLOURS[key],text:value===null||value===undefined?'Not recorded':nf.format(Math.round(value))+' g'};
+   })];
+  }
+  const row=dataByDay?.get(day);
+  return HISTORY_SERIES.filter(({key})=>context!=='lines'||!hiddenNutritionSeries.has(key)).map(({name,key,colour})=>{
+   if(!row?.recorded[key])return {name,colour,text:'Not recorded'};
+   const target=row.targets[key],raw=row.values[key],format=key==='energy'?displayEnergyNumber:n=>nf.format(Math.round(n)),unit=key==='energy'?energySymbol():'g';
+   const amount=format(raw)+(target===null?'':'/'+format(target))+' '+unit;
+   return {name,colour,text:Number.isFinite(row[key])?nf.format(Math.round(row[key]))+'%':amount,amount:Number.isFinite(row[key])?amount:null};
+  });
+ }};
+ wireLinkedChart(frame,wrap,'weight',start,end,undefined,(focus,day,px,context)=>{
+  if(context||paints.length||macroRows!==null)addSvg(focus,'line',{x1:px,x2:px,y1:top,y2:frame.selectionBottom,stroke:'#526c5d','stroke-width':.75,'stroke-dasharray':'2 2'});
+  paintMacros?.(focus,day,px,context==='macros');
+  if(context==='weight'){
+   const kg=recordedWeights.get(dateNum(day));
+   if(kg!==undefined)addSvg(focus,'circle',{cx:px,cy:y(kg),r:4,fill:'#376747',stroke:'#fff','stroke-width':1.35,'data-record-weight':''});
+  }
+  if(context==='lines')for(const paint of paints)paint?.(focus,day,px,true);
+  if(context==='tiles'&&tileRows){
+   const bounds=tileCellBounds(tileRows,dateNum(day));
+   const width=Math.max(1,bounds.width);
+   addSvg(focus,'rect',{x:px-width/2,y:tileRows.top,width,height:tileRows.bottom-tileRows.top,fill:'none',stroke:'#314c3b','stroke-width':1.3,'data-record-tiles':''});
+  }
+  if(dataByDay){
+   const row=dataByDay.get(day),label=dateFullFmt.format(dateNum(day))+' · '+HISTORY_SERIES.map(series=>nutritionTileCell(series,row,day).text).join(' · ');
+   if(announce.textContent!==label)announce.textContent=label;
+  }
+ });
  dateAxis();
 }
+function weightMacroDays(foods,startDay,endDay){
+ const days=new Map();
+ for(const entry of foods){
+  if(entry.day<startDay||entry.day>endDay)continue;
+  if(!days.has(entry.day))days.set(entry.day,[]);
+  days.get(entry.day).push(entry);
+ }
+ return new Map([...days].map(([day,items])=>{
+  const grams={};
+  for(const key of ['protein','carbs','fat','fibre']){
+   const sum=nutrientSummary(items,key+'_g');grams[key]=sum.known?sum.grams:null;
+  }
+  return [day,{...breakdown(items,'macros'),grams}];
+ }));
+}
+function macroBudgetRuns(start,end,settings){
+ const first=toDay(start),last=toDay(end),metric='energy_budget_kj';
+ let value=nutritionTargetForDay(metric,first,settings),from=start;
+ const changes=new Map();
+ for(const row of settings?.nutrition_target_history??[]){
+  if(row.metric===metric&&row.effective_day>first&&row.effective_day<=last)changes.set(row.effective_day,row.target_value);
+ }
+ const runs=[];
+ const record=until=>{if(Number.isFinite(value)&&value>0&&until>from)runs.push({from,until,value})};
+ for(const day of [...changes.keys()].sort()){
+  const next=changes.get(day);
+  if(next===value)continue;
+  const boundary=dateNum(day);record(boundary);from=boundary;value=next;
+ }
+ record(end+DAY);
+ return runs;
+}
+function drawWeightMacros(frame,rows,currentDay,budgetRuns=[]){
+ const {svg,width,left,right,interval,macroScaleBottom:bottom,x,line,coord}=frame;
+ const barWidth=tileCellBounds(frame,dateNum(currentDay)).width;
+ let peak=0;for(const row of rows.values())peak=Math.max(peak,row.total);
+ for(const run of budgetRuns)peak=Math.max(peak,run.value);
+ // Pick the natural next energy tick from the visible data, without extra headroom.
+ const peakShown=energyInDisplayUnit(peak);
+ const tick=tickStep(peakShown,3,energySymbol()==='kcal'?50:200);
+ const steps=Math.max(1,Math.ceil(peakShown/tick-Number.EPSILON*8));
+ const y=amount=>bottom-energyInDisplayUnit(amount)/tick*frame.gridPitch;
+ const compactEnergy=new Intl.NumberFormat('en-AU',{notation:'compact',maximumFractionDigits:1});
+ for(let i=1;i<=steps;i++){
+  const amount=energyFromDisplayUnit(i*tick);
+  const compact=compactEnergy.format(energyInDisplayUnit(amount)).replace('K','k');
+  frame.axisGrid(y(amount),compact,'macros',i===steps?energySymbol():'',{stroke:'#dbe4d9'});
+ }
+ const paths=new Map(),barGroup=addSvg(svg,'g',{'class':'weight-macro-bars','pointer-events':'none','aria-hidden':'true','data-date-mark-width':barWidth});
+ for(const [day,row] of rows){
+  const start=x(dateNum(day))-barWidth/2;
+  let sum=0;
+  for(const part of row.segments){
+   const segmentHeight=y(sum)-y(sum+part.kj);sum+=part.kj;
+   const shape='M'+coord(start)+' '+coord(y(sum))+'h'+coord(barWidth)+'v'+coord(segmentHeight)+'h'+coord(-barWidth)+'Z';
+   const bucket=part.key+(day===currentDay?'-today':'');
+   if(!paths.has(bucket))paths.set(bucket,{...part,d:''});
+   paths.get(bucket).d+=shape;
+  }
+ }
+ for(const [key,part] of paths)addSvg(barGroup,'path',{d:part.d,fill:part.colour,opacity:key.endsWith('-today')?.34:.72,'data-weight-macro':key});
+ const current=rows.get(currentDay);
+ if(current?.total>0)addSvg(barGroup,'rect',{
+  x:x(dateNum(currentDay))-barWidth/2,y:y(current.total),width:barWidth,height:bottom-y(current.total),
+  fill:'none',stroke:'#456358',opacity:.54,'stroke-width':.75,'stroke-dasharray':'2 2','data-weight-macro-today':'',
+ });
+ if(budgetRuns.length){
+  const edge=t=>Math.max(left,Math.min(width-right,x(t)-interval/2));
+  let d='',previous=null;
+  for(const run of budgetRuns){
+   const first=edge(run.from),last=edge(run.until),lineY=y(run.value);
+   d+=(previous===run.from?'V'+coord(lineY):'M'+coord(first)+' '+coord(lineY))+'H'+coord(last);
+   previous=run.until;
+  }
+  const budgetPath=addSvg(svg,'path',{d,fill:'none',stroke:'#355346','stroke-width':1.15,'stroke-dasharray':'4 3','data-weight-budget':'','pointer-events':'none'});
+  addSvg(budgetPath,'title',{},'Daily energy budget by date ('+energySymbol()+')');
+ }
+ return (focus,day,px,outline=false)=>{
+  const row=rows.get(day);
+  if(outline&&row?.total>0){
+   const width=Math.max(1,barWidth);
+   addSvg(focus,'rect',{x:px-width/2,y:y(row.total),width,height:bottom-y(row.total),fill:'none',stroke:'#314c3b','stroke-width':1.3,'data-record-bar':''});
+  }
+  const detail=$('#weightMacrosDetails');
+  const prefix=day?shortDate(day)+': ':'';
+  const segments=row?.segments.map(part=>part.label+' '+showKj(part.kj)).join(' · ');
+  const text=prefix+(row?showKj(row.total)+(day===currentDay?' so far':'')+(segments?' · '+segments:''):'No food logged');
+  if(detail.textContent!==text)detail.textContent=text;
+ };
+}
+const historyScrollTail=$('#historyScrollTail');
+let historyTailSize=0;
+function sizeHistoryTail(value){
+ const height=Math.max(0,Math.ceil(value));
+ if(height===historyTailSize)return;
+ historyTailSize=height;
+ historyScrollTail.style.height=height+'px';
+ document.documentElement.classList.toggle('history-scroll-held',height>0);
+}
+function naturalHistoryScrollLimit(scroll){
+ return Math.round(historyScrollTail.getBoundingClientRect().top+scroll.scrollTop-scroll.clientHeight);
+}
+function redrawHistoryKeepingPlace(source,update){
+ const scroll=document.scrollingElement;
+ if(!scroll){update();draws();return}
+ const before=Math.max(0,scroll.scrollTop), priorTop=source.getBoundingClientRect().top;
+ // Reserve before replacing the SVG so a layout-triggering read can't clamp
+ // the old position. This larger reserve exists only within this same task.
+ if(before>0)sizeHistoryTail(Math.max(historyTailSize,
+  $('#chart').getBoundingClientRect().height+$('#weightMacrosDetails').getBoundingClientRect().height));
+ update();draws();
+ const goal=Math.max(0,source.getBoundingClientRect().top+scroll.scrollTop-priorTop);
+ sizeHistoryTail(goal>0?goal-naturalHistoryScrollLimit(scroll):0);
+ if(Math.abs(scroll.scrollTop-goal)>.5)window.scrollTo({top:goal,behavior:'instant'});
+}
+window.addEventListener('scroll',()=>{
+ const scroll=document.scrollingElement;
+ if(historyTailSize&&scroll&&scroll.scrollTop<=Math.max(0,naturalHistoryScrollLimit(scroll)))sizeHistoryTail(0);
+},{passive:true});
+window.addEventListener('resize',()=>{
+ const scroll=document.scrollingElement;
+ if(historyTailSize&&scroll)sizeHistoryTail(scroll.scrollTop>0?scroll.scrollTop-naturalHistoryScrollLimit(scroll):0);
+},{passive:true});
+$('#weightMacrosToggle').onclick=event=>{
+ if(!ready)return;
+ redrawHistoryKeepingPlace(event.currentTarget,()=>{
+  chartPopup=null;
+  weightMacrosVisible=!weightMacrosVisible;
+  saveHistoryView({macros:weightMacrosVisible});
+  event.currentTarget.setAttribute('aria-pressed',String(weightMacrosVisible));
+  $('#weightMacrosDetails').hidden=!weightMacrosVisible;
+ });
+};
 const HISTORY_SERIES=[
- {key:'energy',name:'Energy',colour:'#171917',dash:'none',unit:'kJ'},
- {key:'protein',name:'Protein',colour:NUTRITION_COLOURS.protein,dash:'7 4',unit:'g'},
- {key:'fibre',name:'Fibre',colour:'#5b8756',dash:'1 4',unit:'g'},
+ {key:'energy',name:'Energy',colour:'#171917',unit:'kJ'},
+ {key:'protein',name:'Protein',colour:NUTRITION_COLOURS.protein,unit:'g'},
+ {key:'fibre',name:'Fibre',colour:'#5b8756',unit:'g'},
 ];
 const hiddenNutritionSeries=new Set();
 const nutritionPointRadius=3,nutritionOpenStroke=1;
@@ -1892,29 +2488,33 @@ function paintNutritionVisibility(wrap,legend){
 function drawNutritionLegend(wrap){
  const legend=$('#nutritionSeriesLegend');
  if(legend.childElementCount)return legend;
- for(const {key,name,colour,dash} of HISTORY_SERIES){
+ for(const {key,name,colour} of HISTORY_SERIES){
   const button=make('button',undefined,'nutrition-series-button');button.type='button';button.dataset.nutritionLabel=key;
-  button.style.setProperty('--series',colour);
-  const swatch=addSvg(button,'svg',{viewBox:'0 0 18 8','aria-hidden':'true',focusable:'false'});
-  addSvg(swatch,'line',{x1:1,x2:17,y1:4,y2:4,stroke:colour,'stroke-width':2,'stroke-dasharray':dash,'stroke-linecap':'round'});
+  button.style.setProperty('--series',colour);button.setAttribute('aria-label',name+' target line');
   button.append(make('span',name));
   button.addEventListener('click',()=>{
    if(hiddenNutritionSeries.has(key))hiddenNutritionSeries.delete(key);
    else hiddenNutritionSeries.add(key);
    paintNutritionVisibility(wrap,legend);
+   if(chartPopup==='record')syncChartSelection();
   });
   legend.append(button);
  }
  return legend;
 }
-function proteinTargetForDay(day,settings){
- const history=settings?.protein_target_history;
- if(Array.isArray(history)&&history.length){
-  for(let i=history.length-1;i>=0;i--)if(history[i].effective_day<=day)return history[i].target_g;
-  return null;
+function nutritionTargetForDay(metric,day,settings){
+ const protein=metric==='protein_target_g';
+ const history=protein?settings?.protein_target_history:settings?.nutrition_target_history;
+ if(Array.isArray(history)){
+  for(let i=history.length-1;i>=0;i--){
+   const row=history[i];
+   if((protein||row.metric===metric)&&row.effective_day<=day)return protein?row.target_g:row.target_value;
+  }
  }
- return Number.isFinite(settings?.protein_target_g)?settings.protein_target_g:null;
+ const legacy=protein&&!history?.length?settings?.protein_target_g:settings?.nutrition_target_legacy?.[metric];
+ return Number.isFinite(legacy)?legacy:null;
 }
+function proteinTargetForDay(day,settings){return nutritionTargetForDay('protein_target_g',day,settings)}
 const percentOf=(amount,target)=>amount!==null&&Number.isFinite(target)&&target>0?amount/target*100:null;
 function nutritionHistory(items,endDay,settings){
  const byDay=new Map();
@@ -1926,8 +2526,8 @@ function nutritionHistory(items,endDay,settings){
   const entries=byDay.get(day),p=nutrientSummary(entries,'protein_g'),f=nutrientSummary(entries,'fibre_g');
   // Missing macros contribute nothing on logged days; never persist those as actual zeroes.
   const values={energy:entries.reduce((n,x)=>n+toKj(x),0),protein:p.grams,fibre:f.grams};
-  const targets={energy:settings?.energy_budget_kj??null,protein:proteinTargetForDay(day,settings),fibre:settings?.fibre_target_g??null};
-  const row={day,values,targets};
+  const targets={energy:nutritionTargetForDay('energy_budget_kj',day,settings),protein:proteinTargetForDay(day,settings),fibre:nutritionTargetForDay('fibre_target_g',day,settings)};
+  const row={day,values,targets,recorded:{energy:true,protein:p.known>0,fibre:f.known>0}};
   for(const key of ['energy','protein','fibre']){
    row[key]=percentOf(values[key],targets[key]);
   }
@@ -1942,23 +2542,37 @@ function historyAmount(r,series){
  return name+' '+fmt(raw)+' / '+fmt(target)+' '+symbol+' · '+nf.format(Math.round(pct))+'%';
 }
 
-function drawEnergyChart(wrap,start,end,daily){
+function drawEnergyChart(wrap,start,end,daily,embedded=null){
  const currentDay=today(),rows=daily.filter(r=>dateNum(r.day)>=start&&dateNum(r.day)<=end),plotted=rows.filter(r=>HISTORY_SERIES.some(s=>Number.isFinite(r[s.key])));
- const frame=chartFrame(wrap,'combined',start,end);
+ const frame=embedded??chartFrame(wrap,'combined',start,end);
  const {svg,width,left,right,top,bottom,x,label,line,dateAxis}=frame;
  let ceiling=120;
  for(const {key} of HISTORY_SERIES)for(const r of plotted)ceiling=Math.max(ceiling,r[key]??0);
- const {max,ticks}=niceBounds(0,ceiling,25);
- const y=p=>bottom-p/max*(bottom-top);
- label(0,10,'% of target');
- for(const tick of ticks){if(tick===100)continue;line(left,y(tick),width-right,y(tick));if(Math.abs(y(tick)-y(100))>=11)label(0,y(tick)+4,nf.format(tick)+'%')}
- line(left,y(100),width-right,y(100),{stroke:'#6e8072','stroke-width':1.35,'stroke-dasharray':'5 4'});
- label(0,y(100)+4,'100%',{fill:'#294d3d','font-weight':700});
+ let y;
+ if(embedded){
+  let step=50;
+  while(Math.ceil(100/step)+Math.max(1,Math.ceil((ceiling-100)/step))>3)step*=2;
+  const upper=100+Math.max(1,Math.ceil((ceiling-100)/step))*step;
+  y=p=>top+(upper-p)/step*frame.gridPitch;
+  for(let v=upper;v>0;v-=step){
+   if(v===100)continue;
+   frame.axisGrid(y(v),nf.format(v),'targets',v===upper?'%':'',{stroke:'#dfe9e0'});
+  }
+  line(left,y(100),width-right,y(100),{stroke:'#6e8072','stroke-width':1.35,'stroke-dasharray':'5 4','data-history-grid':'targets'});
+  frame.axisTick(y(100),'100','%');
+ }else{
+  const {max,ticks}=niceBounds(0,ceiling,25);
+  y=p=>bottom-p/max*(bottom-top);
+  label(0,10,'% of target');
+  for(const tick of ticks){if(tick===100)continue;line(left,y(tick),width-right,y(tick));if(Math.abs(y(tick)-y(100))>=11)label(0,y(tick)+4,nf.format(tick)+'%')}
+  line(left,y(100),width-right,y(100),{stroke:'#6e8072','stroke-width':1.35,'stroke-dasharray':'5 4'});
+  label(0,y(100)+4,'100%',{fill:'#294d3d','font-weight':700});
+ }
  const current=plotted.find(r=>r.day===currentDay),legend=drawNutritionLegend(wrap);
  for(const series of HISTORY_SERIES){
-  const {key,name,colour,dash}=series,{d}=nutritionDayPath(plotted,key,x,y,currentDay);
+  const {key,name,colour}=series,{d}=nutritionDayPath(plotted,key,x,y,currentDay);
   if(d){
-   const trace=addSvg(svg,'path',{d,fill:'none',stroke:colour,'stroke-width':1.8,'stroke-dasharray':dash,'stroke-linecap':'round','stroke-linejoin':'round','data-nutrition-stroke':key});
+   const trace=addSvg(svg,'path',{d,fill:'none',stroke:colour,'stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round','data-nutrition-stroke':key});
    addSvg(trace,'title',{},name+' · past days');
   }
   if(Number.isFinite(current?.[key])){
@@ -1966,42 +2580,168 @@ function drawEnergyChart(wrap,start,end,daily){
    addSvg(point,'title',{},name+' · today so far');
   }
  }
- dateAxis();
+ if(!embedded)dateAxis();
  if(!plotted.length)label(left+5,(top+bottom)/2,'No values with a target in this range.');
  const rowByDay=new Map(rows.map(r=>[r.day,r]));
- wireLinkedChart(frame,wrap,'nutrition',start,end,day=>{
+ const paint=(focus,day,px,record=false)=>{
+  if(day===currentDay&&!record)return; // Today already has an open circle, even when it isn't selected.
+  const r=rowByDay.get(day);
+  if(!r)return;
+  for(const {key,colour} of HISTORY_SERIES){
+   if(!Number.isFinite(r[key])||(record&&!r.recorded[key]))continue;
+   addSvg(focus,'circle',{cx:px,cy:y(r[key]),r:nutritionPointRadius,fill:colour,'data-nutrition-point':key,opacity:.9,visibility:hiddenNutritionSeries.has(key)?'hidden':'visible'});
+  }
+ };
+ if(!embedded)wireLinkedChart(frame,wrap,'nutrition',start,end,day=>{
   const r=rowByDay.get(day);
   return {rows:HISTORY_SERIES.map(({key,name,colour,unit})=>{
     const raw=r?.values[key];
     return {name,colour,text:raw===null||raw===undefined?'Not recorded':(key==='energy'?showKj(raw):kgf.format(raw)+' '+unit)};
    }),points:HISTORY_SERIES.filter(({key})=>r&&Number.isFinite(r[key])).map(({key,colour})=>({y:y(r[key]),colour}))};
- },(focus,day,px)=>{
-  if(day===currentDay)return; // Today already has an open circle, even when it isn't selected.
-  const r=rowByDay.get(day);
-  if(!r)return;
-  for(const {key,colour} of HISTORY_SERIES){
-   if(!Number.isFinite(r[key]))continue;
-   addSvg(focus,'circle',{cx:px,cy:y(r[key]),r:nutritionPointRadius,fill:colour,'data-nutrition-point':key,opacity:.9,visibility:hiddenNutritionSeries.has(key)?'hidden':'visible'});
-  }
- });
+ },paint);
  paintNutritionVisibility(wrap,legend);
+ return paint;
 }
 
+function tileCellBounds(frame,t){
+ // The same date-cell pitch/gutter is used by macro bars and target strips.
+ // Below a screen pixel there is no useful separator; keep dense history contiguous.
+ const gap=frame.interval<1?0:Math.min(5,frame.interval*.17);
+ const width=Math.min(36,frame.interval-gap);
+ return {x:frame.x(t)-width/2,width};
+}
+const TILE_ENERGY_TONES=[[0,[151,180,147]],[.05,[222,196,120]],[.15,[210,158,109]],[.30,[189,125,111]]];
+const TILE_NUTRIENT_TONES=[[0,[189,125,111]],[.3,[210,158,109]],[.65,[222,196,120]],[1,[151,180,147]]];
+function nutritionTileCell(series,row,day,now=new Date()){
+ const {key,name}=series,none=null;
+ if(!row?.recorded[key])return {colour:none,text:name+' not recorded'};
+ const text=historyAmount(row,series);
+ if(row.targets[key]===null)return {colour:none,text};
+ if(key==='energy'){
+  const pace=budgetPace({budget:row.targets.energy,total:row.values.energy},day,true,now,TILE_ENERGY_TONES);
+  return {colour:pace.colour,text:text+' · '+pace.status};
+ }
+ return {colour:dialColour(row[key]/100,false,TILE_NUTRIENT_TONES),text};
+}
+function drawTrackTiles(wrap,start,end,daily,embedded=null){
+ const frame=embedded??chartFrame(wrap,'tiles',start,end),{svg,width,left,right,interval,label,top,bottom}=frame;
+ const dates=new Map(),current=today(),visualNow=new Date();
+ const cellHeight=embedded?11:21, stride=embedded?14:24;
+ const layers=addSvg(svg,'g',{'aria-hidden':'true','data-track-tile-layer':'','data-date-mark-width':tileCellBounds(frame,start).width,'data-tile-top':top,'data-tile-stride':stride,'pointer-events':'none'});
+ const dateMark=addSvg(svg,'line',{'aria-hidden':'true','pointer-events':'none',stroke:'#526c5d','stroke-width':1,'stroke-dasharray':'2 2'});
+ const paths=new Map(),todayPaths=new Map(),filled=new Map(),q=n=>Number(n.toFixed(6));
+ for(const [i,{name,colour}] of HISTORY_SERIES.entries()){
+  const y=top+i*stride;
+  if(!embedded)label(0,y+Math.round(cellHeight/2)+4,name,{fill:colour,'font-weight':700});
+
+ }
+ for(const row of daily){
+  const t=dateNum(row.day);
+  if(t<start||t>end)continue;
+  dates.set(row.day,row);
+  const bounds=tileCellBounds(frame,t);
+  for(const [i,series] of HISTORY_SERIES.entries()){
+   const cell=nutritionTileCell(series,row,row.day,visualNow);
+   if(cell.colour===null)continue;
+   filled.set(t,(filled.get(t)??0)|(1<<i));
+   const y=top+i*stride,x=q(bounds.x),w=q(bounds.width);
+   // Dense views use one batched SVG path per colour with no pixel-sized gaps.
+   const d='M'+x+' '+y+'h'+w+'v'+cellHeight+'h'+(-w)+'Z';
+   const batch=row.day===current?todayPaths:paths;
+   if(!batch.has(cell.colour))batch.set(cell.colour,[]);
+   batch.get(cell.colour).push(d);
+  }
+ }
+ // Missing values get their own subtle geometry, independent of low results
+ // and today's partial opacity. One path covers every missing cell in the range.
+ const missing=[];
+ for(let t=start;t<=end;t+=DAY){
+  const mask=filled.get(t)??0;if(mask===7)continue;
+  const bounds=tileCellBounds(frame,t),x=q(bounds.x),w=q(bounds.width);
+  for(let i=0;i<HISTORY_SERIES.length;i++)if(!(mask&(1<<i))){
+   missing.push('M'+x+' '+(top+i*stride)+'h'+w+'v'+cellHeight+'h'+(-w)+'Z');
+  }
+ }
+ if(missing.length)addSvg(layers,'path',{fill:'#e4ebe4',d:missing.join(''),'data-track-tile-empty':''});
+ for(const [fill,commands] of paths)addSvg(layers,'path',{fill,d:commands.join('')});
+ for(const [fill,commands] of todayPaths)addSvg(layers,'path',{fill,d:commands.join(''),opacity:.48,'data-track-tile-today':''});
+ if(interval>=25&&cellHeight>=18){
+  const textGroup=addSvg(svg,'g',{'aria-hidden':'true','pointer-events':'none'});
+  for(const row of dates.values())for(const [i,{key}] of HISTORY_SERIES.entries()){
+   const pct=row[key],mark=row.recorded[key]&&Number.isFinite(pct)&&pct<999.5?Math.round(pct)+'%':null;
+   if(mark)addSvg(textGroup,'text',{x:frame.x(dateNum(row.day)),y:top+i*stride+Math.round(cellHeight/2)+4,'text-anchor':'middle',fill:'#fff',opacity:row.day===current?.7:1,'font-size':9,'font-weight':750,stroke:'#26392f','stroke-width':1,'paint-order':'stroke'},mark);
+  }
+ }
+ if(embedded){dateMark.remove();return}
+ frame.dateAxis();
+ const announcement=make('span',undefined,'track-tile-sr');
+ announcement.setAttribute('role','status');announcement.setAttribute('aria-atomic','true');
+ svg.setAttribute('aria-describedby','trackTileSelection');announcement.id='trackTileSelection';wrap.append(announcement);
+ wireLinkedChart(frame,wrap,'tiles',start,end,undefined,(_focus,day,x)=>{
+  const row=dates.get(day),caption=dateFullFmt.format(dateNum(day))+(day===current?' · today so far':'');
+  const value=caption+' · '+HISTORY_SERIES.map(series=>nutritionTileCell(series,row,day).text).join(' · ');
+  if(announcement.textContent!==value)announcement.textContent=value;
+  dateMark.setAttribute('x1',x);dateMark.setAttribute('x2',x);
+  dateMark.setAttribute('y1',top);dateMark.setAttribute('y2',bottom);
+ });
+ // Bring the selected-date mark above the painted paths but below the focus ring.
+ svg.append(dateMark);
+ const paint=linkedCharts.get('nutrition');
+ linkedCharts.set('nutrition',()=>{
+  const t=dateNum($('#day').value);
+  const inside=t>=start&&t<=end;
+  dateMark.setAttribute('visibility',inside?'visible':'hidden');
+  if(!inside)announcement.textContent='Selected date is outside this range.';
+  paint();
+ });
+ linkedCharts.get('nutrition')();
+}
+$('#trackTargetsToggle').onclick=event=>{
+ if(!ready)return;
+ redrawHistoryKeepingPlace(event.currentTarget,()=>{
+  cancelDayNavigation();chartPopup=null;
+  trackTargetsVisible=!trackTargetsVisible;
+  saveHistoryView({targets:trackTargetsVisible});
+  event.currentTarget.setAttribute('aria-pressed',String(trackTargetsVisible));
+ });
+};
+function sharedChartStart(end){
+ if(chartRange!=='all')return startForRange(chartRange,end);
+ const endDay=toDay(end);
+ let earliest;
+ for(const entries of [state.food,state.weights])for(const entry of entries){
+  if(entry.day<=endDay&&(!earliest||entry.day<earliest))earliest=entry.day;
+ }
+ return startForRange(chartRange,end,earliest);
+}
+function setSharedChartRange(range,source=null){
+ if(!ready)return;
+ if(source)saveHistoryView({range});
+ if(range===chartRange)return;
+ const anchor=source?captureDayScrollAnchor(source):null;
+ cancelDayNavigation();chartPopup=null;chartRange=range;
+ for(const button of document.querySelectorAll('#historyRange [data-range]')){
+  button.setAttribute('aria-pressed',String(button.dataset.range===range));
+ }
+ draws();restoreDayScrollAnchor(anchor);
+}
+function drawCurrentWeightChart(start=null){
+ const weightWrap=$("#chart");weightWrap.replaceChildren();
+ const end=dateNum(today()),endDay=toDay(end);
+ const weights=new Map(state.weights.filter(w=>w.day<=endDay).map(w=>[w.day,Number(w.kg)]));
+ const ordered=[...weights.keys()].sort(),points=ordered.map(d=>[dateNum(d),weights.get(d)]);
+ const wStart=start??sharedChartStart(end);
+ const macroRows=weightMacrosVisible?weightMacroDays(state.food,toDay(wStart),endDay):null;
+ const daily=trackTargetsVisible?nutritionHistory(state.food,endDay,state.settings):[];
+ const budgetRuns=weightMacrosVisible?macroBudgetRuns(wStart,end,state.settings):[];
+ drawWeightChart(weightWrap,wStart,end,points,state.settings?.weight_goal_kg??null,macroRows,{targets:trackTargetsVisible,daily,budgetRuns});
+ if(!trackTargetsVisible)$('#trackTileSelection').textContent='';
+}
 function draws(){
  if(!ready)return;
  linkedCharts.clear();
- const weightWrap=$("#chart"),energyWrap=$("#energyChart");weightWrap.replaceChildren();energyWrap.replaceChildren();
- const end=dateNum(today()), endDay=toDay(end);
-
- const weights=new Map(state.weights.filter(w=>w.day<=endDay).map(w=>[w.day,Number(w.kg)]));
- const ordered=[...weights.keys()].sort(),points=ordered.map(d=>[dateNum(d),weights.get(d)]),last=points.at(-1);
- const recent=last?points.filter(([t])=>t>=last[0]-6*DAY):[];
- $("#latest").textContent=last?roundKg(last[1]):"—";
- $("#mean").textContent=recent.length>=2?roundKg(recent.reduce((sum,[,v])=>sum+v,0)/recent.length):"—";
- const daily=nutritionHistory(state.food,endDay,state.settings);
- const wStart=startForRange(weightRange,end,ordered[0]);
- const eStart=startForRange(energyRange,end,daily[0]?.day);
- drawWeightChart(weightWrap,wStart,end,points,state.settings?.weight_goal_kg??null);drawEnergyChart(energyWrap,eStart,end,daily);
+ $('#nutritionSeriesLegend').hidden=!trackTargetsVisible;
+ drawCurrentWeightChart();
 }
 function updateManualDate(){const day=$("#day").value;$("#manualDate").textContent=day&&Number.isFinite(dateNum(day))?"For "+dateFullFmt.format(dateNum(day)):""}
 function render(){updateManualDate();drawDay();draws();btnState()}
@@ -2196,7 +2936,24 @@ function animateCommittedDay(direction,drag,commit){
 }
 // Finishing motion never redraws or swaps the live ring a new press is targeting.
 if(typeof document!=='undefined')document.addEventListener?.('pointerdown',()=>{dayAnchorPress++;daySwipeFinish?.()},true);
-$("#day").addEventListener("change",()=>{cancelDayNavigation();if(!$("#day").checkValidity()){status("Choose a valid date no later than today.",true);return}redrawSelectedDay()});
+function syncMastDate(){
+ const day=$("#day").value,t=dateNum(day);
+ $("#dayLabel").textContent=Number.isFinite(t)?dateFullFmt.format(t):"Date";
+}
+// Date inputs may report focus-visible even when touched because they are editable.
+const mastDateInput=$("#day");
+mastDateInput.addEventListener("pointerdown",()=>mastDateInput.classList.add("date-pointer-focus"));
+const restoreDateKeyboardFocus=()=>mastDateInput.classList.remove("date-pointer-focus");
+mastDateInput.addEventListener("keydown",restoreDateKeyboardFocus);
+mastDateInput.addEventListener("blur",restoreDateKeyboardFocus);
+// Keep the native picker, with the full visual date chip as its hit target.
+$("#day").addEventListener("click",event=>{
+ const picker=event.currentTarget;
+ if(typeof picker.showPicker!=="function")return;
+ try{picker.showPicker();event.preventDefault()}catch{/* Let the browser handle its native control. */}
+});
+$("#day").addEventListener("input",syncMastDate);
+$("#day").addEventListener("change",()=>{syncMastDate();cancelDayNavigation();if(!$("#day").checkValidity()){status("Choose a valid date no later than today.",true);return}redrawSelectedDay()});
 dailyLog.addEventListener("pointerdown",e=>{
  releasedFlick=null;
  if(e.pointerType!=="touch")return;
@@ -2261,7 +3018,7 @@ dailyLog.addEventListener("click",e=>{
 },true);
 
 // Tap controls for the attached food tray; vertical movement scrolls normally.
-const foodTray=$('#foodListCard'),foodTrayToggle=$('#foodTrayToggle'),foodTrayClose=$('#foodTrayClose');
+const foodTray=$('#foodListCard'),foodTrayToggle=$('#foodTrayToggle');
 let traySnap=null;
 let foodLogTipDay=null,foodLogTipSeen=false,foodLogTipPending=false;
 function syncFoodLogTip(day=$('#day').value,count=ready?dayFoods(day).length:0){
@@ -2284,7 +3041,7 @@ async function maybeOfferFoodLogTip(){
 }
 $('#foodLogTipDone').onclick=()=>{
  foodLogTipDay=null;
- if($('#foodLogTip').contains(document.activeElement))foodTrayClose.focus({preventScroll:true});
+ if($('#foodLogTip').contains(document.activeElement))(foodTray.querySelector('summary,[data-food-sort]')??foodTrayToggle).focus({preventScroll:true});
  syncFoodLogTip();
 };
 
@@ -2304,11 +3061,10 @@ function setFoodTray(open,keyboard=false){
   traySnap=animation;animation.onfinish=()=>{if(traySnap===animation)traySnap=null};
  }
  if(!open&&foodTray.contains(document.activeElement))foodTrayToggle.focus({preventScroll:true});
- else if(open&&keyboard)foodTray.querySelector('summary,[data-food-sort]')?.focus({preventScroll:true});
+ else if(open&&keyboard)foodTray.querySelector('summary,[data-food-sort],.food-log-chat')?.focus({preventScroll:true});
  if(open)void maybeOfferFoodLogTip();
 }
 foodTrayToggle.onclick=e=>setFoodTray(!foodTray.open,e.detail===0);
-foodTrayClose.onclick=()=>setFoodTray(false);
 foodTray.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();setFoodTray(false)}});
 renderFoodTray(false);
 function animateNutritionExit(modal,offset,opacity){
@@ -2400,11 +3156,10 @@ bindNutritionDismiss($('#appSettings'),()=>nutritionNarrow?.matches===true,()=>s
 bindNutritionDismiss($('#logSheet'),()=>nutritionNarrow?.matches===true,()=>swipeMotion?.matches===true);
 wireDayWheel($('#budgetDashboard').parentElement);
 wireDayWheel($('#chart'));
-wireDayWheel($('#energyChart'));
-document.querySelectorAll("[data-range]").forEach(b=>b.addEventListener("click",()=>{
- cancelDayNavigation();
- const group=b.dataset.chart;if(group==="weight")weightRange=b.dataset.range;else if(group==="protein")proteinRange=b.dataset.range;else energyRange=b.dataset.range;document.querySelectorAll("[data-range]").forEach(t=>{if(t.dataset.chart===group)t.setAttribute("aria-pressed",String(t===b))});draws()
-}));
+
+document.querySelectorAll('#historyRange [data-range]').forEach(button=>{
+ button.addEventListener('click',()=>setSharedChartRange(button.dataset.range,button));
+});
 $("#cancelEdit").onclick=cancelEdit;
 $("#foodForm").onsubmit=e=>{
  e.preventDefault();
@@ -2444,10 +3199,27 @@ function checkDayRollover(){
  const followToday=$("#day").value===observedDay;
  observedDay=next;$("#day").max=next;
  // Keep an in-progress entry on its selected date rather than silently moving it.
- if(followToday&&!editId&&!$("#description").value&&!$("#kj").value)$("#day").value=next;
+ if(followToday&&!$("#logSheet")?.matches?.("[open][data-direct-entry]")&&!editId&&!$("#description").value&&!$("#kj").value)$("#day").value=next;
  draws();drawDay();
 }
 setInterval(checkDayRollover,30000);
+// Refresh the current ring in place: don't reset the log, dialog or keyboard
+// focus on each clock tick, and let the existing rollover handle midnight.
+function refreshBudgetPace(){
+ if(!ready||document.hidden)return;
+ const day=$('#day').value;
+ if(day!==today())return;
+ const ring=$('#budgetDashboard').querySelector('[data-budget-pace]');
+ if(!ring)return;
+ const items=dayFoods(day),budget=nutritionTargetForDay('energy_budget_kj',day,state.settings);
+ const pace=budgetPace({budget,total:items.reduce((sum,item)=>sum+toKj(item),0)},day,items.length>0);
+ const label=ring.dataset.budgetPace+' · '+pace.status;
+ if(ring.getAttribute('aria-label')!==label)ring.setAttribute('aria-label',label);
+ ring.style.color=pace.colour;
+}
+setInterval(refreshBudgetPace,30000);
+window.addEventListener('focus',refreshBudgetPace);
+document.addEventListener('visibilitychange',refreshBudgetPace);
 window.addEventListener("focus",checkDayRollover);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)checkDayRollover()});
 let initialScreenChosen=false;

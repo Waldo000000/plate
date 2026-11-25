@@ -5,7 +5,7 @@ import {runInNewContext} from 'node:vm';
 const html=readFileSync('index.html','utf8');
 
 test('first-paint placeholders keep the real chart and dashboard geometry',()=>{
- for(const id of ['chart','energyChart'])assert.ok(html.includes(`id="${id}" class="chart"><div class="plate-skeleton sk-chart" aria-hidden="true">`));
+ for(const id of ['chart'])assert.ok(html.includes(`id="${id}" class="chart"><div class="plate-skeleton sk-chart" aria-hidden="true">`));
  assert.match(html,/height=202/);
  assert.match(html,/\.sk-chart\{height:202px/);
  const dash=html.slice(html.indexOf('id="budgetDashboard"'),html.indexOf('id="foodListCard"'));

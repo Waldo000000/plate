@@ -149,8 +149,8 @@ test('first-run panels advance, allow skips, render real macros, and stay off th
  let opened=0,weightOpened=0;
  const env={$,state,make:node,document:{querySelector:()=>active()},sessionStorage:{getItem:k=>storage.get(k),setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)},
   breakdown:()=>({total:540,segments:[{key:'protein_g',label:'Protein',kj:119,colour:'red'}]}),
-  foodDisplayName:t=>t,showKj:x=>x+' kJ',roundKg:x=>x+' kg',renderFoodTray(){},dateNum:Date.parse,startForRange:()=>0,energyRange:'all',today:()=>'2026-11-22',
-  openSettings(){opened++},openLog(){weightOpened++},proteinTargetForDay(_day,settings){return settings.protein_target_g??null},dayFoods:()=>state.food,budgetModel(){return {reserve:680,left:7000}}};
+  foodDisplayName:t=>t,showKj:x=>x+' kJ',roundKg:x=>x+' kg',renderFoodTray(){},dateNum:Date.parse,startForRange:()=>0,chartRange:'all',today:()=>'2026-11-22',
+  nutritionTargetForDay(metric,_day,settings){return settings[metric]??null},openSettings(){opened++},openLog(){weightOpened++},proteinTargetForDay(_day,settings){return settings.protein_target_g??null},dayFoods:()=>state.food,budgetModel(){return {reserve:680,left:7000}}};
  runInNewContext(source+`;firstMealGuide={stage:'meal',day:'2026-11-22',ids:['x']};showGuideStage('meal')`,env);
  assert.match(active().children[1].text,/Flat white/);
  actions()[0].onclick();

@@ -1,15 +1,15 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';
+import {runInNewContext} from 'node:vm';
 const h=readFileSync('index.html','utf8');
 test('tray is tap-only with quiet top seam and bottom accessible toggle',()=>{
  assert.match(h,/id="foodTrayToggle" class="food-tray-toggle" aria-controls="foodListCard" aria-expanded="false"/);
- assert.match(h,/id="foodTrayClose" class="food-tray-close" aria-controls="foodListCard" aria-expanded="true"/);
+ assert.doesNotMatch(h,/foodTrayClose|food-tray-close/);
  assert.match(h,/foodTray.inert=!open/);assert.match(h,/renderFoodTray\(false\)/);
  assert.doesNotMatch(h,/trackTrayGesture|finishTrayGesture|trayGesture|tray-dragging/);
  assert.doesNotMatch(h,/class="food-list-head"|class="food-sort"/);
  assert.match(h,/#dailyLog\{touch-action:pan-y pinch-zoom\}/);
  assert.doesNotMatch(h,/(?:food-tray|day-progress)[^{}]*\{[^{}]*touch-action:pan-x/);
  assert.match(h,/if\(!swipeMotion\?\.matches&&typeof foodTray.animate/);
- assert.match(h,/\.food-tray-close:focus-visible/);
 });
 test('sorting uses sibling metric buttons and keeps focus on the same food metric',()=>{
  assert.match(h,/summary.append\(icon,short\)/);
@@ -44,9 +44,6 @@ test('peek and live food metrics use the same native button geometry',()=>{
 
 test('Food log keeps the same visible name and right-hand chevron when toggled',()=>{
  const toggle=h.match(/<button[^>]*id="foodTrayToggle"[^>]*>(.*?)<\/button>/)?.[1];
- const close=h.match(/<button[^>]*id="foodTrayClose"[^>]*>(.*?)<\/button>/)?.[1];
- assert.equal(close,toggle);
- assert.match(h,/\.food-tray-close \.tray-chevron\{transform:rotate\(225deg\)/);
  assert.match(toggle??'', /^<span class="tray-label">Food log<\/span><span class="tray-chevron" aria-hidden="true"><\/span>$/);
  assert.doesNotMatch(h,/\.food-tray-toggle[^{}]*\.tray-label\{display:none/);
  assert.doesNotMatch(h,/foodTrayToggle\.setAttribute\('aria-label'/);
@@ -54,10 +51,66 @@ test('Food log keeps the same visible name and right-hand chevron when toggled',
  assert.match(h,/\.food-tray-toggle\[aria-expanded=true\] \.tray-chevron\{transform:rotate\(225deg\)/);
 });
 
-test('top and bottom Food log controls share typography and label geometry',()=>{
- assert.match(h,/\.food-tray-close,\.food-tray-toggle,\.food-tray-preview\{[^}]*gap:9px;[^}]*font-size:\.8125rem;line-height:1\.2;color:#46604b\}/);
- assert.match(h,/\.food-tray-close,\.food-tray-toggle,\.food-tray-preview\{[^}]*height:35px;min-height:35px;padding:0;border:0;border-top:1px solid transparent/);
- for(const rule of h.matchAll(/(?<!,)\.food-tray-(?:close|toggle)(?:,\.food-tray-preview)?\{([^}]*)\}/g)){
-  assert.doesNotMatch(rule[1],/font-size|line-height|gap:|(?:^|;)height:|min-height:|border-top:|padding:/);
- }
+
+test('the only Food log toggle follows the list and expands, collapses, and reopens it',()=>{
+ const trayMarkup=h.match(/<div id="foodListCard".*?aria-expanded="false".*?<\/button>/)?.[0];
+ assert.ok(trayMarkup);
+ assert.equal([...trayMarkup.matchAll(/<span class="tray-label">Food log<\/span>/g)].length,1);
+ assert.match(trayMarkup,/<ul id="foodList"[^>]*><\/ul><\/div><\/div><button type="button" id="foodTrayToggle"/);
+
+ const document={activeElement:null},states={};
+ const firstItem={focus:()=>{document.activeElement=firstItem}};
+ const tray={
+  classList:{toggle:(cls,on)=>{states[cls]=on}},
+  setAttribute:(key,value)=>{states[key]=value},
+  contains:active=>active===firstItem,
+  querySelector:()=>firstItem,
+  getBoundingClientRect:()=>({height:tray.open?280:0}),
+  addEventListener:(type,handler)=>{tray[type]=handler},
+ };
+ const toggle={
+  setAttribute:(key,value)=>{states[key]=value},
+  focus:()=>{document.activeElement=toggle},
+ };
+ const start=h.indexOf('function renderFoodTray(open)');
+ const end=h.indexOf('function animateNutritionExit',start);
+ runInNewContext(h.slice(start,end),{document,foodTray:tray,foodTrayToggle:toggle,traySnap:null,foodLogTipDay:null,syncFoodLogTip:()=>{},maybeOfferFoodLogTip:async()=>{},swipeMotion:{matches:true}});
+ const expectOpen=open=>{
+  assert.equal(tray.open,open);
+  assert.equal(tray.inert,!open);
+  assert.equal(states.open,open);
+  assert.equal(states['aria-hidden'],String(!open));
+  assert.equal(states['aria-expanded'],String(open));
+ };
+ expectOpen(false);
+ toggle.onclick({detail:1});expectOpen(true);
+ toggle.onclick({detail:1});expectOpen(false);
+ toggle.onclick({detail:0});expectOpen(true);assert.equal(document.activeElement,firstItem);
+ let escaped=false;
+ tray.keydown({key:'Escape',preventDefault:()=>{escaped=true}});
+ expectOpen(false);assert.equal(document.activeElement,toggle);assert.equal(escaped,true);
+});
+
+test('the anchored ChatGPT action is a native link to the build-specific starter, not another log sheet',()=>{
+ const link=h.match(/<a id="logMenuChat"[^>]*>/)?.[0]??'';
+ assert.match(link,/target="_blank"/);
+ assert.match(link,/rel="noopener noreferrer"/);
+ assert.match(h,/logMenuChat\.href=\$\('#plateStarter'\)\.href/);
+ assert.doesNotMatch(link,/data-log-action/);
+ assert.doesNotMatch(h,/data-log-action="chat"/);
+});
+
+test('an empty Food log has exactly one shortcut to the same starter as the plus menu',()=>{
+ const make=(tag,text,cls)=>({tag,text,cls,children:[],addEventListener(){},append(...children){this.children.push(...children)},setAttribute(k,v){this[k]=v}});
+ const list=make('ul');list.dataset={};list.replaceChildren=()=>{list.children=[]};
+ const source=h.slice(h.indexOf('function drawFoodList('),h.indexOf(' const maxFoodEnergy=Math.max(1,...items.map(toKj));'));
+ runInNewContext(source+'}\ndrawFoodList(list,[]);',{list,make,preparePublicChat(){},foodSort:'time',logMenuChat:{href:'https://example.test/starter'}});
+ assert.equal(list.children.length,1);
+ const [empty]=list.children;
+ assert.equal(empty.children[0].text,'No food logged yet.');
+ const [copy,cue]=empty.children[1].children;
+ assert.equal(copy.text,'Log food in ChatGPT');
+ assert.equal(cue['aria-hidden'],'true');
+ assert.equal(empty.children[1].href,'https://example.test/starter');
+ assert.equal(empty.children[1].target,'_blank');
 });

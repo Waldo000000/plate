@@ -10,7 +10,7 @@ These screenshots use fictional data.
 
 I check how much protein I still need and how much room I have left. The dotted section shows the energy I’m setting aside for protein. That helps me decide what else to have with dinner.
 
-![Daily energy bar showing the room left for protein](docs/images/before.jpg)
+![The daily card, with energy set aside for the protein target](docs/images/before.jpg)
 
 ## After a day over budget
 
@@ -18,20 +18,30 @@ I tap an energy amount in the Food log to put the highest-energy items first. Th
 
 ![Food log sorted from highest to lowest energy, with a large blue fat segment on the rib fillet](docs/images/day.jpg)
 
-## A couple of weeks in
+## From bulk to cut
 
-I look at my track record to see whether missing fibre was a one-off or something I do most days. In this example, energy is coming down closer to target, protein is mostly on target, and fibre is improving but still short.
+I wanted to put on muscle without putting on weight too fast. I raised my energy target, then gave it a few weeks. Looking at what I’d eaten next to my weight, I could see I was eating enough to move towards 90 kg.
 
-![Track record showing energy coming down, protein near target and fibre climbing](docs/images/targets.jpg)
+![End of the bulk: weight reaches 90 kg alongside daily intake and the higher energy target](docs/images/track-bulk.jpg)
 
-## Across a bulk and cut
+When I reached 90 kg, I switched to a cut by lowering my daily energy target. A few weeks later, my weight was coming down. A couple of big days stuck out, but getting back to my usual meals kept me moving towards my goal.
 
-The weight chart is where I check if I’m moving in the direction I intended. The individual readings bounce around. The longer view makes it easier to see the bulk and the cut that followed.
+![A few weeks into the cut: the daily energy target steps down and weight starts coming down](docs/images/track-cut.jpg)
 
-![Fictional weight readings between about 85 and 90 kg showing a completed bulk and a cut in progress](docs/images/weight.jpg)
+Looking at my track record against my targets, I could see that protein was mostly green but fibre was still yellow. I went back through a few days in my food log and tapped Fibre to see which foods had given me the most. Pears were up there, so I started having them more often. The fibre tiles started turning green.
 
-## Try it locally
+![Later in the same cut: the fibre tiles turn green as the trend reaches the target](docs/images/targets.jpg)
 
-With Node.js 24 or newer, run `npm run demo` and open the address it prints. There’s nothing to install or sign into. The demo uses fictional meals and weights and resets when you reload. Add `?onboarding=1` to try the first-meal flow from scratch.
+I thought tracking calories would be a pain, but logging a meal takes next to no effort, and seeing those small changes pay off makes me want to keep doing it.
+
+## Try it yourself
+
+If you have [ChatGPT Sites](https://help.openai.com/en/articles/20001339-creating-and-using-chatgpt-sites), open ChatGPT Work on the web or desktop and paste this:
+
+> Build a private ChatGPT Site from https://github.com/Waldo000000/plate. Run `node demo/build.mjs` and use the generated `demo/dist/index.html` as the Site’s static homepage. Use the existing demo, not a recreation or the live backend. Let me preview it before deploying.
+
+**Run it locally instead:** Clone or download this repo. With Node.js 24 or newer, run `npm run demo` and open the address it prints. No dependencies to install.
+
+Both routes use fictional meals and weights, and diary edits reset on reload. Add `?onboarding=1` to try the first-meal flow. This is a demo, not a personal log that saves your data.
 
 The interface is plain HTML, CSS and JavaScript, with SVG for the charts. The live app uses a Worker and keeps each account’s log in D1. This repo has the app, tests and sample data, but no live logs or production configuration. For more, see [the design notes](docs/design.md).
