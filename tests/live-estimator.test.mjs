@@ -153,6 +153,8 @@ test('published composer uses one explicit browser mic click and one meal submit
  assert.doesNotMatch(markup,/Enter manually|Log food in ChatGPT/);
  assert.match(markup,/<div class="native-toolbar">[\s\S]*?id="nativePhotoChoices"[\s\S]*?aria-label="Take photo"[\s\S]*?aria-label="Choose from photo library"[\s\S]*?id="nativeMic"/);
  assert.doesNotMatch(markup,/>Take photo<|>Choose photo</);
+ assert.doesNotMatch(js,/say\('Listening|say\('Starting browser dictation/);
+ assert.match(markup,/id="nativeMicStatus" class="track-tile-sr"/);
 });
 test('provider failure is classified without logging raw key material or meal content',async()=>{
  const {createMealEstimateRoute}=await import('../estimate/meal-estimate-route.mjs');

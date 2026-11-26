@@ -49,6 +49,7 @@ function wireNativeMeal() {
     mic.setAttribute('aria-pressed',String(active));
     mic.setAttribute('aria-label',active?'Stop dictation':'Dictate meal');
     mic.title=active?'Stop dictation':'Dictate meal';
+    $('#nativeMicStatus').textContent=active?'Listening':'';
   }
   function resetMic(){
     const active=micRun;
@@ -224,14 +225,14 @@ function wireNativeMeal() {
     const recognition=createBrowserRecognition(recognitionType(),true);
     if(!recognition){say(micFallback,true);return}
     const current={recognition};micRun=current;
-    say('Starting browser dictation…');
+    say();
     startRecognition(current,recognition);
   };
   function startRecognition(current,recognition){
     current.recognition=recognition;
     recognition.onstart=()=>{
       if(micRun!==current)return;
-      micState(true);say('Listening…');
+      micState(true);say();
     };
     recognition.onresult=event=>{
       if(micRun!==current)return;

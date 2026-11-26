@@ -1333,7 +1333,7 @@ function paintGuide(move=false){
  let info,title,primary,action,secondary,skip;
  if(stage==='meal'){
   title='First meal saved';
-  info=(entries.length===1?'You’ll find '+foodDisplayName(entries[0].description):'You’ll find all '+entries.length+' items')+' in your Food log below. Tap an item to see its details.';
+  info=(entries.length===1?'You’ll find '+foodDisplayName(entries[0].description):'You’ll find all '+entries.length+' items')+' in your Food log below. Tap an item’s name to see its details.';
   primary='See meal impact';action=()=>showGuideStage('impact');secondary='Not now';skip=()=>showGuideStage(null);
  }else if(stage==='impact'){
   title=showKj(impact.total)+' from this meal';
@@ -1388,7 +1388,7 @@ function revealSavedFood(draft){
  renderFoodTray(true);
  const row=[...$('#foodList').children].find(el=>el.dataset.foodId===draft.firstId);
  if(draft.firstMeal&&row){
-  row.querySelector('details').open=true;openFoodEntries.add(draft.firstId);
+  row.querySelector('details').open=false;openFoodEntries.delete(draft.firstId);
   firstMealGuide={stage:'meal',day:$('#day').value,ids:draft.entryIds??[draft.firstId]};
   showGuideStage('meal');
   return;

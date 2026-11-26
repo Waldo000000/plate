@@ -66,8 +66,8 @@ test('only a newly saved first meal starts the guide, with all relevant saved ID
   const stages=[], context={$:key=>nodes[key],renderFoodTray(value){assert.equal(value,true)},openFoodEntries:new Set(),showGuideStage:stage=>stages.push(stage)};
   runInNewContext(source,context);
   context.revealSavedFood({firstId:'saved',entryIds:['saved','saved2'],firstMeal,total:2});
-  assert.equal(detail.open,firstMeal);
-  assert.equal(context.openFoodEntries.has('saved'),firstMeal);
+  assert.equal(detail.open,false);
+  assert.equal(context.openFoodEntries.has('saved'),false);
   if(firstMeal){
    assert.deepEqual(stages,['meal']);
    assert.equal(JSON.stringify(context.firstMealGuide),'{"stage":"meal","day":"2026-11-22","ids":["saved","saved2"]}');
@@ -236,4 +236,9 @@ test('first load expands the food log once only when the two-column layout fits'
   assert.equal(calls.length,expected);
   if(expected)assert.equal(calls[0],true);
  }
+});
+
+test('first meal tutorial asks users to open the initially collapsed details by name',()=>{
+ assert.match(html,/Tap an item’s name to see its details/);
+ assert.match(html,/draft\.firstMeal&&row\)\{\s*row\.querySelector\('details'\)\.open=false;openFoodEntries\.delete\(draft\.firstId\)/);
 });

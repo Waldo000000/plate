@@ -22,8 +22,14 @@
 #nativeMeal .native-icon:hover:not(:disabled){background:radial-gradient(circle,var(--light) 0 17px,transparent 17.5px)}
 #nativeMeal .native-icon:focus-visible,#nativeMeal button:focus-visible,.native-edit-saved:focus-visible{outline:2px solid var(--green);outline-offset:-2px}
 .native-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-#nativeMeal .native-mic{margin-inline-start:auto}
+#nativeMeal .native-mic{margin-inline-start:auto;position:relative}
 #nativeMeal .native-mic[aria-pressed="true"]{color:var(--danger);background:radial-gradient(circle,var(--orange) 0 17px,transparent 17.5px)}
+#nativeMeal .native-mic[aria-pressed="true"]::after{
+ content:'';position:absolute;inset:7px;border:1.5px solid currentColor;border-radius:50%;pointer-events:none;animation:plate-mic-pulse 1.25s ease-out infinite
+}
+@keyframes plate-mic-pulse{0%{opacity:.74;transform:scale(.78)}100%{opacity:0;transform:scale(1.26)}}
+@media(prefers-reduced-motion:reduce){#nativeMeal .native-mic[aria-pressed="true"]::after{animation:none;opacity:.6}}
+
 #nativeMeal .native-send{background:radial-gradient(circle,var(--green) 0 17px,transparent 17.5px);color:var(--card)}
 #nativeMeal .native-send:hover:not(:disabled){background:radial-gradient(circle,var(--ink) 0 17px,transparent 17.5px)}
 #nativeMeal .native-send:disabled{background:radial-gradient(circle,var(--line) 0 17px,transparent 17.5px);color:var(--muted)}
