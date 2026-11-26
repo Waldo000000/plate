@@ -42,30 +42,14 @@ Pears were up there, so I started having them more often. The fibre tiles starte
 
 I thought tracking calories would be a pain, but logging a meal takes next to no effort, and seeing those small changes pay off makes me want to keep doing it.
 
-## Try it yourself
+## Try the demo
 
-If you have [ChatGPT Sites](https://help.openai.com/en/articles/20001339-creating-and-using-chatgpt-sites), open ChatGPT Work on the web or desktop and paste this:
+Both options below open the interactive demo. It uses sample meals and weights, resets when you reload, and doesn’t save a personal log or make AI estimates.
 
-> Build a private ChatGPT Site from https://github.com/Waldo000000/plate. Run `node demo/build.mjs` and use the generated `demo/dist/index.html` as the Site’s static homepage. Use the existing demo, not a recreation or the live backend. Let me preview it before deploying.
+**In ChatGPT Sites:** Open ChatGPT Work on the web or desktop and paste this:
 
-**Run it locally instead:** Clone or download this repo. With Node.js 24 or newer, run `npm run demo` and open the address it prints. No dependencies to install.
+> Build a private ChatGPT Site from https://github.com/Waldo000000/plate. Run `node demo/build.mjs` and use the generated `demo/dist/index.html` as the Site’s static homepage. Use the existing demo, not the live backend. Let me preview it before deploying.
 
-Both routes use fictional meals and weights, and diary edits reset on reload. Add `?onboarding=1` to try the first-meal flow. This is a demo, not a personal log that saves your data.
+**On your computer:** Clone or download this repo. With Node.js 24 or newer, run `npm run demo` and open the address it prints. There are no dependencies to install.
 
-The interface is plain HTML, CSS and JavaScript, with SVG for the charts. The live app uses a Worker and keeps each account’s log in D1. This repo has the app, tests and sample data, but no live logs or production configuration. For more, see [the design notes](docs/design.md).
-
-### In-app logger source
-
-The hosted app’s **+** composer accepts text, browser dictation or a photo. The
-server uses the OpenAI Responses API for estimates. A standalone weigh-in
-such as `84.8 kg` is saved without an API estimate. The fictional demo still
-runs offline and does not use an API key.
-
-The server build expects verified ChatGPT Sites identity headers and a D1
-binding named `DB`. Do not expose this Worker behind a gateway that lets
-clients supply those headers. Apply the migrations under `drizzle/`. Set
-`PLATE_OWNER_SHA256` to the SHA-256 hex digest of the owner's verified
-site-scoped user ID, and `PLATE_ORIGIN` to the canonical site origin. To enable
-estimates, set `PLATE_ESTIMATE_ENABLED=true`, a valid `PLATE_ESTIMATE_END_UTC`,
-and an `OPENAI_API_KEY` hosting secret. Never put that key in source or client
-configuration. Settings → Manage accounts is owner-only.
+Add `?onboarding=1` to the demo URL to start with the first-meal walkthrough. For more about how Plate is built, see the [design notes](docs/design.md).
