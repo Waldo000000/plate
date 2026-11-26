@@ -9,7 +9,7 @@ function setup(){
  const label={hidden:true},daily={addEventListener:(type,fn)=>handlers[type]=fn};
  const classes=new Set(),viewport={clientWidth:300,classList:{add(k){classes.add(k)},remove(k){classes.delete(k)}},style:{setProperty(){}}},preview={hidden:true,replaceChildren(){}};
  let renders=0;
- const c={DAY:86400000,$:s=>({'#day':date,'#dailyLog':daily,'#swipeViewport':viewport,'#swipePreview':preview,'#swipeDayLabel':label,'#foodListCard':details}[s]),today:()=> '2026-11-20',ready:true,busy:false,dateNum:s=>Date.parse(s+'T00:00:00Z'),toDay:t=>new Date(t).toISOString().slice(0,10),dateFullFmt:{format:t=>new Date(t).toISOString().slice(0,10)},shortDate:s=>s,captureDayScrollAnchor(){return null},restoreDayScrollAnchor(){},cancelDayNavigation(){},navigationEpoch:0,dayAnchorPress:0,document:{addEventListener(type,fn){handlers['document:'+type]=fn}},dismissChartValues(){},cancelEdit(){},status(){},updateManualDate(){},drawDay(){renders++},clearTimeout(){},setTimeout(){}};
+ const c={DAY:86400000,$:s=>({'#day':date,'#dailyLog':daily,'#swipeViewport':viewport,'#swipePreview':preview,'#swipeDayLabel':label,'#foodListCard':details}[s]),today:()=> '2026-11-20',ready:true,busy:false,dateNum:s=>Date.parse(s+'T00:00:00Z'),toDay:t=>new Date(t).toISOString().slice(0,10),dateFullFmt:{format:t=>new Date(t).toISOString().slice(0,10)},shortDate:s=>s,captureDayScrollAnchor(){return null},restoreDayScrollAnchor(){},cancelDayNavigation(){},navigationEpoch:0,dayAnchorPress:0,document:{addEventListener(type,fn){handlers['document:'+type]=fn}},dismissChartValues(){},resetFoodRemoval(){},cancelEdit(){},status(){},updateManualDate(){},drawDay(){renders++},clearTimeout(){},setTimeout(){}};
  runInNewContext(source+';globalThis.shift=dayAfterFlick;',c);
  const event=(x,y,timeStamp,opt={})=>({pointerId:1,pointerType:'touch',isPrimary:true,target:{closest:()=>null},clientX:x,clientY:y,timeStamp,...opt});
  const swipe=(dx,dy=0,opt={})=>{handlers.pointerdown(event(150,150,0,opt));handlers.pointermove(event(150+dx*.5,150+dy*.5,60,opt));handlers.pointerup(event(150+dx,150+dy,130,opt))};
@@ -128,4 +128,25 @@ test('cancel during a small row nudge never reveals Remove',()=>{
  x.handlers.pointermove(x.event(130,150,60,onRow));
  x.handlers.pointercancel(x.event(130,150,130,onRow));
  assert.equal(row.dataset.foodSwipe,undefined);assert.equal(x.renders,0);
+});
+
+test('a fresh quick tap on exposed Remove opens confirmation without needing a synthetic click',()=>{
+ const x=setup(),touch={identifier:7,clientX:240,clientY:145},events={};
+ let opened=0,prevented=0;
+ const row={dataset:{},style:{setProperty(){}},querySelector:()=>button};
+ const button={addEventListener:(type,fn)=>events[type]=fn,click:()=>opened++,getBoundingClientRect:()=>({left:210,right:295,top:120,bottom:160})};
+ const onRow={target:{closest:key=>key==='#foodList > .adaptive-food-row'?row:null}};
+ runInNewContext('globalThis.bindTap=bindSwipeRemoveTap',x.c);
+ x.c.bindTap(button,row);
+ const evt=(timeStamp,touches,changedTouches=[touch])=>({timeStamp,touches,changedTouches,cancelable:true,preventDefault:()=>prevented++});
+ events.touchstart(evt(5,[touch]));events.touchend(evt(10,[]));assert.equal(opened,0);
+ x.swipe(-86,0,onRow);assert.equal(row.dataset.foodSwipe,'open');
+ events.touchend(evt(132,[]));assert.equal(opened,0);
+ events.touchstart(evt(138,[touch]));events.touchend(evt(155,[]));
+ assert.equal(opened,1);assert.equal(prevented,1);
+ let duplicatePrevented=false;
+ events.click({detail:1,pointerType:'touch',timeStamp:156,preventDefault(){duplicatePrevented=true},stopImmediatePropagation(){}});
+ assert.equal(duplicatePrevented,true);
+ events.touchstart(evt(160,[touch]));events.touchmove(evt(162,[{...touch,clientX:254}]));events.touchend(evt(180,[]));
+ assert.equal(opened,1);assert.equal(prevented,1);
 });

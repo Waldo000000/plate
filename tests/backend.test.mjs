@@ -228,7 +228,7 @@ for(const bad of [{to:currentBrisbane},{from:dateOffset(-500)},{from:currentBris
 await body(fix(targetCorrection));
 let targetHistory=await historyState(targetOwner);
 const datedFor=(state,metric,day)=>state.nutrition_target_history.filter(r=>r.metric===metric&&r.effective_day<=day).at(-1)?.target_value;
-assert.equal(datedFor(targetHistory,"energy_budget_kj",dateOffset(-6)),12345);
+assert.equal(datedFor(targetHistory,"energy_budget_kj",dateOffset(-6)),undefined);
 for(const offset of [-5,-4,-3,-2,-1])assert.equal(datedFor(targetHistory,"energy_budget_kj",dateOffset(offset)),9012);
 assert.equal(datedFor(targetHistory,"energy_budget_kj",currentBrisbane),12345);
 assert.deepEqual(targetHistory.nutrition_target_legacy,{fibre_target_g:28});
@@ -237,7 +237,7 @@ assert.equal(targetHistory.protein_target_g,141);
 assert.equal(targetHistory.weight_goal_kg,83);
 assert.deepEqual(await historyState("targets-b"),{protein_target_g:null});
 const earlierSettings=(await body(req("/api/state?to="+dateOffset(-8),{user:targetOwner}))).settings;
-assert.equal(earlierSettings.nutrition_target_history.find(r=>r.metric==="energy_budget_kj").target_value,12345);
+assert.equal(earlierSettings.nutrition_target_legacy.energy_budget_kj,undefined);
 await body(fix({...targetCorrection,from:dateOffset(-3),to:dateOffset(-2),value:null}));
 targetHistory=await historyState(targetOwner);
 assert.equal(datedFor(targetHistory,"energy_budget_kj",dateOffset(-4)),9012);
@@ -350,3 +350,12 @@ assert.equal((await body(req("/api/state",{user:tipUser}))).settings.food_log_ti
 assert.equal((await body(req("/api/log",{user:tipUser}))).settings.food_log_tip_seen,undefined);
 await body(req("/api/delete-account",{method:"POST",origin:API,user:tipUser,body:{confirmation:"DELETE"}}));
 assert.equal((await body(req("/api/state",{user:tipUser}))).settings.food_log_tip_seen,undefined);
+
+const removeWeightDay='2026-11-27';
+await body(req('/api/weight',{method:'POST',user:'weight-delete-owner',origin:API,body:{day:removeWeightDay,kg:84.8}}));
+await body(req('/api/weight',{method:'POST',user:'weight-delete-bystander',origin:API,body:{day:removeWeightDay,kg:95}}));
+await body(req('/api/weight',{method:'DELETE',user:'weight-nonowner',origin:API,body:{day:removeWeightDay}}),404);
+await body(req('/api/weight',{method:'DELETE',user:'weight-delete-owner',origin:'https://unrelated.test',body:{day:removeWeightDay}}),403);
+await body(req('/api/weight',{method:'DELETE',user:'weight-delete-owner',origin:API,body:{day:removeWeightDay}}));
+assert.deepEqual((await body(req('/api/state',{user:'weight-delete-owner'}))).weights,[]);
+assert.deepEqual((await body(req('/api/state',{user:'weight-delete-bystander'}))).weights,[{day:removeWeightDay,kg:95}]);

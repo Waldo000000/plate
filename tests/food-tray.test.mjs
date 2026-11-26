@@ -101,10 +101,10 @@ test('the anchored ChatGPT action is a native link to the build-specific starter
 });
 
 test('an empty Food log has exactly one shortcut to the same starter as the plus menu',()=>{
- const make=(tag,text,cls)=>({tag,text,cls,children:[],addEventListener(){},append(...children){this.children.push(...children)},setAttribute(k,v){this[k]=v}});
+ const make=(tag,text,cls)=>({tag,text,cls,children:[],append(...children){this.children.push(...children)},setAttribute(k,v){this[k]=v}});
  const list=make('ul');list.dataset={};list.replaceChildren=()=>{list.children=[]};
  const source=h.slice(h.indexOf('function drawFoodList('),h.indexOf(' const maxFoodEnergy=Math.max(1,...items.map(toKj));'));
- runInNewContext(source+'}\ndrawFoodList(list,[]);',{list,make,preparePublicChat(){},foodSort:'time',logMenuChat:{href:'https://example.test/starter'}});
+ runInNewContext(source+'}\ndrawFoodList(list,[]);',{list,make,pendingFoodRemoval:null,document:{body:{hasAttribute:()=>false}},foodSort:'time',logMenuChat:{href:'https://example.test/starter'}});
  assert.equal(list.children.length,1);
  const [empty]=list.children;
  assert.equal(empty.children[0].text,'No food logged yet.');

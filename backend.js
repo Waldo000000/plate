@@ -128,11 +128,13 @@ async function saveSettings(db, user, data) {
       (value !== null && (typeof value !== "number" || !Number.isFinite(value) || value < 1 || value > 500))) {
     fail("Enter a protein target from 1 to 500 grams, or null to clear it.");
   }
+  // The pre-history version had one live target and did not capture its exact
+  // time. The tracking project began on 19 November 2026 Brisbane time.
   await db.batch(proteinWrites(db,user,value));
   return {ok:true, settings:{protein_target_g:value}};
 }
 function seedLegacyProteinTarget(db,user){
-  return db.prepare("INSERT OR IGNORE INTO protein_target_history (user_id,effective_day,target_g) SELECT user_id,'1900-01-01',protein_target_g FROM user_settings WHERE user_id=? AND protein_target_g IS NOT NULL AND NOT EXISTS (SELECT 1 FROM protein_target_history WHERE user_id=?)").bind(user,user);
+  return db.prepare("INSERT OR IGNORE INTO protein_target_history (user_id,effective_day,target_g) SELECT user_id,'2026-11-19',protein_target_g FROM user_settings WHERE user_id=? AND protein_target_g IS NOT NULL AND NOT EXISTS (SELECT 1 FROM protein_target_history WHERE user_id=?)").bind(user,user);
 }
 function proteinWrites(db,user,value){
   return [
@@ -143,8 +145,8 @@ function proteinWrites(db,user,value){
 }
 const preferenceLimits={energy_budget_kj:[1,50000],fibre_target_g:[1,150],weight_goal_kg:[20,800]};
 const nutritionTargetMetrics=["energy_budget_kj","fibre_target_g"];
-// An undated legacy value is the baseline across the supported range until a dated edit.
-const nutritionHistoryStart="1900-01-01";
+// Brisbane date when energy/fibre history shipped, not the start of any log.
+const nutritionHistoryStart="2026-11-24";
 const localDay=()=>new Date(Date.now()+36000000).toISOString().slice(0,10);
 
 function seedLegacyNutritionTarget(db,user,metric,onlyIfChanged=false,value=null) {
@@ -443,6 +445,13 @@ export async function handleData(request, env) {
       return json(state);
     }
     if (path === "/api/food" && request.method === "DELETE") return json(await deleteFood(env.DB, user, await input(request)));
+    if (path === "/api/weight" && request.method === "DELETE") {
+      if(request.headers.get("origin")!==url.origin)fail("Only this dashboard may remove a weigh-in.",403);
+      const {day}=await input(request);
+      const removed=await env.DB.prepare("DELETE FROM weights WHERE user_id=? AND day=? RETURNING day").bind(user,validatedDay(day)).first();
+      if(!removed)fail("No weigh-in was found for that day.",404);
+      return json({ok:true,day:removed.day});
+    }
     if (request.method === "POST") {
       switch (path) {
         case "/api/delete-account":

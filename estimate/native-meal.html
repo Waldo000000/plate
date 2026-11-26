@@ -1,0 +1,29 @@
+<section id="nativeMeal" hidden aria-label="Log a meal in Plate">
+ <p id="nativeLogDate" class="native-log-date" hidden></p>
+ <div class="native-composer">
+  <textarea id="nativeText" aria-label="Describe food or enter weight" rows="1" maxlength="1200" placeholder="Food, drink or weight?"></textarea>
+  <div id="nativeAttachment" class="native-attachment" hidden>
+   <img id="nativePhotoPreview" alt="Meal photo" width="32" height="32" hidden>
+   <button type="button" id="nativeRemovePhoto" class="native-icon" aria-label="Remove photo">×</button>
+  </div>
+  <div class="native-toolbar">
+   <input id="nativePhoto" type="file" accept="image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif" hidden>
+   <input id="nativeCamera" type="file" accept="image/*" capture="environment" hidden>
+   <button type="button" id="nativeAddPhoto" class="native-icon" aria-label="Add photo" title="Add photo" aria-expanded="false" aria-controls="nativePhotoChoices"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+   <div id="nativePhotoChoices" class="native-photo-choices" role="group" aria-label="Add a photo" hidden>
+    <button type="button" class="native-icon" id="nativeTakePhoto" aria-label="Take photo" title="Take photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h4l1.5-2h5L16 6h4a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/><circle cx="12" cy="13" r="3.25"/></svg></button>
+    <button type="button" class="native-icon" id="nativeChoosePhoto" aria-label="Choose from photo library" title="Choose from photo library"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m3 17 5-4 3 2 4-5 6 6"/></svg></button>
+   </div>
+   <button type="button" id="nativeMic" class="native-icon native-mic" aria-label="Dictate meal" aria-pressed="false" title="Dictate meal"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3m-3 0h6"/></svg></button>
+   <button type="button" class="native-icon native-send" id="nativeReview" aria-label="Log meal" title="Log meal" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg><span class="native-working" aria-hidden="true"></span></button>
+  </div>
+ </div>
+ <div id="nativeWebcam" class="native-webcam" hidden>
+  <video id="nativeWebcamVideo" autoplay muted playsinline aria-label="Webcam preview"></video>
+  <div class="native-webcam-actions">
+   <button type="button" class="button secondary tight" id="nativeWebcamClose">Cancel</button>
+   <button type="button" class="button tight" id="nativeWebcamTake" disabled>Capture</button>
+  </div>
+ </div>
+ <p role="status" id="nativeMealStatus" class="muted"></p>
+</section>

@@ -53,3 +53,19 @@ If you have [ChatGPT Sites](https://help.openai.com/en/articles/20001339-creatin
 Both routes use fictional meals and weights, and diary edits reset on reload. Add `?onboarding=1` to try the first-meal flow. This is a demo, not a personal log that saves your data.
 
 The interface is plain HTML, CSS and JavaScript, with SVG for the charts. The live app uses a Worker and keeps each account’s log in D1. This repo has the app, tests and sample data, but no live logs or production configuration. For more, see [the design notes](docs/design.md).
+
+### In-app logger source
+
+The hosted app’s **+** composer accepts text, browser dictation or a photo. The
+server uses the OpenAI Responses API for estimates. A standalone weigh-in
+such as `84.8 kg` is saved without an API estimate. The fictional demo still
+runs offline and does not use an API key.
+
+The server build expects verified ChatGPT Sites identity headers and a D1
+binding named `DB`. Do not expose this Worker behind a gateway that lets
+clients supply those headers. Apply the migrations under `drizzle/`. Set
+`PLATE_OWNER_SHA256` to the SHA-256 hex digest of the owner's verified
+site-scoped user ID, and `PLATE_ORIGIN` to the canonical site origin. To enable
+estimates, set `PLATE_ESTIMATE_ENABLED=true`, a valid `PLATE_ESTIMATE_END_UTC`,
+and an `OPENAI_API_KEY` hosting secret. Never put that key in source or client
+configuration. Settings → Manage accounts is owner-only.

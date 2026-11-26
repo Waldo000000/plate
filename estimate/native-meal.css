@@ -1,0 +1,109 @@
+/* Plate's existing surface and type tokens, with a single compact composer. */
+#nativeMeal{display:grid;gap:0;min-inline-size:0;color:var(--ink);font-size:.8125rem;text-align:left}
+#nativeMeal[hidden],#nativeMeal [hidden]{display:none}
+#nativeMeal p{margin:0}
+.native-composer{
+ display:grid;align-items:center;grid-template-columns:auto minmax(0,1fr) auto auto;gap:2px;min-inline-size:0;
+ padding:2px 4px;background:var(--card);border:1px solid #c5d3c8;border-radius:13px
+}
+.native-composer:focus-within{border-color:color-mix(in srgb,var(--green) 30%,var(--line))}
+#nativeText{
+ grid-column:2;grid-row:1;display:block;box-sizing:border-box;width:100%;min-height:38px;max-height:136px;
+ padding:9px 2px;margin:0;border:0;outline:none;resize:none;field-sizing:content;background:transparent;
+ color:var(--ink);font:inherit;font-size:16px;line-height:1.3
+}
+@media(hover:hover) and (pointer:fine){#nativeText{font-size:14px}}
+#nativeText::placeholder{color:var(--muted);opacity:1}
+.native-toolbar{display:contents}
+#nativeAddPhoto,#nativePhotoChoices{grid-column:1;grid-row:1}
+#nativeMic{grid-column:3;grid-row:1}
+#nativeReview{grid-column:4;grid-row:1}
+#nativeMeal .native-icon{display:flex;align-items:center;justify-content:center;gap:0;flex:0 0 44px;width:44px;height:44px;min-height:44px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--green);line-height:1}
+#nativeMeal .native-icon:hover:not(:disabled){background:radial-gradient(circle,var(--light) 0 17px,transparent 17.5px)}
+#nativeMeal .native-icon:focus-visible,#nativeMeal button:focus-visible,.native-edit-saved:focus-visible{outline:2px solid var(--green);outline-offset:-2px}
+.native-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#nativeMeal .native-mic{margin-inline-start:auto}
+#nativeMeal .native-mic[aria-pressed="true"]{color:var(--danger);background:radial-gradient(circle,var(--orange) 0 17px,transparent 17.5px)}
+#nativeMeal .native-send{background:radial-gradient(circle,var(--green) 0 17px,transparent 17.5px);color:var(--card)}
+#nativeMeal .native-send:hover:not(:disabled){background:radial-gradient(circle,var(--ink) 0 17px,transparent 17.5px)}
+#nativeMeal .native-send:disabled{background:radial-gradient(circle,var(--line) 0 17px,transparent 17.5px);color:var(--muted)}
+.native-attachment{grid-column:1/-1;display:flex;align-items:center;gap:6px;width:max-content;max-width:100%;min-height:44px;margin:2px 4px;padding-inline:7px 0;background:var(--bg);border:1px solid var(--line);border-radius:10px;color:var(--ink)}
+.native-attachment img{object-fit:cover;border-radius:6px}
+#nativeMeal .native-attachment .native-icon{font-size:1.25rem}
+#nativeMealStatus:empty{display:none}
+#nativeMeal #nativeMealStatus{padding:6px 5px 0;color:var(--muted);line-height:1.4}
+#nativeMeal #nativeMealStatus.err{color:var(--danger)}
+#logActionMenu:has(#nativeMeal:not([hidden])){
+ width:min(416px,calc(100vw - 24px));padding:5px;gap:0;background:var(--card);border:1px solid #a4b8aa;
+ border-radius:14px;box-shadow:0 11px 28px #14292035,0 2px 5px #14292026;overflow:visible
+}
+#logActionMenu:has(#nativeMeal:not([hidden]))::before{background:var(--card);border-color:#a4b8aa}
+#logActionMenu .native-composer{border:0;padding:0}
+#logActionMenu:focus-within .native-composer{border:0}
+.native-log-date{
+ justify-self:start;margin:1px 4px 5px!important;border-radius:20px;padding:3px 7px;background:#eaf0e8;color:#36503f;
+ font-size:.72rem;font-weight:700;line-height:1.2
+}
+#logActionMenu .native-log-date{
+ position:absolute;inset-inline-start:8px;inset-block-start:-11px;z-index:1;box-shadow:0 0 0 2px var(--card)
+}
+#logActionMenu:has(#nativeMeal:not([hidden])) > [data-log-action="manualFood"]{display:none}
+#nativeReviewNote{margin:0;color:var(--muted)}
+#foodList > [data-just-logged]{background:var(--light);outline:1px solid var(--green);outline-offset:-1px}
+.native-edit-saved{min-height:44px;margin-inline-start:3px;padding:4px 7px;border:0;border-radius:8px;background:none;color:var(--green);font:inherit;font-weight:650;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+
+
+
+#logActionMenu:has(#nativeMeal:not([hidden])) > #logMenuChat,
+body[data-native-composer] #logSheet:not([data-legacy-food]) :is(#chatSteps,#chatAlternatives,#directFoodWays,.log-entry-choices){display:none}
+#logActionMenu:has(#nativeMeal:not([hidden])) > [data-log-action="manualWeight"]{display:none}
+.native-send svg{transition:opacity .16s,transform .16s}
+#nativeMeal .native-send{position:relative}
+.native-working{
+ position:absolute;inset:calc(50% - 7px);width:14px;height:14px;
+ border:2px solid currentColor;border-inline-end-color:transparent;
+ border-radius:50%;box-sizing:border-box;opacity:0;transition:opacity .16s;
+}
+#nativeMeal[data-working] .native-send{color:var(--card);background:radial-gradient(circle,var(--green) 0 17px,transparent 17.5px)}
+#nativeMeal[data-working] .native-send svg{opacity:0;transform:scale(.75)}
+#nativeMeal[data-working] .native-working{opacity:1;animation:plate-send-spin .8s linear infinite}
+#nativeMeal[data-working] #nativeMealStatus:not(.err){
+ position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;padding:0;
+}
+@keyframes plate-send-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.native-working,#nativeMeal[data-working] .native-working,.native-send svg{transition:none;animation:none}}
+button.food-log-chat{font:inherit;cursor:pointer;border:0}
+#plateAccounts .plate-account-row label{display:grid;gap:6px;overflow-wrap:anywhere}
+#plateAccountCode{overflow-wrap:anywhere;user-select:all}
+
+#plateAccounts .plate-quota-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+@media(min-width:1120px){
+ body[data-native-composer] .shell{width:min(calc(100% - 64px),1360px)}
+ body[data-native-composer] #plateMain{
+  display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:18px;align-items:start;
+ }
+ body[data-native-composer] #plateMain>.cards{grid-column:1;min-width:0}
+ body[data-native-composer] #plateMain>.shared-history-card{grid-column:2;min-width:0;margin:0}
+ body[data-native-composer] #plateMain>:is(#guide-habit,#guideTargetsNotice){grid-column:1/-1}
+}
+
+.native-photo-choices{display:flex;align-items:center;gap:2px}
+.native-photo-choices[hidden]{display:none}
+
+.native-webcam{display:grid;gap:6px;padding:6px 0}
+.native-webcam video{display:block;width:100%;max-height:280px;aspect-ratio:4 / 3;object-fit:contain;background:#10271e;border-radius:11px}
+.native-webcam-actions{display:flex;justify-content:flex-end;gap:6px}
+
+#logSheet[data-native-quick]:not([data-legacy-food])>header{
+ position:absolute;inset-block-start:4px;inset-inline-end:5px;z-index:1;border:0;padding:0;background:transparent
+}
+#logSheet[data-native-quick]:not([data-legacy-food])>header::before,
+#logSheet[data-native-quick]:not([data-legacy-food]) #logTitle,
+#logSheet[data-native-quick]:not([data-legacy-food]) .log-standard-close{display:none}
+#logSheet[data-native-quick]:not([data-legacy-food]) #closeLogSheet{
+ display:grid;place-items:center;width:36px;height:36px;min-height:36px;
+ border:0;border-radius:50%;padding:0;background:transparent;color:var(--muted);font-weight:500
+}
+#logSheet[data-native-quick]:not([data-legacy-food]) #closeLogSheet:hover{background:var(--light)}
+#logSheet[data-native-quick]:not([data-legacy-food]) .log-direct-close{display:block;font-size:1.4rem;line-height:1}
+#logSheet[data-native-quick]:not([data-legacy-food])>.settings-body{padding-top:33px}

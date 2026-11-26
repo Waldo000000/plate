@@ -97,7 +97,7 @@ test('guide mounts at each real feature without rendering for unrelated dates',(
  for(const stage of ['meal','impact','reserve','weight','history','habit','finish'])assert.match(html,new RegExp('id="guide-'+stage+'"[^>]+hidden'));
  assert.match(html,/if\(\$\('#day'\)\.value!==guide\.day\)return/);
  assert.match(html,/sheet\.close\(\);\s+showGuideStage\('reserve'\)/);
- assert.match(html,/firstMealGuide\.weightDay=day;\$\('#logSheet'\)\.close\(\);showGuideStage\('weight-saved'\)/);
+ assert.match(html,/firstMealGuide\.weightDay=day;showGuideStage\('weight-saved'\)/);
  assert.match(html,/sessionStorage\.removeItem\(GUIDE_KEY\)/);
 });
 
@@ -168,7 +168,7 @@ test('first-run panels advance, allow skips, render real macros, and stay off th
  env.showGuideStage('weight');
  assert.equal(actions()[0].text,'Next');
  assert.equal(weightOpened,1);assert.equal(active().children[0].text,'See if your food choices are working');
- assert.equal(active().children[1].text,'Weight recorded: 84.2 kg. To track progress toward your goal, tap + → Log weight to log it again tomorrow.');
+ assert.equal(active().children[1].text,'Weight recorded: 84.2 kg. To track progress toward your goal, type or dictate your weight in + again tomorrow.');
  actions()[0].onclick();assert.equal(active().children[0].text,'Know what to focus on next');
  $('#day').value='2026-11-21';env.paintGuide();assert.equal(active(),undefined);
  $('#day').value='2026-11-22';env.paintGuide();actions()[0].onclick();
@@ -222,4 +222,18 @@ test('guided target setup can save the first weight; existing weight and normal 
 
 test('the target calculator defaults to muscle building with general health available second',()=>{
  assert.match(html,/<select[^>]*name="protein_goal"><option value="muscle" selected>Build muscle with strength training<\/option><option value="general">General health<\/option><\/select>/);
+});
+
+test('first load expands the food log once only when the two-column layout fits',()=>{
+ for(const [wide,real,expected] of [[true,true,1],[false,true,0],[true,false,0]]){
+  const calls=[];
+  const c={matchMedia:query=>{assert.equal(query,'(min-width:1120px)');return {matches:wide}},
+   document:{body:{hasAttribute:name=>name==='data-native-composer'&&real}},renderFoodTray:open=>calls.push(open),
+   restoreGuide(){},openLog(){},firstMealGuide:null};
+  runInNewContext(decision,c);
+  c.chooseInitialScreen({food:[{}]},false);
+  c.chooseInitialScreen({food:[{}]},false);
+  assert.equal(calls.length,expected);
+  if(expected)assert.equal(calls[0],true);
+ }
 });

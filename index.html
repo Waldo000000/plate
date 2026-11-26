@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en-AU" data-history-scope="">
+<html lang="en-AU" data-history-scope="" data-plate-account="" data-plate-onboarding="">
 <head>
-<link rel="manifest" href="/manifest.webmanifest">
-<link rel="apple-touch-icon" href="/icons/plate-192.png">
+<link rel="manifest" href="/manifest.webmanifest" crossorigin="use-credentials">
+<link rel="apple-touch-icon" href="/icons/plate-192.png?v=2">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f8f7f1">
@@ -114,6 +114,30 @@
 #chatImportRows li small{white-space:nowrap}
 #chatImportRows li span{min-width:0;overflow-wrap:anywhere}
 .weight-macro-detail{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.weight-macro-detail[hidden]{display:none}
+
+.record-weight-line{display:flex;align-items:center;gap:6px}
+.record-weight-edit{display:inline-flex;align-items:center;min-height:34px;padding:3px 5px;border:0;border-radius:6px;background:transparent;color:inherit;font:inherit;font-weight:750;white-space:nowrap}
+.record-weight-edit:hover,.record-weight-edit:focus-visible{background:var(--light);text-decoration:underline;text-underline-offset:3px}
+.record-weight-form{display:grid;gap:6px;min-width:min(220px,55vw);touch-action:auto;cursor:default;user-select:auto}
+.record-weight-form label{display:grid;gap:4px}
+.record-weight-form .input{margin:0;min-height:42px}
+.record-weight-actions{display:flex;flex-wrap:wrap;gap:4px}
+.record-weight-form p{margin:0;color:var(--danger)}
+.swipe-remove[data-confirm-remove]{background:#82261e}
+
+.plate-toast{
+ position:fixed;inset-inline-start:50%;inset-block-end:max(18px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);
+ z-index:90;width:max-content;max-width:calc(100vw - 28px);margin:0;padding:7px 13px;border-radius:999px;
+ color:#fff;background:#24543d;box-shadow:0 4px 14px #14292033;font-size:.875rem;font-weight:650;pointer-events:none;opacity:0
+}
+.plate-toast:empty{padding:0;box-shadow:none}
+.plate-toast[data-active]{animation:plate-toast-life var(--toast-duration,1450ms) ease both}
+.plate-toast[data-error]{background:#8a382b;border-radius:12px}
+@keyframes plate-toast-life{0%,100%{opacity:0}10%,88%{opacity:1}}
+@media(prefers-reduced-motion:reduce){.plate-toast[data-active]{animation:none;opacity:1}}
+
+.onboarding-preview-note{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:10px;background:#e5eee6;border-radius:8px;padding:8px 11px;margin:0 0 10px;color:#365342;font-size:.8rem}
+.onboarding-preview-note a{color:var(--green);font-weight:720;white-space:nowrap}
 </style>
 <style>
 button.budget-mini{width:100%;padding:0;border:0;border-radius:8px;background:none;color:inherit;text-align:left;touch-action:manipulation}
@@ -324,6 +348,7 @@ button.budget-mini.pointer-focus:focus,.macro-legend>summary.pointer-focus:focus
 .adaptive-food-row .swipe-remove{visibility:hidden;position:absolute;z-index:1;inset:0 0 0 auto;width:var(--food-swipe-width);display:grid;place-items:center;padding:0;border:0;border-radius:0;background:#a33228;color:white;font-size:.875rem;font-weight:700;transform:translateX(calc(var(--food-swipe-width) + var(--food-swipe-x,0px)))}
 .adaptive-food-row[data-food-swipe] .swipe-remove{visibility:visible}
 .adaptive-food-row:not([data-food-swipe="open"]) .swipe-remove{pointer-events:none}
+.adaptive-food-row[data-food-swipe="open"] .swipe-remove{transform:none;transition:none;touch-action:manipulation}
 @media(prefers-reduced-motion:reduce){.adaptive-food-row[data-food-swipe]>*{transition:none!important}}
 .food-entry-body>p{font-size:.8125rem;color:var(--muted);margin:3px 0 5px;overflow-wrap:anywhere}
 .food-entry-macros{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin:0;font-variant-numeric:tabular-nums}
@@ -454,6 +479,7 @@ html.history-scroll-held{overflow-anchor:none}
 <p id="plateLoadStatus" class="plate-load-status" role="status">Loading your log</p>
 <div id="plateLoadError" class="shell plate-load-error" hidden><p id="plateLoadErrorText" role="alert"></p><button id="plateLoadRetry" type="button" class="button secondary tight">Retry</button></div>
 <main id="plateMain" class="shell main" data-load="pending" aria-busy="true">
+<aside id="onboardingPreviewNote" class="onboarding-preview-note" hidden><span>Onboarding preview. Your real log is unchanged.</span><a href="/">Exit preview</a></aside>
 <aside id="guide-habit" class="plate-guide" aria-label="Log your next meal" tabindex="-1" hidden></aside>
 <div class="cards">
 <section class="card" id="dailyLog" aria-label="Daily log">
@@ -507,6 +533,25 @@ html.history-scroll-held{overflow-anchor:none}
   <p id="targetHistoryStatus" class="status" role="status"></p>
  </form>
 </details>
+<details id="legacyFoodSettings" hidden><summary>Other ways to log</summary><div class="form">
+<button type="button" class="button secondary tight" id="settingsManualFood">Enter food manually</button>
+<button type="button" class="button secondary tight" id="settingsManualWeight">Enter weight manually</button>
+<button type="button" class="button secondary tight" id="settingsChatFood">Log food in ChatGPT</button>
+</div></details>
+<p class="muted" id="plateAccountCode" hidden></p>
+<details id="plateAccounts" hidden><summary>Manage accounts</summary><div class="form">
+<p class="muted">Limits reset at midnight Brisbane time. The shared limit applies only to Standard accounts. Blocked accounts can’t access Plate.</p>
+<form id="plateQuotaForm" class="form">
+<div class="plate-quota-fields">
+<label class="label">Standard per account<input type="number" class="input" name="standard_daily" min="1" max="300" step="1" required disabled></label>
+<label class="label">Standard shared total<input type="number" class="input" name="shared_daily" min="1" max="300" step="1" required disabled></label>
+<label class="label">Trusted and owner, each<input type="number" class="input" name="trusted_daily" min="1" max="300" step="1" required disabled></label>
+</div><button type="submit" class="button secondary tight" disabled>Save limits</button><p id="plateQuotaStatus" class="status" role="status"></p>
+</form>
+<ul id="plateAccountList" class="loglist" aria-label="Plate accounts"></ul>
+<button class="button secondary tight" id="plateAccountsMore" type="button" hidden>Show more</button>
+<p id="plateAccountsStatus" class="status" role="status"></p>
+</div></details>
 <p class="plate-signout"><a href="/signout-with-chatgpt?return_to=%2F" target="_top">Sign out of Plate</a></p><details id="importCard">
  <summary>Import weight history</summary>
  <p class="muted import-intro">Choose a CSV, TSV or text file, or paste two columns from a spreadsheet. You’ll review the dates and weights before saving. Existing dates stay unchanged.</p>
@@ -554,15 +599,9 @@ html.history-scroll-held{overflow-anchor:none}
  <button type="button" id="backToGuidedFood" class="button secondary tight" hidden>Back to food chat</button><p id="manualDate" class="muted sub" hidden></p><div id="manualFood" hidden><form id="foodForm" class="form"><label class="label">Food or drink<input class="input" id="description" placeholder="e.g. Flat white, regular" required maxlength="300"></label><div class="form-row food-entry-fields"><div class="form-row"><label class="label"><span>Energy (<span id="foodEnergyUnit">kJ</span>)</span><input class="input" id="kj" type="number" inputmode="decimal" min="0" max="83680" step="any" placeholder="e.g. 500" required></label><button class="button" type="submit" id="foodSubmit">Log food</button></div><label class="label">Time eaten (optional, Brisbane)<input class="input" id="consumedTime" type="time"></label></div><details class="food-nutrition" id="nutritionDetails"><summary>Add a food group or macros <span class="muted">(optional)</span></summary>
 <div class="nutrition-inputs"><label class="label" for="entryGroup">Food group for the whole item<select id="entryGroup" class="input"><option value="">Not specified / mixed</option><option value="vegetables">Vegetables</option><option value="fruit">Fruit</option><option value="grains">Grains</option><option value="protein">Meat, fish, eggs and alternatives</option><option value="dairy">Dairy and alternatives</option><option value="added_fats_oils">Added fats &amp; oils</option><option value="supplements">Supplements</option><option value="discretionary">Discretionary foods</option></select></label><div class="macro-inputs"><label class="label">Protein (g)<input id="entryProtein" class="input" type="number" min="0" max="5000" step="any" inputmode="decimal"></label><label class="label">Carbohydrate (g)<input id="entryCarbs" class="input" type="number" min="0" max="5000" step="any" inputmode="decimal"></label><label class="label">Fat (g)<input id="entryFat" class="input" type="number" min="0" max="5000" step="any" inputmode="decimal"></label><label class="label">Fibre (g)<input id="entryFibre" class="input" type="number" min="0" max="5000" step="any" inputmode="decimal"></label></div><p class="muted sub" id="nutritionHint">Leave unknown amounts blank.</p></div></details>
 <button type="submit" id="directFoodSave" class="button">Save food</button><button type="button" class="button secondary tight" id="removeEditedFood" hidden>Remove entry</button><button type="button" class="button secondary tight" id="cancelEdit" hidden>Cancel edit</button></form><details id="directFoodWays"><summary>Other ways to log food</summary><div class="direct-food-links"><button type="button" id="directFoodChat">Log food in ChatGPT</button><button type="button" id="directFoodPaste">Paste a ChatGPT reply</button></div></details></div><div id="manualWeight" hidden><form id="weightForm" class="form"><div class="form-row"><label class="label">Weight (kg)<input class="input" id="kg" type="number" inputmode="decimal" min="20" max="500" step=".01" placeholder="e.g. 90.5" required></label><button class="button secondary" type="submit">Save weight</button></div></form></div><div id="manualStatus" class="status" role="status"></div></section><div class="manual-buttons log-modes"><button type="button" class="button secondary tight" id="logModeFood" hidden>Back to food logging</button></div></div></dialog>
-<dialog class="nutrition-sheet settings-sheet" id="removeFoodSheet" aria-labelledby="removeFoodTitle" closedby="none">
-<header><h2 id="removeFoodTitle">Remove this entry?</h2></header>
-<div class="settings-body"><p id="removeFoodName"></p><div class="manual-buttons">
-<button type="button" id="confirmRemoveFood" class="button">Remove entry</button>
-<button type="button" id="cancelRemoveFood" class="button secondary" autofocus>Cancel</button>
-</div><p id="removeFoodStatus" class="status" role="status"></p></div>
-</dialog>
 <p id="guideTargetsNotice" class="guide-notice" role="status" hidden></p></main>
 <div id="historyScrollTail" aria-hidden="true"></div>
+<p id="plateToast" class="plate-toast" role="status" aria-live="polite" aria-atomic="true"></p>
 <!-- WEIGHT_IMPORT_PARSER -->
 <script>
 "use strict";
@@ -657,6 +696,8 @@ function btnState(){
 }
 async function api(path,data,signal,method="POST"){
   const options=data?{method,headers:{"content-type":"application/json"},body:JSON.stringify(data)}:{cache:"no-store"};
+  const preview=document.documentElement.dataset.plateOnboarding;
+  if(preview)options.headers={...options.headers,'x-plate-onboarding-preview':preview};
   const r=await fetch(path,{...options,signal});
   let payload;try{payload=await r.json()}catch{}
   if(!r.ok)throw Error(typeof payload?.error==="string"?payload.error:typeof payload?.message==="string"?payload.message:"Couldn’t reach your log. Please try again.");
@@ -827,6 +868,7 @@ function addSvg(svg,tag,attrs,text){
  svg.append(e);return e;
 }
 function cancelEdit(){
+ resetFoodRemoval();
  editId=null;$("#nutritionDetails").open=false;$("#nutritionHint").textContent="Leave unknown amounts blank.";$("#foodForm").reset();putEnergyInput($("#kj"),null);$("#foodSubmit").textContent="Log food";$("#cancelEdit").hidden=true;$("#removeEditedFood").hidden=true;
 }
 // Shared category colours; ring colours independently communicate progress.
@@ -1305,7 +1347,7 @@ function paintGuide(move=false){
  }else if(stage==='weight'||stage==='weight-saved'){
   title='See if your food choices are working';
   if(savedWeight){
-   info='Weight recorded: '+roundKg(savedWeight.kg)+'. To track progress toward your goal, tap + → Log weight to log it again tomorrow.';
+   info='Weight recorded: '+roundKg(savedWeight.kg)+'. To track progress toward your goal, type or dictate your weight in + again tomorrow.';
    primary='Next';action=()=>showGuideStage('history');
   }else{
    primary='Log weight';action=()=>{openLog('manualWeight');$('#kg').focus()};
@@ -1360,6 +1402,8 @@ function openLog(manual=null,firstMeal=false,direct=false){
  if(!ready)return;
  const sheet=$('#logSheet'),firstMealScreen=firstMeal&&!manual;
  sheet.toggleAttribute('data-first-meal',firstMealScreen);
+ sheet.removeAttribute('data-legacy-food');
+ sheet.removeAttribute('data-native-quick');sheet.setAttribute('aria-labelledby','logTitle');sheet.removeAttribute('aria-label');
  if(direct){sheet.dataset.directEntry=manual;$('#directFoodWays').open=false}
  else delete sheet.dataset.directEntry;
  $('#plateStarter').textContent=firstMealScreen?'Log with voice or a photo':'Log food in ChatGPT';
@@ -1369,11 +1413,6 @@ function openLog(manual=null,firstMeal=false,direct=false){
 const logMenuButton=$('#openLog'),logActionMenu=$('#logActionMenu'),logMenuChat=$('#logMenuChat');
 // Use the same starter as onboarding; other builds retain their own configured link.
 logMenuChat.href=$('#plateStarter').href;
-function preparePublicChat(event){
- event.preventDefault();
- openLog();copyFoodPrompt(true);
-}
-$('#plateStarter').addEventListener('click',preparePublicChat);
 function setLogMenu(open,restoreFocus=false){
  logActionMenu.hidden=!open;
  logMenuButton.setAttribute('aria-expanded',String(open));
@@ -1381,7 +1420,10 @@ function setLogMenu(open,restoreFocus=false){
  else if(restoreFocus)logMenuButton.focus({preventScroll:true});
 }
 logMenuButton.onclick=()=>{if(ready)setLogMenu(logActionMenu.hidden)};
-logMenuChat.addEventListener('click',event=>{setLogMenu(false,true);preparePublicChat(event)});
+logMenuChat.addEventListener('click',()=>{
+ // The native link keeps the handoff within the user's tap and bypasses the guided sheet.
+ setTimeout(()=>{if(!logActionMenu.hidden)setLogMenu(false,true)},0);
+});
 logActionMenu.addEventListener('click',event=>{
  const action=event.target.closest('[data-log-action]')?.dataset.logAction;
  if(!action||!ready)return;
@@ -1722,19 +1764,29 @@ function foodEntryDetails(food,interactive=false){
  body.append(make('p',food.description),macros);
  if(interactive){
   const tools=make('div',undefined,'entry-actions'),remove=make('button','Remove');
-  remove.type='button';remove.onclick=()=>openRemoveFood(food);tools.append(remove);body.append(tools);
+  remove.type='button';remove.onclick=()=>armFoodRemoval(food,remove);tools.append(remove);body.append(tools);
  }
  return body;
 }
 function drawFoodList(list,items,interactive=true){
+ if(interactive&&pendingFoodRemoval&&list.contains(pendingFoodRemoval.button))resetFoodRemoval();
  list.replaceChildren();list.dataset.sort=foodSort;
  if(!items.length){
-  const empty=make('li',undefined,'food-log-empty'),link=make('a',undefined,'food-log-chat');
+  const empty=make('li',undefined,'food-log-empty');
+  const inline=document.body.hasAttribute('data-native-composer');
+  const link=make(inline?'button':'a',undefined,'food-log-chat');
   empty.append(make('p','No food logged yet.','muted'));
-  link.href=logMenuChat.href;link.target='_blank';link.rel='noopener noreferrer';
+  if(inline){link.type='button';link.onclick=()=>{
+   if(!ready||busy)return;
+   const sheet=$('#logSheet');
+   openLog(null);
+   sheet.setAttribute('data-native-quick','');sheet.removeAttribute('aria-labelledby');sheet.setAttribute('aria-label','Quick log');
+   $('#nativeText').focus();
+  }}
+  else{link.href=logMenuChat.href;link.target='_blank';link.rel='noopener noreferrer';}
   const cue=make('span','↗');cue.setAttribute('aria-hidden','true');
-  link.addEventListener('click',preparePublicChat);
-  link.append(make('span','Log food in ChatGPT'),cue);
+  link.append(make('span',inline?'Log food':'Log food in ChatGPT'));
+  if(!inline)link.append(cue);
   empty.append(link);list.append(empty);
   return;
  }
@@ -1781,45 +1833,79 @@ function drawFoodList(list,items,interactive=true){
    const swipeRemove=make('button','Remove','swipe-remove');
    swipeRemove.type='button';swipeRemove.tabIndex=-1;
    swipeRemove.setAttribute('aria-label','Remove '+foodDisplayName(f.description));
-   swipeRemove.onclick=()=>openRemoveFood(f);li.append(swipeRemove);
+   swipeRemove.onclick=()=>armFoodRemoval(f,swipeRemove);bindSwipeRemoveTap(swipeRemove,li);li.append(swipeRemove);
   }
   list.append(li);
  }
 }
 
-let pendingFoodRemoval=null;
-function openRemoveFood(food){
+let pendingFoodRemoval=null,plateToastTimer;
+function showPlateToast(message,error=false){
+ const toast=$('#plateToast'),duration=error?3600:1450;
+ clearTimeout(plateToastTimer);
+ toast.removeAttribute('data-active');toast.textContent=message;
+ toast.toggleAttribute('data-error',error);
+ toast.style.setProperty('--toast-duration',duration+'ms');
+ void toast.offsetWidth; // Restart the short fade if a new message replaced the old one.
+ toast.setAttribute('data-active','');
+ plateToastTimer=setTimeout(()=>{
+  toast.removeAttribute('data-active');toast.textContent='';
+ },duration);
+}
+function resetFoodRemoval(){
+ const pending=pendingFoodRemoval;
+ if(!pending||pending.saving)return;
+ pendingFoodRemoval=null;
+ pending.button.textContent=pending.caption;
+ if(pending.aria)pending.button.setAttribute('aria-label',pending.aria);
+ else pending.button.removeAttribute('aria-label');
+ delete pending.button.dataset.confirmRemove;
+}
+async function armFoodRemoval(food,button){
  if(busy||!ready)return;
- pendingFoodRemoval=food.id;
- $('#removeFoodName').textContent=foodDisplayName(food.description);
- status('',false,'#removeFoodStatus');
- const sheet=$('#removeFoodSheet');
- if(!sheet.open)sheet.showModal();
+ if(pendingFoodRemoval?.button!==button||pendingFoodRemoval?.id!==food.id){
+  resetFoodRemoval();
+  pendingFoodRemoval={id:food.id,button,caption:button.textContent,aria:button.getAttribute('aria-label')};
+  button.dataset.confirmRemove='';
+  button.textContent='Confirm?';
+  button.setAttribute('aria-label','Confirm removal of '+foodDisplayName(food.description));
+  return;
+ }
+ const pending=pendingFoodRemoval,id=pending.id;
+ const snapshot=state;
+ if(!snapshot.food.some(item=>item.id===id)){resetFoodRemoval();return}
+ const rowWasOpen=openFoodEntries.has(id);
+ pending.saving=true;busy=true;btnState();button.disabled=true;
+ try{
+  if(editId===id){cancelEdit();$('#logSheet').close()}
+  openFoodEntries.delete(id);
+  state={...snapshot,food:snapshot.food.filter(item=>item.id!==id)};
+  render();
+  showPlateToast('Entry removed');
+  await api('/api/food',{id},undefined,'DELETE');
+ }catch(error){
+  state=snapshot;
+  if(rowWasOpen)openFoodEntries.add(id);
+  render();
+  showPlateToast('Couldn’t remove entry. It’s back in your log.',true);
+ }finally{
+  pending.saving=false;resetFoodRemoval();busy=false;button.disabled=false;btnState();
+ }
 }
 $('#removeEditedFood').onclick=()=>{
  const food=state.food.find(f=>f.id===editId);
- if(food)openRemoveFood(food);
+ if(food)return armFoodRemoval(food,$('#removeEditedFood'));
 };
-$('#cancelRemoveFood').onclick=()=>{if(!busy)$('#removeFoodSheet').close()};
-$('#removeFoodSheet').addEventListener('close',()=>{if(!$('#removeFoodSheet').open)pendingFoodRemoval=null});
-$('#removeFoodSheet').addEventListener('cancel',event=>{if(busy)event.preventDefault()});
-$('#confirmRemoveFood').onclick=async()=>{
- const id=pendingFoodRemoval;
- if(!id||busy||!ready)return;
- busy=true;btnState();
- const confirm=$('#confirmRemoveFood'),cancel=$('#cancelRemoveFood'),sheet=$('#removeFoodSheet');
- confirm.disabled=cancel.disabled=true;
- let removed=false;
- try{
-  await api('/api/food',{id},undefined,'DELETE');removed=true;openFoodEntries.delete(id);
-  await refresh();sheet.close();
-  if(editId===id){cancelEdit();$('#logSheet').close()}
-  status('Entry removed.');
- }catch(error){
-  status(removed?'Entry removed. Reload to see your updated log.':error.message,true,'#removeFoodStatus');
-  if(removed)pendingFoodRemoval=null;
- }finally{busy=false;confirm.disabled=cancel.disabled=false;btnState()}
-};
+document.addEventListener('pointerdown',event=>{
+ if(pendingFoodRemoval&&!pendingFoodRemoval.button.contains(event.target))resetFoodRemoval();
+},true);
+document.addEventListener('focusin',event=>{
+ if(pendingFoodRemoval&&!pendingFoodRemoval.button.contains(event.target))resetFoodRemoval();
+});
+document.addEventListener('keydown',event=>{
+ if(event.key==='Escape'&&pendingFoodRemoval&&!pendingFoodRemoval.saving){event.preventDefault();event.stopImmediatePropagation();resetFoodRemoval()}
+},true);
+$('#logSheet').addEventListener('close',resetFoodRemoval);
 
 function monthsBefore(end,n){
  const date=new Date(end), day=date.getUTCDate();
@@ -2031,7 +2117,7 @@ function wireLinkedChart(frame,wrap,kind,start,end,values,paintSelection){
   tip.setAttribute('tabindex','0');
   tip.setAttribute('aria-label','Selected day values. Use arrow keys to move this pop-up or Escape to close.');
   tip.addEventListener('pointerdown',event=>{
-   if(!event.isPrimary||event.button!==0)return;
+   if(!event.isPrimary||event.button!==0||event.target.closest('button,input,label'))return;
    recordDrag={id:event.pointerId,x:event.clientX,y:event.clientY,left:parseFloat(tip.style.left),top:parseFloat(tip.style.top)};
    tip.setPointerCapture(event.pointerId);tip.setAttribute('data-dragging','');event.preventDefault();
   });
@@ -2043,6 +2129,7 @@ function wireLinkedChart(frame,wrap,kind,start,end,values,paintSelection){
   tip.addEventListener('pointerup',finish);tip.addEventListener('pointercancel',finish);tip.addEventListener('lostpointercapture',finish);
   tip.addEventListener('keydown',event=>{
    if(event.key==='Escape'){event.preventDefault();event.stopPropagation();dismissChartValues();svg.focus({preventScroll:true});return}
+   if(event.target!==tip)return;
    const movement={ArrowLeft:[-12,0],ArrowRight:[12,0],ArrowUp:[0,-12],ArrowDown:[0,12]}[event.key];
    if(!movement)return;
    event.preventDefault();
@@ -2051,9 +2138,20 @@ function wireLinkedChart(frame,wrap,kind,start,end,values,paintSelection){
  }
  function paintRecordTip(detail,px){
   tip.replaceChildren();tip.setAttribute('data-record-context',recordContext);
+  tip.setAttribute('role',recordContext==='weight'&&detail[0]?.kg!==undefined?'group':'status');
   for(const value of detail){
    if(recordContext==='weight'){
-    tip.append(make('span','Weight: ','track-tile-sr'),make('strong',value.text));
+    const line=make('div',undefined,'record-weight-line');
+    line.append(make('span','Weight: ','track-tile-sr'));tip.append(line);
+    if(value.kg!==undefined){
+     const edit=make('button',value.text,'record-weight-edit');edit.type='button';
+     edit.setAttribute('aria-label','Edit weigh-in: '+value.text);
+     edit.onclick=event=>{
+      event.stopPropagation();
+      if(!busy&&ready)editWeightInCallout(value,px,detail);
+     };
+     line.append(edit);
+    }else line.append(make('strong',value.text));
     continue;
    }
    const row=make('div',undefined,'nutrition-callout-row'),mark=make('i'),amount=make('strong',value.text);
@@ -2069,6 +2167,52 @@ function wireLinkedChart(frame,wrap,kind,start,end,values,paintSelection){
    const side=preferred>=3&&preferred+w<=box.width-3;
    placeRecordTip(preferred,side?hit-h/2:hit-h-gap>=3?hit-h-gap:hit+gap,true);
   }
+ }
+ function editWeightInCallout(value,px,detail){
+  const form=make('form',undefined,'record-weight-form'),label=make('label','Weight (kg)'),
+   input=make('input'),actions=make('div',undefined,'record-weight-actions'),save=make('button','Save','button tight'),
+   remove=make('button','Remove','button secondary tight'),cancel=make('button','Cancel','button secondary tight'),
+   feedback=make('p');
+  input.type='number';input.inputMode='decimal';input.className='input';input.min='20';input.max='800';input.step='.001';input.required=true;input.value=value.kg;
+  save.type='submit';remove.type=cancel.type='button';
+  feedback.setAttribute('role','status');feedback.hidden=true;
+  label.append(input);actions.append(save,remove,cancel);form.append(label,actions,feedback);
+  tip.replaceChildren(form);
+  function reflow(){
+   placeRecordTip(parseFloat(tip.style.left),parseFloat(tip.style.top),true);
+  }
+  function cancelEditWeight(){
+   paintRecordTip(detail,px);tip.querySelector('.record-weight-edit')?.focus({preventScroll:true});
+  }
+  let confirming=false;
+  function resetRemove(){confirming=false;remove.textContent='Remove'}
+  for(const field of [input,save,cancel])field.addEventListener('focus',resetRemove);
+  cancel.onclick=cancelEditWeight;
+  async function updateWeight(deleting){
+   if(busy||!ready)return;
+   busy=true;btnState();
+   for(const control of [input,save,remove,cancel])control.disabled=true;
+   let saved=false;
+   try{
+    await api('/api/weight',deleting?{day:value.day}:{day:value.day,kg:input.valueAsNumber},undefined,deleting?'DELETE':'POST');
+    saved=true;
+    await refresh();
+    showPlateToast(deleting?'Weigh-in removed':'Weight updated');
+   }catch(error){
+    const message=saved?'Weight changed, but the chart couldn’t reload. Refresh to see it.':error.message;
+    if(tip.isConnected){feedback.hidden=false;feedback.textContent=message;reflow()}else status(message,true);
+    if(saved)ready=false;
+   }finally{
+    busy=false;btnState();for(const control of [input,save,remove,cancel])control.disabled=false;
+    resetRemove();
+   }
+  }
+  remove.onclick=()=>{
+   if(!confirming){confirming=true;remove.textContent='Confirm?';reflow();return}
+   void updateWeight(true);
+  };
+  form.onsubmit=event=>{event.preventDefault();if(input.reportValidity())void updateWeight(false)};
+  reflow();input.focus({preventScroll:true});input.select?.();
  }
  let painted=false,wasInside=false;
  function paint(){
@@ -2172,7 +2316,14 @@ function wireLinkedChart(frame,wrap,kind,start,end,values,paintSelection){
   selectChartDay(toDay(Math.max(start,Math.min(end,Number.isFinite(prior)?prior+step:end))),record?(chartPopup==='record'?'record':null):kind==='tiles'?null:kind,wrap);
  });
 }
-document.addEventListener('click',event=>{if(chartPopup&&!event.target.closest('#chart svg,#energyChart svg,.record-callout,#nutritionSeriesLegend'))dismissChartValues()});
+function isChartPopupClick(event){
+ // A control can replace itself during its click. The event's original path
+ // still contains the callout even if the clicked element is now detached.
+ const selector='#chart svg,#energyChart svg,.record-callout,#nutritionSeriesLegend';
+ return event.composedPath?.().some(node=>node.matches?.(selector))||
+  Boolean(event.target.closest?.(selector));
+}
+document.addEventListener('click',event=>{if(chartPopup&&!isChartPopupClick(event))dismissChartValues()});
 
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&chartPopup==='record'&&!event.defaultPrevented)dismissChartValues()});
 
@@ -2292,7 +2443,7 @@ function drawWeightChart(wrap,start,end,points,goalKg=null,macroRows=null,panels
  frame.record={panels:recordPanels,values:(context,day)=>{
   if(context==='weight'){
    const kg=recordedWeights.get(dateNum(day));
-   return [{name:'Weight',colour:'#376747',text:kg===undefined?'No weigh-in':roundKg(kg)}];
+   return [{name:'Weight',colour:'#376747',text:kg===undefined?'No weigh-in':roundKg(kg),kg,day}];
   }
   if(context==='macros'){
    const data=macroRows?.get(day);
@@ -2875,12 +3026,44 @@ const dailyLog=$("#dailyLog"),swipeViewport=$("#swipeViewport"),swipePreview=$("
 const swipeMotion=typeof matchMedia==="function"?matchMedia("(prefers-reduced-motion: reduce)"):null;
 let dayFlick=null, releasedFlick=null, swipeLabelTimer, swipePeek=null, daySwipeFinish=null, openSwipeFood=null;
 const FOOD_SWIPE_WIDTH=86, FOOD_SWIPE_COMMIT=28;
+function bindSwipeRemoveTap(button,row){
+ let press=null,lastDirectTouch=-Infinity;
+ const drift=(a,b)=>Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
+ button.addEventListener('touchstart',event=>{
+  const t=event.changedTouches[0];
+  press=event.touches.length===1&&t&&row.dataset.foodSwipe==='open'&&ready&&!busy?
+   {id:t.identifier,clientX:t.clientX,clientY:t.clientY,at:event.timeStamp}:null;
+ },{passive:true});
+ button.addEventListener('touchmove',event=>{
+  if(!press)return;
+  const t=Array.from(event.touches).find(t=>t.identifier===press.id);
+  if(event.touches.length!==1||!t||drift(press,t)>9)press=null;
+ },{passive:true});
+ button.addEventListener('touchcancel',()=>{press=null},{passive:true});
+ button.addEventListener('touchend',event=>{
+  const start=press;press=null;
+  if(!start||event.touches.length||event.timeStamp-start.at>550||!event.cancelable||!ready||busy||
+     row.dataset.foodSwipe!=='open')return;
+  const t=Array.from(event.changedTouches).find(t=>t.identifier===start.id);
+  if(!t||drift(start,t)>9)return;
+  const rect=button.getBoundingClientRect();
+  if(t.clientX<rect.left||t.clientX>rect.right||t.clientY<rect.top||t.clientY>rect.bottom)return;
+  event.preventDefault(); // no duplicate delayed tap
+  lastDirectTouch=event.timeStamp;button.click();
+ },{passive:false});
+ button.addEventListener('click',event=>{
+  if(event.detail>0&&event.timeStamp-lastDirectTouch>=0&&event.timeStamp-lastDirectTouch<500&&event.pointerType!=='mouse'&&event.sourceCapabilities?.firesTouchEvents!==false){
+   event.preventDefault();event.stopImmediatePropagation();
+  }
+ },true);
+}
 function paintFoodSwipe(row,phase,offset){
  if(!row)return;
  if(phase)row.dataset.foodSwipe=phase;else delete row.dataset.foodSwipe;
  row.style.setProperty('--food-swipe-x',offset+'px');
 }
 function settleFoodSwipe(row,open){
+ if(!open||row!==openSwipeFood)resetFoodRemoval();
  if(openSwipeFood&&openSwipeFood!==row){paintFoodSwipe(openSwipeFood,null,0);openSwipeFood.querySelector('.swipe-remove').tabIndex=-1}
  paintFoodSwipe(row,open?'open':null,open?-FOOD_SWIPE_WIDTH:0);
  if(row)row.querySelector('.swipe-remove').tabIndex=open?0:-1;
@@ -2958,7 +3141,7 @@ dailyLog.addEventListener("pointerdown",e=>{
  releasedFlick=null;
  if(e.pointerType!=="touch")return;
  if(!e.isPrimary){if(dayFlick?.row)settleFoodSwipe(dayFlick.row,dayFlick.rowOpen);dayFlick=null;clearPeek();return}
- if(e.target.closest(".date-row,dialog,input,select,textarea,a"))return;
+ if(e.target.closest(".date-row,dialog,input,select,textarea,a,.swipe-remove"))return;
  const row=e.target.closest('#foodList > .adaptive-food-row');
  if(openSwipeFood&&openSwipeFood!==row)settleFoodSwipe(openSwipeFood,false);
  dayFlick={id:e.pointerId,x:e.clientX,y:e.clientY,time:e.timeStamp,anchor:captureDayScrollAnchor(),row,rowOpen:!!row&&row===openSwipeFood};
@@ -3180,10 +3363,12 @@ $("#foodForm").onsubmit=e=>{
 $("#weightForm").onsubmit=e=>{
  e.preventDefault();if(!$("#day").reportValidity())return;
  const day=$("#day").value,fromGuide=firstMealGuide?.stage==='weight'&&firstMealGuide.day===day;
- commit("/api/weight",{day,kg:Number($("#kg").value)},"Weight saved.",null,"#manualStatus",fromGuide?()=>{
-  if(firstMealGuide?.stage!=='weight')return;
-  firstMealGuide.weightDay=day;$('#logSheet').close();showGuideStage('weight-saved');
- }:undefined);
+ const kg=Number($("#kg").value);
+ commit("/api/weight",{day,kg},"",null,"#manualStatus",()=>{
+  $('#logSheet').close();
+  showPlateToast('Logged '+roundKg(kg));
+  if(fromGuide&&firstMealGuide?.stage==='weight'){firstMealGuide.weightDay=day;showGuideStage('weight-saved')}
+ });
 };
 $("#export").onclick=()=>{
  const csv=v=>{const s=String(v??"");return '"'+(/^[=+@\-\t\r]/.test(s)?"'":"")+s.replaceAll('"','""')+'"'};
@@ -3226,6 +3411,7 @@ let initialScreenChosen=false;
 function chooseInitialScreen(data,importReturn){
  if(initialScreenChosen)return;
  initialScreenChosen=true;
+ if(typeof matchMedia==='function'&&matchMedia('(min-width:1120px)').matches&&document.body.hasAttribute('data-native-composer'))renderFoodTray(true);
  if(!importReturn&&data.food.length===0)openLog(null,true);
  else if(!importReturn){
   restoreGuide();

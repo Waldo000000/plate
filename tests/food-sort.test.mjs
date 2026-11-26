@@ -59,18 +59,36 @@ test('expanded row and edit route use the same confirmation; only confirm sends 
  const html=readFileSync('index.html','utf8');
  const source=html.slice(html.indexOf('function foodEntryDetails('),html.indexOf('function drawFoodList('))+
   html.slice(html.indexOf('let pendingFoodRemoval='),html.indexOf('function monthsBefore('));
- const calls=[],closed=[],nodes={};
- const make=(tag,text)=>({tag,text,children:[],append(...children){this.children.push(...children)},style:{setProperty(){}},focus(){},setAttribute(){}});
- const $=key=>nodes[key]??={open:false,showModal(){this.open=true},close(){this.open=false;this.onclose?.()},addEventListener(type,fn){this['on'+type]=fn}};
+ const calls=[],closed=[],nodes={},events={},timers=[];let pendingResolve,pendingReject;
+ const make=(tag,text)=>({tag,textContent:text,children:[],dataset:{},attributes:{},
+  append(...children){this.children.push(...children)},style:{setProperty(){}},focus(){},setAttribute(k,v){this.attributes[k]=v},
+  getAttribute(k){return this.attributes[k]??null},removeAttribute(k){delete this.attributes[k]},toggleAttribute(k,v){if(v)this.attributes[k]='';else delete this.attributes[k]},contains(target){return target===this}});
+ const $=key=>nodes[key]??={...make('button','Remove'),open:false,close(){this.open=false;this.onclose?.()},addEventListener(type,fn){this['on'+type]=fn}};
  const food={id:'exact',description:'Coffee'};
- const context={$,make,foodEntryNutrientRows:()=>[],foodDisplayName:x=>x,busy:false,ready:true,btnState(){},editId:null,state:{food:[food]},cancelEdit(){context.editId=null},
-  api:async(...args)=>calls.push(args),refresh:async()=>{},openFoodEntries:{delete:id=>closed.push(id)},status(){}};
+ const context={$,make,document:{addEventListener(type,fn){events[type]=fn}},foodEntryNutrientRows:()=>[],foodDisplayName:x=>x,busy:false,ready:true,btnState(){},editId:null,state:{food:[food]},cancelEdit(){context.editId=null},
+  api:(...args)=>{calls.push(args);return new Promise((resolve,reject)=>{pendingResolve=resolve;pendingReject=reject})},render(){},openFoodEntries:{has:()=>true,delete:id=>closed.push(id),add(){}},
+  clearTimeout(){},setTimeout(fn,delay){timers.push({fn,delay})},status(value){$('#status').textContent=value}};
  runInNewContext(source,context);
  assert.equal(context.foodEntryDetails(food,false).children.length,2);
  const [remove]=context.foodEntryDetails(food,true).children[2].children;
- remove.onclick();assert.equal($('#removeFoodSheet').open,true);assert.equal(calls.length,0);
- $('#cancelRemoveFood').onclick();await $('#confirmRemoveFood').onclick();assert.equal(calls.length,0);
- context.editId='exact';$('#logSheet').open=true;$('#removeEditedFood').onclick();await $('#confirmRemoveFood').onclick();
+ await remove.onclick();assert.equal(remove.textContent,'Confirm?');assert.equal(calls.length,0);
+ events.pointerdown({target:{}});
+ assert.equal(remove.textContent,'Remove');
+ await remove.onclick();assert.equal(calls.length,0);
+ context.editId='exact';$('#logSheet').open=true;
+ await $('#removeEditedFood').onclick();assert.equal(calls.length,0);assert.equal($('#removeEditedFood').textContent,'Confirm?');
+ const result=$('#removeEditedFood').onclick();
  assert.equal(calls.length,1);assert.equal(calls[0][1].id,'exact');assert.equal(calls[0][3],'DELETE');
+ assert.equal(context.state.food.length,0);
  assert.deepEqual(closed,['exact']);assert.equal($('#logSheet').open,false);
+ assert.equal($('#plateToast').textContent,'Entry removed');assert.equal(timers[0].delay,1450);
+ pendingReject(new Error('Offline'));await result;
+ assert.equal(context.state.food[0].id,'exact');
+ assert.match($('#plateToast').textContent,/back in your log/);
+ assert.equal($('#plateToast').attributes['data-error'],'');
+ await remove.onclick();
+ const confirmed=remove.onclick();
+ assert.equal(context.state.food.length,0);pendingResolve({ok:true});await confirmed;
+ assert.equal(context.state.food.length,0);
+ timers.at(-1).fn();assert.equal($('#plateToast').textContent,'');
 });
